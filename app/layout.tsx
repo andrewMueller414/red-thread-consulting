@@ -5,7 +5,7 @@ import Head from "next/head";
 import { LargeHeader } from "@/features/navigation/header";
 import { MobileHeader } from "@/features/navigation/mobile_header";
 import { GlobalProvider } from "@/core/state/provider";
-import { Drawer } from "@/features/navigation/drawer";
+import { FooterContainer } from "@/features/navigation/footer/footer_container";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -38,6 +38,7 @@ export default function RootLayout({
                     <LargeHeader />
                     <MobileHeader />
                     {children}
+                    <FooterContainer />
                 </GlobalProvider>
             </body>
         </html>

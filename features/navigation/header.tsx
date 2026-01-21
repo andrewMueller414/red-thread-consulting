@@ -37,14 +37,15 @@ export const LargeHeader = (): ReactNode => {
     return (
         <div className="w-screen top-0 left-0 right-0 flex flex-col justify-center items-center max-lg:hidden">
             <a
-                className="w-fit flex flex-col justify-center items-center py-4 capitalize"
+                className="w-fit flex flex-col justify-center items-center pt-5 pb-8 capitalize"
                 href="https://www.redthreadconsulting.co"
             >
                 <Image
-                    width={350}
-                    height={200}
+                    width={250}
+                    height={55}
                     alt="Red Thread Consulting logo"
                     src={"/logo/text_logo.svg"}
+                    className="max-h-13.75"
                 />
             </a>
             <div
