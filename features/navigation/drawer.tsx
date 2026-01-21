@@ -1,6 +1,6 @@
 "use client";
 import { AppState } from "@/core/state/store";
-import React, { type ReactNode } from "react";
+import React, { useMemo, type ReactNode } from "react";
 import { motion } from "framer-motion";
 
 import { connect } from "react-redux";
@@ -16,13 +16,20 @@ interface DrawerProps {
 }
 
 export const Drawer = connector((props: DrawerProps): ReactNode => {
+    const height = useMemo(
+        () =>
+            typeof window === "undefined"
+                ? 0
+                : window.innerHeight - props.navbarHeight,
+        [props.navbarHeight],
+    );
     return (
         <motion.div
             animate={props.open ? "open" : "close"}
             initial="close"
             variants={{
                 open: {
-                    height: `${window.innerHeight - props.navbarHeight}px`,
+                    height: `${height}px`,
                     opacity: 1,
                 },
                 close: {
