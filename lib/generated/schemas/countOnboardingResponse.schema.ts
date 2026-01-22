@@ -1,0 +1,10 @@
+import type { Prisma } from '../prisma/client';
+import * as z from 'zod';
+import { OnboardingResponseOrderByWithRelationInputObjectSchema as OnboardingResponseOrderByWithRelationInputObjectSchema } from './objects/OnboardingResponseOrderByWithRelationInput.schema';
+import { OnboardingResponseWhereInputObjectSchema as OnboardingResponseWhereInputObjectSchema } from './objects/OnboardingResponseWhereInput.schema';
+import { OnboardingResponseWhereUniqueInputObjectSchema as OnboardingResponseWhereUniqueInputObjectSchema } from './objects/OnboardingResponseWhereUniqueInput.schema';
+import { OnboardingResponseCountAggregateInputObjectSchema as OnboardingResponseCountAggregateInputObjectSchema } from './objects/OnboardingResponseCountAggregateInput.schema';
+
+export const OnboardingResponseCountSchema: z.ZodType<Prisma.OnboardingResponseCountArgs> = z.object({ orderBy: z.union([OnboardingResponseOrderByWithRelationInputObjectSchema, OnboardingResponseOrderByWithRelationInputObjectSchema.array()]).optional(), where: OnboardingResponseWhereInputObjectSchema.optional(), cursor: OnboardingResponseWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), OnboardingResponseCountAggregateInputObjectSchema ]).optional() }).strict() as unknown as z.ZodType<Prisma.OnboardingResponseCountArgs>;
+
+export const OnboardingResponseCountZodSchema = z.object({ orderBy: z.union([OnboardingResponseOrderByWithRelationInputObjectSchema, OnboardingResponseOrderByWithRelationInputObjectSchema.array()]).optional(), where: OnboardingResponseWhereInputObjectSchema.optional(), cursor: OnboardingResponseWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), OnboardingResponseCountAggregateInputObjectSchema ]).optional() }).strict();

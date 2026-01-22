@@ -8,6 +8,11 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     process.exit(1);
 }
 
+const getAllowedEmails = () => {
+    const emailsString = process.env.ADMIN_EMAILS ?? "";
+    return emailsString.split(",").map((s) => s.trim().toLowerCase());
+};
+
 export const authOptions: AuthOptions = {
     providers: [
         GoogleProvider({
@@ -22,6 +27,14 @@ export const authOptions: AuthOptions = {
             },
         }),
     ],
+    callbacks: {
+        async signIn({ user }) {
+            if (!user.email) {
+                return false;
+            }
+            return getAllowedEmails().includes(user.email!.toLowerCase());
+        },
+    },
 };
 
 const authHandler = NextAuth(authOptions);

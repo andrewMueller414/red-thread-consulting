@@ -1,4 +1,9 @@
-import React, { useState, type ReactNode } from "react";
+import React, {
+    useEffect,
+    useEffectEvent,
+    useState,
+    type ReactNode,
+} from "react";
 import { HeaderButton } from "./header";
 import { motion } from "framer-motion";
 
@@ -14,6 +19,12 @@ export const DrawerButton = ({
     open,
 }: DrawerButtonProps): ReactNode => {
     const [hasRendered, setHasRendered] = useState(false);
+    const resetRendered = useEffectEvent(() => setHasRendered(false));
+    useEffect(() => {
+        if (!open) {
+            resetRendered();
+        }
+    }, [open]);
     return (
         <motion.a
             className="w-full inline-block px-4 py-4 text-center drawer-fontsize"

@@ -1,0 +1,1 @@
+{"fullyTracked":false,"platform":"darwin","arch":"arm64","nodeVersion":"v24.12.0","command":"npx prisma generate","extraArgs":[],"clean":true,"files":{},"output":[],"dependencies":{},"env":{}}

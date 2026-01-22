@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bellefair, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import { LargeHeader } from "@/features/navigation/header";
 import { MobileHeader } from "@/features/navigation/mobile_header";
 import { GlobalProvider } from "@/core/state/provider";
 import { FooterContainer } from "@/features/navigation/footer/footer_container";
+import { NavigationResizeObserver } from "@/features/navigation/navigation_resize_observer";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
+const bellefair = Bellefair({
+    variable: "--font-bellefair",
+    weight: ["400"],
     subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
+    variable: "--font-ibm-plex-mono",
+    weight: ["400"],
     subsets: ["latin"],
 });
 
@@ -30,13 +33,20 @@ export default function RootLayout({
         <html lang="en">
             <Head>
                 <title>Red Thread</title>
+                <link
+                    rel="icon"
+                    href="/logo/favicon.svg"
+                    type="image/svg+xml"
+                    sizes="any"
+                />
             </Head>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${bellefair.variable} ${plexMono.variable} antialiased font-sans`}
             >
                 <GlobalProvider>
                     <LargeHeader />
                     <MobileHeader />
+                    <NavigationResizeObserver />
                     {children}
                     <FooterContainer />
                 </GlobalProvider>

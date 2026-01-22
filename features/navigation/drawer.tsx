@@ -1,8 +1,8 @@
 "use client";
 import { AppState } from "@/core/state/store";
-import React, { useMemo, type ReactNode } from "react";
+import React, { useEffect, useMemo, type ReactNode } from "react";
 import { motion } from "framer-motion";
-
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { connect } from "react-redux";
 import { navButtons } from "./header";
 import { DrawerButton } from "./drawer_button";
@@ -24,6 +24,14 @@ export const Drawer = connector((props: DrawerProps): ReactNode => {
                 : window.innerHeight - props.navbarHeight,
         [props.navbarHeight],
     );
+
+    useEffect(() => {
+        if (props.open) {
+            disableBodyScroll(document.body);
+        } else {
+            enableBodyScroll(document.body);
+        }
+    }, [props.open]);
     return (
         <motion.div
             animate={props.open ? "open" : "close"}

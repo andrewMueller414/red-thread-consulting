@@ -1,0 +1,13 @@
+export { OnboardingResponseFindUniqueResultSchema } from './OnboardingResponseFindUniqueResult.schema';
+export { OnboardingResponseFindFirstResultSchema } from './OnboardingResponseFindFirstResult.schema';
+export { OnboardingResponseFindManyResultSchema } from './OnboardingResponseFindManyResult.schema';
+export { OnboardingResponseCreateResultSchema } from './OnboardingResponseCreateResult.schema';
+export { OnboardingResponseCreateManyResultSchema } from './OnboardingResponseCreateManyResult.schema';
+export { OnboardingResponseUpdateResultSchema } from './OnboardingResponseUpdateResult.schema';
+export { OnboardingResponseUpdateManyResultSchema } from './OnboardingResponseUpdateManyResult.schema';
+export { OnboardingResponseUpsertResultSchema } from './OnboardingResponseUpsertResult.schema';
+export { OnboardingResponseDeleteResultSchema } from './OnboardingResponseDeleteResult.schema';
+export { OnboardingResponseDeleteManyResultSchema } from './OnboardingResponseDeleteManyResult.schema';
+export { OnboardingResponseAggregateResultSchema } from './OnboardingResponseAggregateResult.schema';
+export { OnboardingResponseGroupByResultSchema } from './OnboardingResponseGroupByResult.schema';
+export { OnboardingResponseCountResultSchema } from './OnboardingResponseCountResult.schema';
