@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import { connect } from "react-redux";
 import { navButtons } from "./header";
+import { DrawerButton } from "./drawer_button";
 
 const connector = connect((state: AppState) => ({
     open: state.nav.drawer.open,
@@ -37,30 +38,16 @@ export const Drawer = connector((props: DrawerProps): ReactNode => {
                     opacity: 0,
                 },
             }}
-            className="w-full fixed bottom-0 left-0 right-0 origin-bottom bg-background flex flex-col justify-center items-center overflow-y-auto"
+            className="w-full fixed bottom-0 left-0 right-0 origin-bottom bg-cream text-pine flex flex-col justify-center items-center overflow-y-auto lg:hidden"
         >
             {navButtons.map((b, i) => {
                 return (
-                    <motion.a
-                        className="w-full inline-block px-4 py-4 text-center drawer-fontsize"
+                    <DrawerButton
+                        item={b}
                         key={`drawer-${b.href}`}
-                        href={b.href}
-                        animate={props.open ? "open" : "close"}
-                        initial="close"
-                        variants={{
-                            open: {
-                                opacity: 1,
-                            },
-                            close: {
-                                opacity: 0,
-                            },
-                        }}
-                        transition={{
-                            delay: i * 0.1 + 0.5,
-                        }}
-                    >
-                        {b.label}
-                    </motion.a>
+                        open={props.open}
+                        idx={i}
+                    />
                 );
             })}
         </motion.div>

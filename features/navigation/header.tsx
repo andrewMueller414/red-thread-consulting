@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { type ReactNode } from "react";
 
-interface HeaderButton {
+export interface HeaderButton {
     href: string;
     label: ReactNode;
 }
@@ -35,7 +35,10 @@ export const navButtons: HeaderButton[] = [
 
 export const LargeHeader = (): ReactNode => {
     return (
-        <div className="w-screen top-0 left-0 right-0 flex flex-col justify-center items-center max-lg:hidden">
+        <div
+            className="w-screen top-0 left-0 right-0 flex flex-col justify-center items-center max-lg:hidden"
+            id="desktop-header-container"
+        >
             <a
                 className="w-fit flex flex-col justify-center items-center pt-5 pb-8 capitalize"
                 href="https://www.redthreadconsulting.co"
@@ -46,6 +49,8 @@ export const LargeHeader = (): ReactNode => {
                     alt="Red Thread Consulting logo"
                     src={"/logo/text_logo.svg"}
                     className="max-h-13.75"
+                    loading="eager"
+                    priority
                 />
             </a>
             <div
@@ -59,7 +64,7 @@ export const LargeHeader = (): ReactNode => {
                         <a
                             key={b.href}
                             href={b.href}
-                            className="w-full h-full flex flex-col justify-center items-center border hover:bg-hover transition-colors duration-150 text-[14px] py-2"
+                            className="w-full h-full flex flex-col justify-center items-center border hover:bg-matcha transition-colors duration-150 text-[14px] py-2"
                         >
                             {b.label}
                         </a>

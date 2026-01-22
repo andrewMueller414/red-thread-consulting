@@ -30,6 +30,7 @@ export const MobileHeader = connector(
                 <div
                     className="lg:hidden flex flex-row justify-between items-center gap-x-8 px-8 py-4 min-[450px]:px-12 min-[450px]:py-6"
                     ref={container}
+                    id="mobile-header-container"
                 >
                     <a
                         className="w-fit flex flex-col justify-center items-center"
@@ -40,6 +41,8 @@ export const MobileHeader = connector(
                             width={200}
                             height={120}
                             alt="Red Thread Consulting Logo"
+                            loading="eager"
+                            priority
                         />
                     </a>
                     <Hamburger
