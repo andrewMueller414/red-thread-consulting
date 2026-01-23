@@ -27,6 +27,7 @@ export const DrawerButton = ({
     }, [open]);
     return (
         <motion.a
+            /* @ts-expect-error -- This property works but the motion package is not typed properly. */
             className="w-full inline-block px-4 py-4 text-center drawer-fontsize"
             key={`drawer-${item.href}`}
             href={item.href}
