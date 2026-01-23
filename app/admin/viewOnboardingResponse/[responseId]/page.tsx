@@ -20,11 +20,10 @@ const OnboardingResponseByIdPage = async ({
     if (!session) {
         return redirect("/admin");
     }
-    /* const trpc = await trpcServer(); */
-    /* const item = await trpc.onboardingForm.getById({ */
-    /*     id: parseInt(params.responseId), */
-    /* }); */
-    const item = fakeOnboardingResponseComplete();
+    const trpc = await trpcServer();
+    const item = await trpc.onboardingForm.getById({
+        id: parseInt(params.responseId),
+    });
     return (
         <div className="w-full flex flex-col justify-center items-center">
             {item ? (

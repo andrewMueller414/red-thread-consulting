@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "0.1.0",
-  "generatedAt": "2026-01-23T17:19:41.015Z",
+  "generatedAt": "2026-01-23T21:17:13.777Z",
   "outputPath": "/Users/bigsexy/Desktop/current/red_thread/lib/generated/schemas",
   "files": [
     "enums/TransactionIsolationLevel.schema.ts",
