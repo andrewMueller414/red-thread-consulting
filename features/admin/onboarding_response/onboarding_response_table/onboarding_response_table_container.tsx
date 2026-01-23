@@ -1,17 +1,28 @@
 import { OnboardingResponse } from "@/lib/generated/prisma/client";
 import React, { type ReactNode } from "react";
+import { OnboardingResponseTable } from "./onboarding_response_table";
+import { OnboardingResponseTableProvider } from "../../state/onboarding_response_table_context";
 
 interface OnboardingResponseTableContainerProps {
-    items: OnboardingResponse[];
+  items: OnboardingResponse[];
 }
 
 export const OnboardingResponseTableContainer = (
-    props: OnboardingResponseTableContainerProps,
+  props: OnboardingResponseTableContainerProps,
 ): ReactNode => {
-    return (
-        <div className="max-w-[min(1080px,90vw)]">Response table goes here.</div>
-    );
+  return (
+    <div className="max-w-[min(1080px,90vw)]">
+      <OnboardingResponseTableProvider
+        initialValues={{
+          responseSummaries: props.items,
+          filteredSummaries: props.items,
+        }}
+      >
+        <OnboardingResponseTable />
+      </OnboardingResponseTableProvider>
+    </div>
+  );
 };
 
 OnboardingResponseTableContainer.displayName =
-    "OnboardingResponseTableContainer";
+  "OnboardingResponseTableContainer";

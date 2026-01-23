@@ -1,7 +1,11 @@
 import { OnboardingResponseSchema } from "@/lib/generated/schemas";
 import { baseProcedure, createTRPCRouter } from "../trpc_init";
 import { prisma } from "@/lib/prisma";
-import { dbEntityIdSchema } from "@/features/db/schemas/database_utility_schemas";
+import {
+    dbEntityIdSchema,
+    paginationSchema,
+} from "@/features/db/schemas/database_utility_schemas";
+import z from "zod";
 
 export const onboardingRouter = createTRPCRouter({
     create: baseProcedure
@@ -20,7 +24,6 @@ export const onboardingRouter = createTRPCRouter({
                 return false;
             }
         }),
-
     deleteById: baseProcedure
         .input(dbEntityIdSchema.array())
         .mutation(async ({ input }) => {
@@ -38,7 +41,6 @@ export const onboardingRouter = createTRPCRouter({
                 return false;
             }
         }),
-
     getById: baseProcedure.input(dbEntityIdSchema).query(async ({ input }) => {
         try {
             const res = await prisma.onboardingResponse.findFirst({
@@ -52,7 +54,6 @@ export const onboardingRouter = createTRPCRouter({
             return false;
         }
     }),
-
     getManySummaries: baseProcedure.query(async () => {
         try {
             const res = await prisma.onboardingResponse.findMany({
@@ -60,6 +61,8 @@ export const onboardingRouter = createTRPCRouter({
                     id: true,
                     name_first: true,
                     name_last: true,
+                    reviewed_at: false,
+                    how_can_i_help: false,
                     ctime: true,
                 },
                 orderBy: {
@@ -69,12 +72,15 @@ export const onboardingRouter = createTRPCRouter({
             return res;
         } catch (err) {
             console.error("Error: ", err);
-            return false;
+            return [];
         }
     }),
-
     markReviewedById: baseProcedure
-        .input(dbEntityIdSchema)
+        .input(
+            dbEntityIdSchema.extend({
+                reviewed: z.boolean().default(true),
+            }),
+        )
         .mutation(async ({ input }) => {
             try {
                 await prisma.onboardingResponse.update({

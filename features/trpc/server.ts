@@ -7,11 +7,18 @@ import { createCallerFactory, createTRPCContext } from "./trpc_init";
 
 export const getQueryClient = cache(makeQueryClient);
 
-const caller = createCallerFactory(appRouter)(createTRPCContext);
+const callerFactory = createCallerFactory(appRouter);
+
+const caller = callerFactory(createTRPCContext);
 
 const { trpc, HydrateClient } = createHydrationHelpers<typeof appRouter>(
-  caller,
-  getQueryClient,
+    caller,
+    getQueryClient,
 );
 
 export { trpc, HydrateClient };
+
+export const trpcServer = async () => {
+    const context = await createTRPCContext();
+    return callerFactory(context);
+};
