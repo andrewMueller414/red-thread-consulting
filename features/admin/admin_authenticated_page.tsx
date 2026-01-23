@@ -1,9 +1,7 @@
 import React, { type ReactNode } from "react";
 import { AdminHeaderContainer } from "../navigation/admin_header/admin_header_container";
-import {
-    OnboardingResponse,
-    OnboardingResponseTableContainer,
-} from "./onboarding_response/onboarding_response_table/onboarding_response_table_container";
+import { OnboardingResponseTableContainer } from "./onboarding_response/onboarding_response_table/onboarding_response_table_container";
+import { OnboardingResponse } from "@/lib/generated/prisma/client";
 
 export const AdminAuthenticatedPage = (): ReactNode => {
     const items: OnboardingResponse[] = [];

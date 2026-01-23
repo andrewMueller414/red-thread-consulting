@@ -1,0 +1,1 @@
+{"fullyTracked":false,"platform":"darwin","arch":"arm64","nodeVersion":"v24.12.0","command":"next build","extraArgs":[],"clean":true,"files":{},"output":[],"dependencies":{"[\"/Users/bigsexy/Desktop/current/red_thread\",\"db:generate\"]":"240e5542f86c48119f80d80cf99baf59eecec2ab81de699926655022de92cf03"},"env":{}}
