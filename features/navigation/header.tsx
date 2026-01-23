@@ -64,7 +64,7 @@ export const LargeHeader = (): ReactNode => {
                         <a
                             key={b.href}
                             href={b.href}
-                            className="w-full h-full flex flex-col justify-center items-center border hover:bg-matcha transition-colors duration-150 text-[14px] py-2"
+                            className="w-full h-full flex flex-col justify-center items-center border hover:bg-matcha transition-colors duration-150 text-[14px] py-2 font-mono text-sm"
                         >
                             {b.label}
                         </a>
