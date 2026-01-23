@@ -27,6 +27,8 @@ export const onboardingRouter = createTRPCRouter({
     deleteById: baseProcedure
         .input(dbEntityIdSchema.array())
         .mutation(async ({ input }) => {
+            console.log("input: ", input);
+            return true;
             try {
                 await prisma.onboardingResponse.deleteMany({
                     where: {
@@ -77,18 +79,23 @@ export const onboardingRouter = createTRPCRouter({
     }),
     markReviewedById: baseProcedure
         .input(
-            dbEntityIdSchema.extend({
-                reviewed: z.boolean().default(true),
+            z.object({
+                reviewed: z.boolean(),
+                ids: z.number().int().array(),
             }),
         )
         .mutation(async ({ input }) => {
+            console.log("input: ", input);
+            return true;
             try {
-                await prisma.onboardingResponse.update({
+                await prisma.onboardingResponse.updateMany({
                     where: {
-                        id: input.id,
+                        id: {
+                            in: input.ids,
+                        },
                     },
                     data: {
-                        reviewed_at: new Date(),
+                        reviewed_at: input.reviewed ? new Date() : null,
                     },
                 });
                 return true;

@@ -17,7 +17,6 @@ export const OnboardingSectionImage = ({
         <div className="max-h-80 lg:max-h-full lg:w-full h-full overflow-hidden flex flex-col justify-center items-center">
             <MotionImage
                 src={image.src}
-                objectFit="contain"
                 alt={image.alt}
                 width={1080}
                 height={1080}

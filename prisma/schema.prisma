@@ -14,6 +14,11 @@ generator zod {
     config   = "../zod_generator_config.json"
 }
 
+generator custom_generator {
+    provider = "prisma-generator-fake-data"
+    output   = "../lib/generated/fake-data.ts"
+}
+
 datasource db {
     provider = "postgresql"
 }
@@ -29,8 +34,11 @@ enum PriorityId {
 
 model OnboardingResponse {
     id             Int          @id @default(autoincrement())
+    ///FAKE:faker.lorem.words(1)
     name_first     String
+    ///FAKE:faker.lorem.words(1)
     name_last      String
+    ///FAKE:faker.lorem.paragraphs(2)
     how_can_i_help String
     priorities     PriorityId[]
     ctime          DateTime     @default(now())

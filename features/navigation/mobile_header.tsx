@@ -42,6 +42,7 @@ export const MobileHeader = connector(
                             height={120}
                             alt="Red Thread Consulting Logo"
                             loading="eager"
+                            className="max-h-13.75"
                             priority
                         />
                     </a>

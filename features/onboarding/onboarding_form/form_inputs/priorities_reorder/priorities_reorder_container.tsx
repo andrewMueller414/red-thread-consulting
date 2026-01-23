@@ -1,20 +1,13 @@
 "use client";
 import { PriorityId } from "@/lib/generated/prisma/enums";
-import React, {
-    startTransition,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-    type ReactNode,
-} from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { priorityIdLabelMap } from "./priority_id_label_map";
 import {
     OnboardingFormType,
     PriorityItem,
 } from "@/features/onboarding/onboarding_types";
 import { PriorityIdReorderItem } from "./priority_reorder_item";
-import { LayoutGroup, Reorder, useDragControls } from "framer-motion";
+import { LayoutGroup, Reorder } from "framer-motion";
 
 const formIdsToPriorityItems = (ids: PriorityId[]): PriorityItem[] => {
     return ids.map((n) => {
@@ -67,9 +60,10 @@ export const PrioritiesReorderContainer = ({
             >
                 {items.map((priorityItem) => {
                     return (
-                        <div key={priorityItem.value} className="w-full">
-                            <PriorityIdReorderItem item={priorityItem} />
-                        </div>
+                        <PriorityIdReorderItem
+                            key={priorityItem.value}
+                            item={priorityItem}
+                        />
                     );
                 })}
             </Reorder.Group>

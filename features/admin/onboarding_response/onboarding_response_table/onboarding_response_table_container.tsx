@@ -4,25 +4,26 @@ import { OnboardingResponseTable } from "./onboarding_response_table";
 import { OnboardingResponseTableProvider } from "../../state/onboarding_response_table_context";
 
 interface OnboardingResponseTableContainerProps {
-  items: OnboardingResponse[];
+    items: OnboardingResponse[];
 }
 
 export const OnboardingResponseTableContainer = (
-  props: OnboardingResponseTableContainerProps,
+    props: OnboardingResponseTableContainerProps,
 ): ReactNode => {
-  return (
-    <div className="max-w-[min(1080px,90vw)]">
-      <OnboardingResponseTableProvider
-        initialValues={{
-          responseSummaries: props.items,
-          filteredSummaries: props.items,
-        }}
-      >
-        <OnboardingResponseTable />
-      </OnboardingResponseTableProvider>
-    </div>
-  );
+    return (
+        <div className="w-full max-w-[min(1080px,90vw)]">
+            <OnboardingResponseTableProvider
+                initialValues={{
+                    responseSummaries: props.items,
+                    filteredSummaries: props.items,
+                    filterText: "",
+                }}
+            >
+                <OnboardingResponseTable />
+            </OnboardingResponseTableProvider>
+        </div>
+    );
 };
 
 OnboardingResponseTableContainer.displayName =
-  "OnboardingResponseTableContainer";
+    "OnboardingResponseTableContainer";

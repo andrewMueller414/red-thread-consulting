@@ -21,12 +21,31 @@ export const OnboardingResponseTableContext =
 export enum OnboardingResponseTableAction {
     setResponseSummaries,
     setFilterText,
+    /// Pass an array of ids to remove those ids from both the unfiltered and filtered summaries
+    filterSummariesByIds,
+    setReviewedByIds,
+    updateItem,
 }
 
 type OnboardingResponseTableContextActions =
     | {
         type: OnboardingResponseTableAction.setResponseSummaries;
         payload: OnboardingSummaryResponseItem[];
+    }
+    | {
+        type: OnboardingResponseTableAction.setReviewedByIds;
+        payload: {
+            ids: number[];
+            reviewed: null | Date;
+        };
+    }
+    | {
+        type: OnboardingResponseTableAction.updateItem;
+        payload: OnboardingSummaryResponseItem;
+    }
+    | {
+        type: OnboardingResponseTableAction.filterSummariesByIds;
+        payload: number[];
     }
     | {
         type: OnboardingResponseTableAction.setFilterText;
@@ -54,6 +73,53 @@ export const OnboardingResponseTableContextReducer = (
                 filteredSummaries: action.payload,
             };
         }
+        case OnboardingResponseTableAction.setReviewedByIds: {
+            return {
+                ...state,
+                responseSummaries: state.responseSummaries.map((s) => {
+                    if (action.payload.ids.includes(s.id)) {
+                        return {
+                            ...s,
+                            reviewed_at: action.payload.reviewed,
+                        };
+                    } else {
+                        return s;
+                    }
+                }),
+                filteredSummaries: state.filteredSummaries.map((s) => {
+                    if (action.payload.ids.includes(s.id)) {
+                        return {
+                            ...s,
+                            reviewed_at: action.payload.reviewed,
+                        };
+                    } else {
+                        return s;
+                    }
+                }),
+            };
+        }
+        case OnboardingResponseTableAction.filterSummariesByIds: {
+            return {
+                ...state,
+                responseSummaries: state.responseSummaries.filter(
+                    (f) => !action.payload.includes(f.id),
+                ),
+                filteredSummaries: state.filteredSummaries.filter(
+                    (f) => !action.payload.includes(f.id),
+                ),
+            };
+        }
+        case OnboardingResponseTableAction.updateItem: {
+            return {
+                ...state,
+                responseSummaries: state.responseSummaries.map((n) =>
+                    n.id === action.payload.id ? action.payload : n,
+                ),
+                filteredSummaries: state.filteredSummaries.map((n) =>
+                    n.id === action.payload.id ? action.payload : n,
+                ),
+            };
+        }
         case OnboardingResponseTableAction.setFilterText: {
             return {
                 ...state,
@@ -72,7 +138,7 @@ OnboardingResponseTableContextReducer.displayName =
 
 interface OnboardingResponseTableProviderProps {
     children: ReactNode;
-    initialValues?: Partial<OnboardingResponseTableState>;
+    initialValues?: OnboardingResponseTableState;
 }
 
 export const OnboardingResponseTableProvider = ({
@@ -81,9 +147,7 @@ export const OnboardingResponseTableProvider = ({
 }: OnboardingResponseTableProviderProps) => {
     const [state, dispatch] = useReducer(
         OnboardingResponseTableContextReducer,
-        initialValues
-            ? { ...initialValues, ...defaultInitialValues }
-            : defaultInitialValues,
+        initialValues ? initialValues : defaultInitialValues,
     );
 
     return (

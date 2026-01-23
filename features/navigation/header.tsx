@@ -48,7 +48,7 @@ export const LargeHeader = (): ReactNode => {
                     height={55}
                     alt="Red Thread Consulting logo"
                     src={"/logo/text_logo.svg"}
-                    className="max-h-13.75"
+                    className="max-h-13.75 h-full object-contain"
                     loading="eager"
                     priority
                 />
