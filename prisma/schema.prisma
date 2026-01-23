@@ -19,9 +19,10 @@ datasource db {
 }
 
 model OnboardingResponse {
-    id          Int       @id @default(autoincrement())
-    name_first  String
-    name_last   String
-    ctime       DateTime  @default(now())
-    reviewed_at DateTime?
+    id             Int       @id @default(autoincrement())
+    name_first     String
+    name_last      String
+    how_can_i_help String
+    ctime          DateTime  @default(now())
+    reviewed_at    DateTime?
 }

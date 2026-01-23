@@ -1,12 +1,5 @@
+import { OnboardingResponse } from "@/lib/generated/prisma/client";
 import React, { type ReactNode } from "react";
-
-/* TODO: Remove me. */
-export interface OnboardingResponse {
-    name: {
-        first: string;
-        last: string;
-    };
-}
 
 interface OnboardingResponseTableContainerProps {
     items: OnboardingResponse[];

@@ -6,6 +6,7 @@ const makeSchema = () => z.object({
   id: z.boolean().optional(),
   name_first: z.boolean().optional(),
   name_last: z.boolean().optional(),
+  how_can_i_help: z.boolean().optional(),
   ctime: z.boolean().optional(),
   reviewed_at: z.boolean().optional()
 }).strict();

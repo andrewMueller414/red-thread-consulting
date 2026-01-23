@@ -12,6 +12,7 @@ const onboardingresponsewhereinputSchema = z.object({
   id: z.union([z.lazy(() => IntFilterObjectSchema), z.number().int()]).optional(),
   name_first: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
   name_last: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
+  how_can_i_help: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
   ctime: z.union([z.lazy(() => DateTimeFilterObjectSchema), z.coerce.date()]).optional(),
   reviewed_at: z.union([z.lazy(() => DateTimeNullableFilterObjectSchema), z.coerce.date()]).optional().nullable()
 }).strict();

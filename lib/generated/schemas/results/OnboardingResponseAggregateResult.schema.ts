@@ -3,6 +3,7 @@ export const OnboardingResponseAggregateResultSchema = z.object({  _count: z.obj
     id: z.number(),
     name_first: z.number(),
     name_last: z.number(),
+    how_can_i_help: z.number(),
     ctime: z.number(),
     reviewed_at: z.number()
   }).optional(),
@@ -16,6 +17,7 @@ export const OnboardingResponseAggregateResultSchema = z.object({  _count: z.obj
     id: z.number().int().nullable(),
     name_first: z.string().nullable(),
     name_last: z.string().nullable(),
+    how_can_i_help: z.string().nullable(),
     ctime: z.date().nullable(),
     reviewed_at: z.date().nullable()
   }).nullable().optional(),
@@ -23,6 +25,7 @@ export const OnboardingResponseAggregateResultSchema = z.object({  _count: z.obj
     id: z.number().int().nullable(),
     name_first: z.string().nullable(),
     name_last: z.string().nullable(),
+    how_can_i_help: z.string().nullable(),
     ctime: z.date().nullable(),
     reviewed_at: z.date().nullable()
   }).nullable().optional()});

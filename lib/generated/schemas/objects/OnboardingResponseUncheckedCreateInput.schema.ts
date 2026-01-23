@@ -6,6 +6,7 @@ const makeSchema = () => z.object({
   id: z.number().int().optional(),
   name_first: z.string(),
   name_last: z.string(),
+  how_can_i_help: z.string(),
   ctime: z.coerce.date().optional(),
   reviewed_at: z.coerce.date().optional().nullable()
 }).strict();

@@ -12,6 +12,7 @@ const onboardingresponsescalarwherewithaggregatesinputSchema = z.object({
   id: z.union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number().int()]).optional(),
   name_first: z.union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()]).optional(),
   name_last: z.union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()]).optional(),
+  how_can_i_help: z.union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()]).optional(),
   ctime: z.union([z.lazy(() => DateTimeWithAggregatesFilterObjectSchema), z.coerce.date()]).optional(),
   reviewed_at: z.union([z.lazy(() => DateTimeNullableWithAggregatesFilterObjectSchema), z.coerce.date()]).optional().nullable()
 }).strict();
