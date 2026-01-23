@@ -33,7 +33,7 @@ export const onboardingSections: OnboardingFormSectionItem[] = [
         subtitle:
             "To help me understand your priorities and what we should focus on, please reorder these categories in the order of importance.",
         Body: ({ form }) => {
-            return <PriorityReorderFormSection idx={3} form={form} />;
+            return <PriorityReorderFormSection form={form} />;
         },
         image: "full-width-body",
     },
