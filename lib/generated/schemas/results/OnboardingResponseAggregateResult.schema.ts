@@ -4,6 +4,7 @@ export const OnboardingResponseAggregateResultSchema = z.object({  _count: z.obj
     name_first: z.number(),
     name_last: z.number(),
     how_can_i_help: z.number(),
+    priorities: z.number(),
     ctime: z.number(),
     reviewed_at: z.number()
   }).optional(),

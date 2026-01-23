@@ -5,6 +5,7 @@ export const OnboardingResponseFindManyResultSchema = z.object({
   name_first: z.string(),
   name_last: z.string(),
   how_can_i_help: z.string(),
+  priorities: z.array(z.unknown()),
   ctime: z.date(),
   reviewed_at: z.date().optional()
 })),

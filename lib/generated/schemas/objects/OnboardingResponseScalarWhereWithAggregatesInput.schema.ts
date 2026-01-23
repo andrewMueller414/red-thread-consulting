@@ -2,6 +2,7 @@ import * as z from 'zod';
 import type { Prisma } from '../../prisma/client';
 import { IntWithAggregatesFilterObjectSchema as IntWithAggregatesFilterObjectSchema } from './IntWithAggregatesFilter.schema';
 import { StringWithAggregatesFilterObjectSchema as StringWithAggregatesFilterObjectSchema } from './StringWithAggregatesFilter.schema';
+import { EnumPriorityIdNullableListFilterObjectSchema as EnumPriorityIdNullableListFilterObjectSchema } from './EnumPriorityIdNullableListFilter.schema';
 import { DateTimeWithAggregatesFilterObjectSchema as DateTimeWithAggregatesFilterObjectSchema } from './DateTimeWithAggregatesFilter.schema';
 import { DateTimeNullableWithAggregatesFilterObjectSchema as DateTimeNullableWithAggregatesFilterObjectSchema } from './DateTimeNullableWithAggregatesFilter.schema'
 
@@ -13,6 +14,7 @@ const onboardingresponsescalarwherewithaggregatesinputSchema = z.object({
   name_first: z.union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()]).optional(),
   name_last: z.union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()]).optional(),
   how_can_i_help: z.union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()]).optional(),
+  priorities: z.lazy(() => EnumPriorityIdNullableListFilterObjectSchema).optional(),
   ctime: z.union([z.lazy(() => DateTimeWithAggregatesFilterObjectSchema), z.coerce.date()]).optional(),
   reviewed_at: z.union([z.lazy(() => DateTimeNullableWithAggregatesFilterObjectSchema), z.coerce.date()]).optional().nullable()
 }).strict();

@@ -18,11 +18,21 @@ datasource db {
     provider = "postgresql"
 }
 
+enum PriorityId {
+    GROWTH
+    FINANCIAL_INDEPENDENCE
+    COMMITTMENT
+    IMPACT
+    GIVING_BACK
+    SOCIAL_WELFARE
+}
+
 model OnboardingResponse {
-    id             Int       @id @default(autoincrement())
+    id             Int          @id @default(autoincrement())
     name_first     String
     name_last      String
     how_can_i_help String
-    ctime          DateTime  @default(now())
+    priorities     PriorityId[]
+    ctime          DateTime     @default(now())
     reviewed_at    DateTime?
 }

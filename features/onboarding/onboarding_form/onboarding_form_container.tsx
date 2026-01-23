@@ -6,6 +6,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { onboardingFormSchema } from "../data/onboarding_form_schema";
 import { z } from "zod";
+import { OnboardingFullWidthFormSection } from "./onboarding_full_width_form_section";
+import {
+    OnboardingFullWidthFormSectionItem,
+    OnboardingGridLayoutFormSectionItem,
+} from "../onboarding_types";
+import { PriorityId } from "@/lib/generated/prisma/enums";
 
 export const OnboardingFormContainer = (): ReactNode => {
     const form = useForm({
@@ -13,6 +19,14 @@ export const OnboardingFormContainer = (): ReactNode => {
         defaultValues: {
             name_first: "",
             name_last: "",
+            priorities: [
+                PriorityId.FINANCIAL_INDEPENDENCE,
+                PriorityId.SOCIAL_WELFARE,
+                PriorityId.GIVING_BACK,
+                PriorityId.COMMITTMENT,
+                PriorityId.GROWTH,
+                PriorityId.IMPACT,
+            ],
         },
     });
 
@@ -26,10 +40,20 @@ export const OnboardingFormContainer = (): ReactNode => {
         <div className="w-full flex flex-col justify-start items-center">
             <form onSubmit={form.handleSubmit(handleSubmit)}>
                 {onboardingSections.map((section, i) => {
+                    if (section.image === "full-width-body") {
+                        return (
+                            <OnboardingFullWidthFormSection
+                                item={section as OnboardingFullWidthFormSectionItem}
+                                form={form}
+                                key={`onboarding-sec-${section.title}`}
+                                float="full-width"
+                            />
+                        );
+                    }
                     return (
                         <OnboardingFormSection
-                            key={`onboard-sec-${section.image.src}`}
-                            item={section}
+                            key={`onboard-sec-${section.title}`}
+                            item={section as OnboardingGridLayoutFormSectionItem}
                             idx={i}
                             form={form}
                         />

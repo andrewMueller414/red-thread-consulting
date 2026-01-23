@@ -4,6 +4,10 @@ import {
     OnboardingFormType,
 } from "../onboarding_types";
 import { cn } from "@/lib/utils";
+import {
+    FormSectionSubtitle,
+    FormSectionTitle,
+} from "./onboarding_form_section_typography";
 
 interface OnboardingSectionFormProps {
     item: OnboardingFormSectionItem;
@@ -24,15 +28,8 @@ export const OnboardingSectionForm = ({
                 float === "right" ? "lg:items-start" : "lg:items-end",
             )}
         >
-            <div className="text-3xl font-bellefair">{item.title}</div>
-            <div
-                className={cn(
-                    "text-moss text-sm text-center",
-                    float === "left" ? "lg:w-full lg:text-right" : "lg:text-left",
-                )}
-            >
-                {item.subtitle}
-            </div>
+            <FormSectionTitle>{item.title}</FormSectionTitle>
+            <FormSectionSubtitle float={float}>{item.subtitle}</FormSectionSubtitle>
             <div className="@container/onboarding-item-body w-full grow mt-8">
                 <Body form={form} float={float} />
             </div>

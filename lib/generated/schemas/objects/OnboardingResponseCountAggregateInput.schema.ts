@@ -7,6 +7,7 @@ const makeSchema = () => z.object({
   name_first: z.literal(true).optional(),
   name_last: z.literal(true).optional(),
   how_can_i_help: z.literal(true).optional(),
+  priorities: z.literal(true).optional(),
   ctime: z.literal(true).optional(),
   reviewed_at: z.literal(true).optional(),
   _all: z.literal(true).optional()

@@ -7,6 +7,7 @@ const makeSchema = () => z.object({
   name_first: SortOrderSchema.optional(),
   name_last: SortOrderSchema.optional(),
   how_can_i_help: SortOrderSchema.optional(),
+  priorities: SortOrderSchema.optional(),
   ctime: SortOrderSchema.optional(),
   reviewed_at: SortOrderSchema.optional()
 }).strict();

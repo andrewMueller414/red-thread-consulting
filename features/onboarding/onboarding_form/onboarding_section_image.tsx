@@ -1,11 +1,11 @@
 import Image from "next/image";
 import React, { type ReactNode } from "react";
-import { OnboardingFormSectionItem } from "../onboarding_types";
+import { OnboardingImageData } from "../onboarding_types";
 import { motion } from "framer-motion";
 const MotionImage = motion(Image);
 
 interface OnboardingSectionImageProps {
-    image: OnboardingFormSectionItem["image"];
+    image: OnboardingImageData;
     priority?: boolean;
 }
 

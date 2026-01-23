@@ -1,4 +1,5 @@
 import { FormSectionOne } from "../onboarding_form/form_sections/form_section_1";
+import { PriorityReorderFormSection } from "../onboarding_form/form_sections/priority_reorder_section";
 import { OnboardingFormSectionItem } from "../onboarding_types";
 
 export const onboardingSections: OnboardingFormSectionItem[] = [
@@ -16,7 +17,7 @@ export const onboardingSections: OnboardingFormSectionItem[] = [
     },
 
     {
-        title: "Lorem Ipsum",
+        title: "Lorem Ipsum Quam",
         subtitle:
             "Quam dolor magna aliquam ac dictumst dui donec augue nunc. Dui bibendum mi rhoncus integer bibendum, lacus congue nibh, ante.",
         Body: ({ form }) => {
@@ -26,5 +27,14 @@ export const onboardingSections: OnboardingFormSectionItem[] = [
             src: "/onboarding/northern_wilderness.jpg",
             alt: "Wild horses",
         },
+    },
+    {
+        title: "Priorities",
+        subtitle:
+            "To help me understand your priorities and what we should focus on, please reorder these categories in the order of importance.",
+        Body: ({ form }) => {
+            return <PriorityReorderFormSection idx={3} form={form} />;
+        },
+        image: "full-width-body",
     },
 ];

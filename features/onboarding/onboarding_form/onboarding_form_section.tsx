@@ -1,14 +1,14 @@
 import React, { type ReactNode } from "react";
 import {
-    OnboardingFormSectionItem,
     OnboardingFormType,
+    OnboardingGridLayoutFormSectionItem,
 } from "../onboarding_types";
 import { OnboardingSectionImage } from "./onboarding_section_image";
 import { OnboardingSectionForm } from "./onboarding_section_form";
 import { cn } from "@/lib/utils";
 
 interface OnboardingFormSectionProps {
-    item: OnboardingFormSectionItem;
+    item: OnboardingGridLayoutFormSectionItem;
     idx: number;
     form: OnboardingFormType;
 }
