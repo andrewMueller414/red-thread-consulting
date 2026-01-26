@@ -1,10 +1,6 @@
-import { OnboardingResponseSchema } from "@/lib/generated/schemas";
+import { formDataSchema } from "@/features/mdx/data/schemas/mdx_form_response";
 import z from "zod";
 
-export const onboardingFormSchema = OnboardingResponseSchema.omit({
-    reviewed_at: true,
-    ctime: true,
-    id: true,
-});
+export const onboardingFormSchema = formDataSchema;
 
 export type OnboardingFormData = z.infer<typeof onboardingFormSchema>;

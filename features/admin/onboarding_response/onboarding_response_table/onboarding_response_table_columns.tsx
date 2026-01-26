@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { OnboardingSummaryResponseItem } from "@/features/trpc/type_types";
+import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
 import { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";

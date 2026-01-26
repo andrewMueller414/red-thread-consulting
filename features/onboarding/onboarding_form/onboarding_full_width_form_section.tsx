@@ -23,8 +23,10 @@ export const OnboardingFullWidthFormSection = ({
     return (
         <div className="w-full flex flex-col justify-center items-center">
             <div className="w-full max-w-[min(1080px,90vw)] flex flex-col justify-center items-center lg:items-start">
-                <FormSectionTitle>{item.title}</FormSectionTitle>
-                <FormSectionSubtitle float={float}>{item.subtitle}</FormSectionSubtitle>
+                <FormSectionTitle float="left">{item.title}</FormSectionTitle>
+                <FormSectionSubtitle float={"left"}>
+                    {item.subtitle}
+                </FormSectionSubtitle>
                 <Body form={form} float="full-width" />
             </div>
         </div>

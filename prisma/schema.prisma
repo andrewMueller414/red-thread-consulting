@@ -9,11 +9,6 @@ generator client {
     output   = "../lib/generated/prisma"
 }
 
-generator zod {
-    provider = "prisma-zod-generator"
-    config   = "../zod_generator_config.json"
-}
-
 generator custom_generator {
     provider = "prisma-generator-fake-data"
     output   = "../lib/generated/fake-data.ts"
@@ -32,15 +27,21 @@ enum PriorityId {
     SOCIAL_WELFARE
 }
 
-model OnboardingResponse {
-    id             Int          @id @default(autoincrement())
-    ///FAKE:faker.lorem.words(1)
-    name_first     String
-    ///FAKE:faker.lorem.words(1)
-    name_last      String
-    ///FAKE:faker.lorem.paragraphs(2)
-    how_can_i_help String
-    priorities     PriorityId[]
-    ctime          DateTime     @default(now())
-    reviewed_at    DateTime?
+model FormResponse {
+    id          Int       @id @default(autoincrement())
+    data        Json
+    formId      String
+    ctime       DateTime  @default(now())
+    reviewed_at DateTime?
+}
+
+model MdxContent {
+    id     String   @id @unique
+    body   String
+    /// Will always be present if the form represents a form.
+    formId String?
+    /// "Created at"
+    ctime  DateTime @default(now())
+    /// "Updated at"
+    utime  DateTime @default(now())
 }

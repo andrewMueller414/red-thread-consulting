@@ -10,9 +10,20 @@ interface FormSectionTypographyProps {
 export const FormSectionTitle = ({
     children,
     className,
-}: Omit<FormSectionTypographyProps, "float">): ReactNode => {
+    float,
+}: FormSectionTypographyProps): ReactNode => {
     return (
-        <div className={cn("text-3xl font-bellefair", className)}>{children}</div>
+        <div
+            className={cn(
+                "text-3xl font-bellefair text-center",
+                float === "right"
+                    ? "@5xl/mdx:w-full @5xl/mdx:text-right"
+                    : "@5xl/mdx:text-left",
+                className,
+            )}
+        >
+            {children}
+        </div>
     );
 };
 
@@ -27,7 +38,9 @@ export const FormSectionSubtitle = ({
         <div
             className={cn(
                 "text-moss text-sm text-center",
-                float === "left" ? "lg:w-full lg:text-right" : "lg:text-left",
+                float === "right"
+                    ? "@5xl/mdx:w-full @5xl/mdx:text-right"
+                    : "@5xl/mdx:text-left",
                 className,
             )}
         >

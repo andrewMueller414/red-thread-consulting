@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { trpc } from "@/features/trpc/trpc_provider";
-import { OnboardingSummaryResponseItem } from "@/features/trpc/type_types";
+import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
 dayjs.extend(advancedFormat);
 
 interface OnboardingResponseViewReviewedSectionProps {

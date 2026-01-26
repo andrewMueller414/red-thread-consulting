@@ -3,6 +3,7 @@ import { OnboardingFormType } from "../../onboarding_types";
 import { FormTextInputGroup } from "../form_inputs/form_text_input_group";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel } from "@/components/ui/field";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface FormSectionOneProps {
     form: OnboardingFormType;
@@ -34,8 +35,16 @@ export const FormSectionOne = ({ form }: FormSectionOneProps): ReactNode => {
             <Field className="mt-8">
                 <FieldLabel>How can I help?</FieldLabel>
                 <Textarea
-                    value={form.watch("how_can_i_help")}
+                    value={form.watch("how_can_i_help") as string}
                     onChange={(e) => form.setValue("how_can_i_help", e.target.value)}
+                />
+                <ErrorMessage
+                    name={"how_can_i_help"}
+                    render={({ message }) => {
+                        return (
+                            <div className="text-sm font-mono text-red-700">{message}</div>
+                        );
+                    }}
                 />
             </Field>
         </>

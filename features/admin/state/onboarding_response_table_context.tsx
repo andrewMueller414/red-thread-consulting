@@ -1,5 +1,5 @@
 "use client";
-import { OnboardingSummaryResponseItem } from "@/features/trpc/type_types";
+import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
 import { ReactNode, createContext, useReducer, useContext } from "react";
 import { getFilteredResponseSummaries } from "../admin_utils";
 

@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    // For monaco to avoid double initialization errors in dev.
+    reactStrictMode: false,
 };
 
 export default nextConfig;

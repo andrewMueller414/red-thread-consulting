@@ -1,21 +1,25 @@
-import { OnboardingResponseSchema } from "@/lib/generated/schemas";
 import { baseProcedure, createTRPCRouter } from "../trpc_init";
 import { prisma } from "@/lib/prisma";
-import {
-    dbEntityIdSchema,
-    paginationSchema,
-} from "@/features/db/schemas/database_utility_schemas";
+import { dbEntityIdSchema } from "@/features/db/schemas/database_utility_schemas";
 import z from "zod";
+import { formResponseSchema } from "@/features/db/schemas/form_response_schema";
 
 export const onboardingRouter = createTRPCRouter({
     create: baseProcedure
-        .input(OnboardingResponseSchema)
+        .input(
+            formResponseSchema.omit({
+                id: true,
+                ctime: true,
+                reviewed_at: true,
+            }),
+        )
         .mutation(async ({ input }) => {
             try {
                 delete (input as { id?: number }).id;
-                await prisma.onboardingResponse.create({
+                await prisma.formResponse.create({
                     data: {
                         ...input,
+                        ctime: new Date(),
                     },
                 });
                 return true;
@@ -27,10 +31,8 @@ export const onboardingRouter = createTRPCRouter({
     deleteById: baseProcedure
         .input(dbEntityIdSchema.array())
         .mutation(async ({ input }) => {
-            console.log("input: ", input);
-            return true;
             try {
-                await prisma.onboardingResponse.deleteMany({
+                await prisma.formResponse.deleteMany({
                     where: {
                         id: {
                             in: input.map((n) => n.id),
@@ -45,7 +47,7 @@ export const onboardingRouter = createTRPCRouter({
         }),
     getById: baseProcedure.input(dbEntityIdSchema).query(async ({ input }) => {
         try {
-            const res = await prisma.onboardingResponse.findFirst({
+            const res = await prisma.formResponse.findFirst({
                 where: {
                     id: input.id,
                 },
@@ -56,16 +58,14 @@ export const onboardingRouter = createTRPCRouter({
             return false;
         }
     }),
-    getManySummaries: baseProcedure.query(async () => {
+    getMany: baseProcedure.query(async () => {
         try {
-            const res = await prisma.onboardingResponse.findMany({
+            const res = await prisma.formResponse.findMany({
                 select: {
                     id: true,
-                    name_first: true,
-                    name_last: true,
-                    reviewed_at: false,
-                    how_can_i_help: false,
+                    data: true,
                     ctime: true,
+                    reviewed_at: true,
                 },
                 orderBy: {
                     ctime: "desc",
@@ -85,10 +85,8 @@ export const onboardingRouter = createTRPCRouter({
             }),
         )
         .mutation(async ({ input }) => {
-            console.log("input: ", input);
-            return true;
             try {
-                await prisma.onboardingResponse.updateMany({
+                await prisma.formResponse.updateMany({
                     where: {
                         id: {
                             in: input.ids,

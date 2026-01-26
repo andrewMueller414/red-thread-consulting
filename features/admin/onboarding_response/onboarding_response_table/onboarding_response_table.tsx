@@ -32,7 +32,7 @@ import { OnboardingSummaryTableColumnId } from "./onboarding_table_column_label_
 import { AdminHeaderPortal } from "@/features/navigation/admin_header/admin_header_portal";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/features/trpc/trpc_provider";
-import { OnboardingSummaryResponseItem } from "@/features/trpc/type_types";
+import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
 
 export const OnboardingResponseTable = (): ReactNode => {
     const tableState = useOnboardingResponseTableContext();

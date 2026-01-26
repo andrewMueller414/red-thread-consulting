@@ -28,8 +28,13 @@ export const OnboardingSectionForm = ({
                 float === "right" ? "lg:items-start" : "lg:items-end",
             )}
         >
-            <FormSectionTitle>{item.title}</FormSectionTitle>
-            <FormSectionSubtitle float={float}>{item.subtitle}</FormSectionSubtitle>
+            <FormSectionTitle float={float === "right" ? "left" : "right"}>
+                {item.title}
+            </FormSectionTitle>
+
+            <FormSectionSubtitle float={float === "right" ? "left" : "right"}>
+                {item.subtitle}
+            </FormSectionSubtitle>
             <div className="@container/onboarding-item-body w-full grow mt-8">
                 <Body form={form} float={float} />
             </div>

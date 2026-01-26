@@ -54,7 +54,7 @@ export const PrioritiesReorderContainer = ({
         <LayoutGroup>
             <Reorder.Group
                 /* @ts-expect-error -- This className property works, but it doesn't show up in the types for some reason. */
-                className="w-full pt-6 pb-8 flex flex-col justify-start items-start select-none"
+                className="w-full pt-6 flex flex-col justify-start items-start select-none"
                 values={items}
                 onReorder={handleReorder}
             >
