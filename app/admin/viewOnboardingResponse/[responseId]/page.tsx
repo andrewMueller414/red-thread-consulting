@@ -2,7 +2,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { OnboardingResponseViewContainer } from "@/features/admin/onboarding_response/onboarding_response_view/onboarding_response_view_container";
 import { ResponseNotFoundView } from "@/features/admin/onboarding_response/onboarding_response_view/response_not_found_view";
 import { trpcServer } from "@/features/trpc/server";
-import { fakeOnboardingResponseComplete } from "@/lib/generated/fake-data";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React, { type ReactNode } from "react";
@@ -21,7 +20,7 @@ const OnboardingResponseByIdPage = async ({
         return redirect("/admin");
     }
     const trpc = await trpcServer();
-    const item = await trpc.onboardingForm.getById({
+    const item = await trpc.form.getById({
         id: parseInt(params.responseId),
     });
     return (

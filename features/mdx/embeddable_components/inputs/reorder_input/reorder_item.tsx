@@ -1,25 +1,23 @@
 "use client";
-import { PriorityItem } from "@/features/onboarding/onboarding_types";
 import React, { useState, type ReactNode } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { GripVertical } from "lucide-react";
 import { Reorder } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { ReorderInputItem } from "./reorder_types";
 
 const MotionDragHandle = motion(GripVertical);
 
-interface PriorityIdReorderItemProps {
-    item: PriorityItem;
+interface ReorderItemProps {
+    item: ReorderInputItem;
 }
 
-export const PriorityIdReorderItem = ({
-    item,
-}: PriorityIdReorderItemProps): ReactNode => {
+export const ReorderItem = ({ item }: ReorderItemProps): ReactNode => {
     const controls = useDragControls();
     const [dragging, setDragging] = useState(false);
     return (
         <Reorder.Item
-            className="text-xl font-bellefair border rounded px-4 py-3 bg-matcha w-full select-none touch-none flex flex-row justify-start items-center gap-x-4 overflow-clip"
+            className="text-xl font-bellefair border rounded px-4 py-3 bg-matcha w-full select-none touch-none flex flex-row justify-start items-center gap-x-4 overflow-clip my-0!"
             dragListener={false}
             dragControls={controls}
             value={item}
@@ -49,9 +47,14 @@ export const PriorityIdReorderItem = ({
                     e.stopPropagation();
                 }}
             />
-            <div className="pointer-events-none">{item.label}</div>
+            <div className="flex flex-col justify-center items-start">
+                <div className="pointer-events-none">{item.title}</div>
+                {item.subtitle ? (
+                    <div className="text-sm font-mono indent-3">{item.subtitle}</div>
+                ) : null}
+            </div>
         </Reorder.Item>
     );
 };
 
-PriorityIdReorderItem.displayName = "PriorityIdReorderItem";
+ReorderItem.displayName = "ReorderItem";

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, type ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import {
     ColumnFiltersState,
     flexRender,
@@ -43,12 +43,11 @@ export const OnboardingResponseTable = (): ReactNode => {
     );
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({
-            // Cast to string to avoid type issues wth react-table.
             [OnboardingSummaryTableColumnId.id as string]: false,
         });
     const [rowSelection, setRowSelection] = React.useState({});
-    const deleteById = trpc.onboardingForm.deleteById.useMutation();
-    const markRead = trpc.onboardingForm.markReviewedById.useMutation();
+    const deleteById = trpc.form.deleteById.useMutation();
+    const markRead = trpc.form.markReviewedById.useMutation();
     const table = useReactTable({
         data: tableState.filteredSummaries,
         columns: responseTableColumns,

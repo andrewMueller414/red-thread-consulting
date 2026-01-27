@@ -1,0 +1,184 @@
+.formGrid {
+  display: grid;
+}
+
+.formGridSmall1 {
+  display: flex;
+}
+
+.formGridSmall2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall9 {
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall10 {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall11 {
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  display: grid;
+}
+
+.formGridSmall12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  display: grid;
+}
+
+@media (min-width: 768px) {
+  .formGridMedium1 {
+    display: flex;
+  }
+
+  .formGridMedium2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium9 {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium11 {
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridMedium12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    display: grid;
+  }
+}
+
+@media (min-width: 1080px) {
+  .formGridLarge1 {
+    display: flex;
+  }
+
+  .formGridLarge2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge9 {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge11 {
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+    display: grid;
+  }
+
+  .formGridLarge12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    display: grid;
+  }
+}

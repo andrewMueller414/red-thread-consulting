@@ -8,7 +8,7 @@ type TrpcResponseData<
 > = Awaited<ReturnType<TrpcServerClient[K][L]>>;
 
 export type OnboardingSummaryResponseItem = TrpcResponseData<
-    "onboardingForm",
+    "form",
     "getMany"
 >[number];
 

@@ -4,6 +4,7 @@ import { useMdxClientParse } from "../../admin/mdx_management/hooks/use_mdx_clie
 import { getComponentMap } from "../data/component_map";
 import { LoadingComponent } from "../../../core/shared_components/loading_component";
 import { cn } from "../../../lib/utils";
+import { MdxFormContainer } from "./mdx_form_container";
 
 interface MdxContentProps {
     mdx: string;
@@ -22,8 +23,10 @@ export const MdxContent = ({ mdx, className }: MdxContentProps): ReactNode => {
     if (Component) {
         return (
             <div className={cn("max-w-270 @container/mdx prose", className)}>
-                {/* @ts-expect-error -- Need to create component during render. */}
-                <Component components={getComponentMap()} />
+                <MdxFormContainer>
+                    {/* @ts-expect-error -- Need to create component during render. */}
+                    <Component components={getComponentMap()} />
+                </MdxFormContainer>
             </div>
         );
     }

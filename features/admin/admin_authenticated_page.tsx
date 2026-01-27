@@ -5,7 +5,7 @@ import { trpcServer } from "../trpc/server";
 
 export const AdminAuthenticatedPage = async (): Promise<ReactNode> => {
     const trpc = await trpcServer();
-    const items = await trpc.onboardingForm.getMany();
+    const items = await trpc.form.getMany();
     return (
         <div className="w-full h-fit min-h-screen flex flex-col justify-start items-center gap-y-8">
             <AdminHeaderContainer />

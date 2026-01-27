@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { OnboardingResponse } from "@/lib/generated/prisma/client";
+import { FormResponse } from "@/lib/generated/prisma/client";
 import { Table } from "@tanstack/react-table";
 import React, { type ReactNode } from "react";
 
 interface OnboardingTableFooterProps {
-    table: Table<OnboardingResponse>;
+    table: Table<FormResponse>;
 }
 
 export const OnboardingTableFooter = ({

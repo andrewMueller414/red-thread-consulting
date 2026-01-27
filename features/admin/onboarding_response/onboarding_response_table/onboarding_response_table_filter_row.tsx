@@ -8,12 +8,12 @@ import {
 } from "../../state/onboarding_response_table_context";
 import { TableHeaderColumnSelect } from "./table_header_column_select";
 import { Table } from "@tanstack/react-table";
-import { OnboardingResponse } from "@/lib/generated/prisma/client";
+import { FormResponse } from "@/lib/generated/prisma/client";
 
 export const OnboardingResponseTableFilterRow = ({
     table,
 }: {
-    table: Table<OnboardingResponse>;
+    table: Table<FormResponse>;
 }): ReactNode => {
     const tableState = useOnboardingResponseTableContext();
     const tableDispatch = useOnboardingResponseTableDispatch();

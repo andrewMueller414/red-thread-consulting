@@ -1,27 +1,128 @@
-# Embeddable Components
+# Docs
 
-## Containers
+## Mdx
+
+Mdx is a superset of markdown, a combination of [React's](https://react.dev/) `jsx` language with markdown, the (ironically, 'markup' language) that's used in apps like [Notion](https://www.notion.com/).  
+
+Mdx gets parsed to html, which can be styled to blend in and function along with our existing application. There's a solid breakdown of the default markdown elements [here](https://www.markdownguide.org/basic-syntax/) and how they convert to html, along with examples of all of the syntax. Before the jsx is even added, there are multiple popular 'flavors' of markdown, with the 'github flavor' being the most popular with added support for things like footnotes. With the addition of jsx to markdown however, a developer can write components that interact with the entire application that also compile to html, but in a more complex way. This uses a special `jsx` syntax. I'll do my best to cover what I think isn't obvious from the examples here.
+
+### Jsx
+
+Components will always start with a capital letter, be one word, and will never include any special characters. To call a component, you use an opening `<` bracket followed by the component's name, a list of properties that is unique to each component type, and a set of closing brackets. There are actually two types of closing brackets, with the only difference being if the component is being passed any 'children'. 
+
+`children` is just a special property that represents things that go inside of the parent. The reason this property is written this way is for nothing more than convenience and it allows us to write mdx in a way that more closely aligns with the way we naturally organize things in our head. Think of a layout component like a `Column`, that doesn't display anything itself, but rather aligns things that go inside of it. This is when a component might accept `children`, but it's not a strict requirement that this only occurs when a component returns nothing on it's own, it can do both.
+
+**Remember:** Sometimes the children property will be just regular markdown, other times it might be expecting a specific type of children. If that's the case that will be noted with the component's examples below.
+
+If a component accepts a child, it is written as:
+
+```tsx
+<MyComponent>
+The children in this case will be a paragraph of text that says 'The children....'
+</MyComponent>
+```
+
+If it is not, you don't need the second instance of it's name and you can just write as follows. This is common for things like inputs where nothing really belongs inside of it.
 
 
----
+```tsx
+<MyComponent />
+```
 
-## Inputs
 
-For stylistic reasons, the `maxWidth` property is only applied when the viewport is wide enough.
+### Providing Properties
+
+There are a handful of different types of properties you can provide to mdx components, but they'll be documented here only if they actually occur in our components.
+
+
+#### String
+
+This is the most common, and unfortunately the only one that's even remotely challenging. Since the 'x' in mdx is really just 'jsx', you have to know how javascript handles strings. The key points are:
+
+1. You can use any quotation mark, so long as you use the same quotation mark to both open and close the string.
+2. Wrapping the value, including the quotation marks with curly brackets `{}` is optional for both `'` and `"`, but is required for `\``
+3. Using the back-tick, `\`` (top left of keyboard) gives slightly more freedom, allowing for the use of multiple lines
+4. If you really _need_ to include the same quotation mark that you're using to open and close the string within the string itself, you need to escape it with a leading `\` character. This ends up looking like `"This is my \"quote\" within a string"`
+
+#### Boolean
+
+A boolean is just a `true` or `false` value. To make things even more simple, a property is most often assumed to be false, and is automatically set to true if you don't assign a value, so just writing the property name is the same as setting it to true. This means that 
+
+```tsx
+<Checkbox 
+    initiallyChecked={true}
+  />
+```
+
+and
+
+```tsx
+<Checkbox 
+    initiallyChecked
+  />
+```
+
+are the same thing, where as just removing the `initiallyChecked` all together assumes the value is false.
+
+#### Arrays
+
+Arrays are just ordered lists of some other type in javascript. They're written with a pair of square brackets `[]` with a list of comma-separated values as they would be written elsewhere. For an array of strings that means the same string that quotation rules apply, and the same for the object notation below.
+
+#### Objects
+
+Objects are just a group of properties that all represent the same thing in some sense. The `ReorderInput` component accepts a list of options that is an array of objects with the properties `title`, `subtitle` and `value`.
+
+This is written as:
+
+```tsx 
+options={[
+    {
+        title: "Option 1",
+        value: "1"
+    }, // Notice the comma here.
+    {
+        title: "Option 2", // and the commas here.
+        subtitle: "Option 2 has an optional subtitle",
+        value: "2"
+    }
+]}
+```
+
+# Components, the 'x' in mdx
+
+Jsx is a language developed initially by Facebook for it's portability and readability. It can become quite complicated as it's just a superset of a regular programming language, javascript. While complicated in it's entirety, any capable developer should be able to wrap complex layouts in a set of simple, easy to use properties, making the actual usage of those components almost as simple as markdown.
+
+## Input Components
+
+For stylistic reasons, the `maxWidth` property is only applied when the viewport is wide enough. Below this width everything will collapse to being full-width and a single column to accommodate the smaller viewport.
 
 
 ### Text Input
 
 ```tsx
-<EmbeddableTextInput 
+<TextInput 
     label={`My Label`}
+    // This 'name' field is associated with this value in the database.
+    // What matters most is that it is unique,
+    // and that it never changes once a user has inserted data.
     name={"anyUniqueNameThatNeverChanges"}
-    placeholder="This placeholder field is optional"
+    // This placeholder field is optional.
+    placeholder="Company Name"
     // "small" | "medium" | "large" | "full"
     // If none provided, default is "full"
-    maxWidth="small"
+    maxWidth="large"
 />
 ```
+
+Produces:
+
+
+<TextInput 
+    label={`My Label`}
+    name={"anyUniqueNameThatNeverChanges"}
+    placeholder="Company Name"
+    maxWidth="large"
+/>
 
 
 
@@ -32,10 +133,147 @@ All of the properties here are the same as in the `EmbeddableTextInput` componen
 ```tsx
 <MultiLineTextInput
     label={`My Label`}
-    name={"anyUniqueNameThatNeverChanges"}
-    placeholder="This placeholder field is optional"
+    name={"anyUniqueNameThatNeverChanges2"}
+    placeholder="Company Name"
     // "small" | "medium" | "large" | "full"
     // If none provided, default is "full"
-    maxWidth="small"
+    maxWidth="medium"
+    // The number of rows to make the input. 
+    // The input is resizable, but this will be
+    // it's initial size
+    // defaults to 3 if not present.
+    rows={5}
 />
 ```
+
+
+<MultiLineTextInput
+    label={`My Label`}
+    name={"anyUniqueNameThatNeverChanges2"}
+    placeholder="Company Name"
+    maxWidth="medium"
+/>
+
+
+### Reorder Input
+
+```tsx
+<ReorderInput 
+    name="myUniqueUnchangingName"
+    title="A title is optional"
+    subtitle="A subtitle is optional too!"
+    options={[
+        {
+            title: "Option 1",
+            // This can be either a string or a number.
+            // This is the value that will be stored in the
+            // database and visible only to admins.
+            value: 1 
+        },  
+        {
+            title: "Option 2",
+            subtitle: "Subtitle's are optional",
+            // Make sure the same value doesn't appear twice
+            // in the same list.
+            value: 2
+        },
+        {
+            title: "Option 3",
+            subtitle: "Subtitle's are optional",
+            value: 3
+        },
+    ]}
+/>
+```
+
+
+<ReorderInput 
+    name="myUniqueUnchangingName"
+    title="A title is optional"
+    subtitle="A subtitle is optional too!"
+    options={[
+        {
+            title: "Option 1",
+            // This can be either a string or a number.
+            // This is the value that will be stored in the
+            // database and visible only to admins.
+            value: 1 
+        },  
+        {
+            title: "Option 2",
+            subtitle: "Subtitle's are optional",
+            // Make sure the same value doesn't appear twice
+            // in the same list.
+            value: 2
+        },
+        {
+            title: "Option 3",
+            subtitle: "Subtitle's are optional",
+            value: 3
+        },
+    ]}
+/>
+
+
+
+## Layout Components
+
+Remember to consider the width of the preview when viewing these layout components, as much of their intended functionality is to respond to different screen sizes.
+
+### Grid 
+
+```tsx
+<Grid
+    // This is the default value for this property. 
+    // You can also use a regular integer as columns={2}
+    // to apply the same number of columns to all screen sizes
+    columns={{
+        small: 1,
+        medium: 1,
+        large: 2
+    }}
+    // This will reverse the order of things when the grid collapses to 
+    // a single column. This is necessary to achieve certain alternating layouts.
+    reverse
+>
+    <Align>
+        This will be in the center of the first column
+    </Align>
+    <Align>
+        This will be in the center of the second column
+    </Align>
+</Grid>
+```
+
+
+<Grid
+    columns={{
+    small: 1,
+    medium: 1,
+    large: 2
+    }}
+    reverse
+>
+    <Align>
+        This will be in the center of the first column
+    </Align>
+
+    <Align>
+        This will be in the center of the second column
+    </Align>
+</Grid>
+
+
+### Align
+
+By default, the `Align` component will try to center things within it's parent, but there are many other layouts that can be achieved with this component.
+
+It accepts the following properties:
+
+| Property | Options | Default |
+| -------- | ------- | ------- |
+| vertical | "top", "bottom", "center" | "center" |
+| horizontal | "left", "right", "center" | "center" |
+| width | "fit", "full" | "full" |
+
+Leaving the properties empty will apply all of the defaults, centering the content as in the example above.

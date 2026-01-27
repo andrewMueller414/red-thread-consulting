@@ -6,14 +6,14 @@ import {
     DropdownMenuGroup,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { OnboardingResponse } from "@/lib/generated/prisma/client";
+import { FormResponse } from "@/lib/generated/prisma/client";
 import { Table } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
 import React, { type ReactNode } from "react";
 import { onboardingResponseTableColumnLabelMap } from "./onboarding_table_column_label_map";
 
 interface TableHeaderColumnSelectProps {
-    table: Table<OnboardingResponse>;
+    table: Table<FormResponse>;
 }
 
 export const TableHeaderColumnSelect = ({

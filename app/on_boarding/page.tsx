@@ -1,4 +1,3 @@
-import { OnboardingPageComponent } from "@/features/onboarding/onboarding_page";
 import React, { type ReactNode } from "react";
 
 interface OnboardingPageProps {
@@ -7,9 +6,8 @@ interface OnboardingPageProps {
     };
 }
 
-const OnboardingPage = ({ searchParams }: OnboardingPageProps): ReactNode => {
-    console.log("searchParams: ", searchParams);
-    return <OnboardingPageComponent />;
+const OnboardingPage = (_: OnboardingPageProps): ReactNode => {
+    return <div>Not sure what I&apos;m going to put here to be honest</div>;
 };
 
 OnboardingPage.displayName = "OnboardingPage";

@@ -22,7 +22,7 @@ export const OnboardingResponseViewReviewedSection = ({
 }: OnboardingResponseViewReviewedSectionProps): ReactNode => {
     const [reviewedAt, setReviewedAt] = useState(item.reviewed_at);
     const [reviewedAtPopoverOpen, setReviewedAtPopoverOpen] = useState(false);
-    const markReviewed = trpc.onboardingForm.markReviewedById.useMutation();
+    const markReviewed = trpc.form.markReviewedById.useMutation();
     const toggleReviewed = useCallback(() => {
         markReviewed.mutate(
             {

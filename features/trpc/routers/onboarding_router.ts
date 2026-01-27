@@ -4,7 +4,7 @@ import { dbEntityIdSchema } from "@/features/db/schemas/database_utility_schemas
 import z from "zod";
 import { formResponseSchema } from "@/features/db/schemas/form_response_schema";
 
-export const onboardingRouter = createTRPCRouter({
+export const formRouter = createTRPCRouter({
     create: baseProcedure
         .input(
             formResponseSchema.omit({

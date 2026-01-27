@@ -1,6 +1,5 @@
 "use client";
 import React, { type ReactNode } from "react";
-import { MdxPreviewProps } from "./mdx_preview";
 import dynamic from "next/dynamic";
 const MdxPreview = dynamic(
     () => import("./mdx_preview").then((a) => a.MdxPreview),
@@ -9,10 +8,8 @@ const MdxPreview = dynamic(
     },
 );
 
-export const MdxPreviewClientContainer = (
-    props: MdxPreviewProps,
-): ReactNode => {
-    return <MdxPreview {...props} />;
+export const MdxPreviewClientContainer = (): ReactNode => {
+    return <MdxPreview />;
 };
 
 MdxPreviewClientContainer.displayName = "MdxPreviewClientContainer";

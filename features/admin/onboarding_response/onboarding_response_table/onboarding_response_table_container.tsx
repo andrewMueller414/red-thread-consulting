@@ -1,10 +1,10 @@
-import { OnboardingResponse } from "@/lib/generated/prisma/client";
+import { FormResponse } from "@/lib/generated/prisma/client";
 import React, { type ReactNode } from "react";
 import { OnboardingResponseTable } from "./onboarding_response_table";
 import { OnboardingResponseTableProvider } from "../../state/onboarding_response_table_context";
 
 interface OnboardingResponseTableContainerProps {
-    items: OnboardingResponse[];
+    items: FormResponse[];
 }
 
 export const OnboardingResponseTableContainer = (

@@ -1,5 +1,7 @@
-import { OnboardingPageComponent } from "@/features/onboarding/onboarding_page";
-
 export default function Home() {
-    return <OnboardingPageComponent />;
+    return (
+        <div>
+            Pretty much all of the functionality exists in the admin page for now.
+        </div>
+    );
 }
