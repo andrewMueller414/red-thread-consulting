@@ -6,16 +6,15 @@ import Decimal from 'decimal.js';
 
 export function fakeFormResponse() {
   return {
-    data: JSON.stringify({"foo":"11567573-f88f-4228-bebd-1547ca376725","bar":3797587730190474,"bike":"d","a":"0","b":0.32012295423664305,"name":"Grant","prop":"0b1"}),
-    formId: faker.lorem.words(5),
+    data: JSON.stringify({"foo":"a194ad8b-2415-4084-983a-331c6420c9eb","bar":6021608158172569,"bike":"6","a":"i","b":0.597213163538565,"name":"Reilly","prop":"0b1"}),
     reviewed_at: undefined,
   };
 }
 export function fakeFormResponseComplete() {
   return {
-    id: faker.number.int({ max: 2147483647 }),
-    data: JSON.stringify({"foo":"ed65e427-a6f2-4cc1-9df0-0dead65fb2c6","bar":85197500957130,"bike":"6","a":"k","b":0.9080578642275996,"name":"Richard","prop":"0b0"}),
-    formId: faker.lorem.words(5),
+    formId: faker.string.uuid(),
+    mdxSourceId: faker.string.uuid(),
+    data: JSON.stringify({"foo":"2705cc13-d40b-4f3b-bcc1-8c958fa581cc","bar":2244262440868191,"bike":"3","a":"x","b":0.8603184480433282,"name":"Carleton","prop":"0b1"}),
     ctime: new Date(),
     reviewed_at: undefined,
   };

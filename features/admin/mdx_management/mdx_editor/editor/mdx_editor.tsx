@@ -14,7 +14,10 @@ import {
     HighlighterGeneric,
 } from "shiki";
 import { shikiToMonaco } from "@shikijs/monaco";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import {
+    useMdxEditorContext,
+    useMdxEditorDispatch,
+} from "../state/mdx_editor_context";
 
 export interface MdxEditorProps {
     initialValue: string;
@@ -32,13 +35,17 @@ type StandaloneEditor = Parameters<
 
 export const EDITOR_THEME: BundledTheme = "light-plus";
 
-const PREVIEW_DEBOUNCE = 100;
-
 export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
     const editorRef = useRef<StandaloneEditor | null>(null);
     const monaco = useMonaco();
-    const [body, setBody] = useLocalStorage("editorContent", initialValue);
-    const debounce = useRef<NodeJS.Timeout | null>(null);
+    const { value: body } = useMdxEditorContext();
+    const dispatch = useMdxEditorDispatch();
+    const setBody = (value: string): void => {
+        dispatch({
+            type: "setValue",
+            payload: value,
+        });
+    };
     const [isReady, setIsReady] = useState(false);
     const highlighterRef = useRef<HighlighterGeneric<
         BundledLanguage,
@@ -50,7 +57,9 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
             window.dispatchEvent(
                 new CustomEvent("mdx-editor-change", {
                     detail: {
-                        value: body ?? initialValue,
+                        value: editorRef.current?.getValue
+                            ? editorRef.current!.getValue()
+                            : initialValue,
                     },
                 }),
             );
@@ -90,33 +99,44 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
             </div>
         );
     }
+
+    const handleSave = (): void => {
+        const val = editorRef.current?.getValue();
+        if (!val) {
+            return;
+        }
+        console.log(`Value: ${val}`);
+    };
+
     return (
         <Editor
             height={"100%"}
             defaultLanguage="mdx"
             defaultValue={body}
+            value={body}
             theme={EDITOR_THEME}
             onMount={(editor) => {
                 editor.updateOptions({
                     wordWrap: "on",
                 });
+                editor.addAction({
+                    label: "Save",
+                    run: handleSave,
+                    keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KeyS],
+                    id: "saveEditor",
+                });
                 editorRef.current = editor;
             }}
             onChange={(val) => {
                 if (val) {
-                    if (debounce.current) {
-                        clearTimeout(debounce.current);
-                    }
-                    debounce.current = setTimeout(() => {
-                        window.dispatchEvent(
-                            new CustomEvent("mdx-editor-change", {
-                                detail: {
-                                    value: val,
-                                },
-                            }),
-                        );
-                        setBody(val);
-                    }, PREVIEW_DEBOUNCE);
+                    window.dispatchEvent(
+                        new CustomEvent("mdx-editor-change", {
+                            detail: {
+                                value: val,
+                            },
+                        }),
+                    );
+                    setBody(val);
                 }
             }}
         />

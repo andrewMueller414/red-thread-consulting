@@ -28,20 +28,22 @@ enum PriorityId {
 }
 
 model FormResponse {
-    id          Int       @id @default(autoincrement())
+    formId      String     @id @unique
+    mdxSource   MdxContent @relation(fields: [mdxSourceId], references: [id])
+    mdxSourceId String
     data        Json
-    formId      String
-    ctime       DateTime  @default(now())
+    ctime       DateTime   @default(now())
     reviewed_at DateTime?
 }
 
 model MdxContent {
-    id     String   @id @unique
-    body   String
+    id        String         @id @unique
+    responses FormResponse[]
+    body      String
     /// Will always be present if the form represents a form.
-    formId String?
+    formId    String?
     /// "Created at"
-    ctime  DateTime @default(now())
+    ctime     DateTime       @default(now())
     /// "Updated at"
-    utime  DateTime @default(now())
+    utime     DateTime       @default(now())
 }

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { useMdxClientParse } from "../hooks/use_mdx_client_parse";
 import { MdxContent } from "../../../mdx/presentation/mdx_content";
+import { useMdxEditorContext } from "./state/mdx_editor_context";
 
 export interface MdxEditorChangeEventProps {
     value: string;
@@ -19,7 +20,7 @@ declare global {
 }
 
 export const MdxPreview = (): ReactNode => {
-    const [content, setContent] = useState("");
+    const { value } = useMdxEditorContext();
     const [Component, setMdx] = useMdxClientParse();
 
     const handleMdx = useEffectEvent((newContent: string) => setMdx(newContent));
@@ -39,9 +40,10 @@ export const MdxPreview = (): ReactNode => {
             window.dispatchEvent(new CustomEvent("request-editor-content"));
         }
     }, [Component]);
+
     return (
         <div className="w-full h-full min-h-screen py-8 px-6 @container/mdx">
-            <MdxContent mdx={content} />
+            <MdxContent mdx={value} />
         </div>
     );
 };

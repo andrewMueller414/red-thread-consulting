@@ -21,7 +21,9 @@ export const MdxFormContainer = ({
         <FormProvider {...form}>
             <form
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className={"w-full min-w-full h-full prose prose-h2:mt-0 prose-h3:my-4"}
+                className={
+                    "w-full min-w-full h-full prose prose-h2:mt-0 prose-h3:my-4 prose-blockquote:border-dust"
+                }
             >
                 {children}
             </form>

@@ -16,10 +16,15 @@ import {
 } from "../embeddable_components/layout/column/embeddable_column";
 import { ReorderInput } from "../embeddable_components/inputs/reorder_input/reorder_input";
 import { ReorderInputProps } from "../embeddable_components/inputs/reorder_input/reorder_types";
+import {
+    SubmitForm,
+    SubmitFormProps,
+} from "../embeddable_components/submit_form";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
     return {
+        // HTML
         h1: H1,
         h2: H2,
         h3: H3,
@@ -43,6 +48,13 @@ export const getComponentMap = (): Record<string, FC<any>> => {
             return (
                 <MdxErrorBoundary>
                     <ReorderInput {...props} />
+                </MdxErrorBoundary>
+            );
+        },
+        Submit: (props: SubmitFormProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <SubmitForm {...props} />
                 </MdxErrorBoundary>
             );
         },
