@@ -2,8 +2,7 @@
 import React, { useEffect, useEffectEvent, type ReactNode } from "react";
 import { MdxFormContainer } from "@/features/mdx/presentation/mdx_form_container";
 import { useMdxClientParse } from "../hooks/use_mdx_client_parse";
-import { LoadingComponent } from "@/core/shared_components/loading_component";
-import { getComponentMap } from "@/features/mdx/data/component_map";
+import { MdxContent } from "../../../mdx/presentation/mdx_content";
 
 export interface MdxEditorChangeEventProps {
     value: string;
@@ -16,6 +15,7 @@ declare global {
 }
 
 export const MdxPreview = (): ReactNode => {
+    const [content, setContent] = useState("")
     const [Component, setMdx] = useMdxClientParse();
 
     const handleMdx = useEffectEvent((newContent: string) => setMdx(newContent));
@@ -38,13 +38,9 @@ export const MdxPreview = (): ReactNode => {
     return (
         <div className="w-full h-full min-h-screen py-8 px-6 @container/mdx">
             <MdxFormContainer>
-                {Component ? (
-                    <Component components={getComponentMap("")} />
-                ) : (
-                    <div className="w-full h-full flex flex-col justify-center items-center">
-                        <LoadingComponent />
-                    </div>
-                )}
+                <MdxContent
+                    mdx={content}
+                />
             </MdxFormContainer>
         </div>
     );

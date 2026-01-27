@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { mdxContentSchema } from "@/features/mdx/data/schemas/mdx_content";
 import { compileMdxServer } from "@/features/mdx/methods/parse_mdx_server";
 import { z } from "zod";
+import path from "path";
+import fs from "fs";
 
 export const mdxRouter = createTRPCRouter({
     getById: baseProcedure
@@ -48,4 +50,17 @@ export const mdxRouter = createTRPCRouter({
             },
         });
     }),
+    getDocByFilePath: baseProcedure
+        .input(z.string().default("embeddable_components.mdx"))
+        .query(async ({ input }) => {
+            const p = path.resolve(process.cwd(), "content", "component_docs", input);
+            console.log("p: ", p);
+            if (fs.existsSync(p)) {
+                return await fs.promises.readFile(p, {
+                    encoding: "utf-8",
+                });
+            } else {
+                return false;
+            }
+        }),
 });

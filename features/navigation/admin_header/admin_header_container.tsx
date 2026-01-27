@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import React, { type ReactNode } from "react";
+import { AdminButtonDropdownHeader } from "./admin_header_dropdown_button";
 
 export const AdminHeaderContainer = (): ReactNode => {
     return (
@@ -13,21 +14,7 @@ export const AdminHeaderContainer = (): ReactNode => {
                 id="admin-header-portal-target"
             />
             <div className="w-fit flex flex-row justify-end items-center gap-6">
-                <Link
-                    className={cn(
-                        buttonVariants(),
-                        "bg-matcha/30 hover:bg-matcha/60 transition-colors duration-300",
-                    )}
-                    href="/admin/mdx"
-                >
-                    Manage Mdx
-                </Link>
-                <Button
-                    className="bg-red-700 hover:bg-red-800 text-fog hover:text-fog transition-colors duration-300"
-                    onClick={() => signOut()}
-                >
-                    Logout
-                </Button>
+                <AdminButtonDropdownHeader />
             </div>
         </div>
     );

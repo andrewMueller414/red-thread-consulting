@@ -30,7 +30,7 @@ type StandaloneEditor = Parameters<
     NonNullable<ComponentProps<typeof Editor>["onMount"]>
 >[0];
 
-const THEME: BundledTheme = "everforest-light";
+export const EDITOR_THEME: BundledTheme = "light-plus";
 
 const PREVIEW_DEBOUNCE = 100;
 
@@ -46,7 +46,7 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
     > | null>(null);
 
     useEffect(() => {
-        window.addEventListener("request-editor-content", (e) => {
+        window.addEventListener("request-editor-content", () => {
             window.dispatchEvent(
                 new CustomEvent("mdx-editor-change", {
                     detail: {
@@ -64,7 +64,7 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
         const initShiki = async () => {
             // 1. Create the Shiki highlighter with MDX support
             const highlighter = await createHighlighter({
-                themes: [THEME],
+                themes: [EDITOR_THEME],
                 langs: ["mdx"],
             });
 
@@ -94,8 +94,8 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
         <Editor
             height={"100%"}
             defaultLanguage="mdx"
-            defaultValue={initialValue}
-            theme={THEME}
+            defaultValue={body}
+            theme={EDITOR_THEME}
             onMount={(editor) => {
                 editor.updateOptions({
                     wordWrap: "on",

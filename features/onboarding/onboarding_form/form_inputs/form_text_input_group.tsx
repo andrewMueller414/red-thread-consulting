@@ -1,20 +1,23 @@
 "use client";
-import React, { type ReactNode } from "react";
-import { OnboardingFormType } from "../../onboarding_types";
-import { OnboardingFormData } from "../../data/onboarding_form_schema";
+import React, { CSSProperties, type ReactNode } from "react";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@hookform/error-message";
+import { useForm } from "react-hook-form";
 
 interface FormTextInputGroupProps {
     label: string;
     desc?: string;
-    placeholder: string;
-    form: OnboardingFormType;
+    placeholder?: string;
     required?: boolean;
-    name: keyof OnboardingFormData;
+    name: string;
     classes?: {
         input?: string;
+        container?: string;
+    };
+    styles?: {
+        input?: CSSProperties;
+        container?: CSSProperties;
     };
 }
 
@@ -22,14 +25,15 @@ export const FormTextInputGroup = ({
     label,
     desc,
     placeholder,
-    form,
     name,
     required,
     classes = {},
+    styles = {},
 }: FormTextInputGroupProps): ReactNode => {
+    const form = useForm();
     const value = form.watch(name) as string;
     return (
-        <Field>
+        <Field className={classes.container} style={styles.container}>
             <FieldLabel>{label}</FieldLabel>
             {desc ? <FieldDescription>{desc}</FieldDescription> : null}
             <Input

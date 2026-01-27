@@ -1,0 +1,41 @@
+# Embeddable Components
+
+## Containers
+
+
+---
+
+## Inputs
+
+For stylistic reasons, the `maxWidth` property is only applied when the viewport is wide enough.
+
+
+### Text Input
+
+```tsx
+<EmbeddableTextInput 
+    label={`My Label`}
+    name={"anyUniqueNameThatNeverChanges"}
+    placeholder="This placeholder field is optional"
+    // "small" | "medium" | "large" | "full"
+    // If none provided, default is "full"
+    maxWidth="small"
+/>
+```
+
+
+
+### Multiline Input
+
+All of the properties here are the same as in the `EmbeddableTextInput` component.
+
+```tsx
+<MultiLineTextInput
+    label={`My Label`}
+    name={"anyUniqueNameThatNeverChanges"}
+    placeholder="This placeholder field is optional"
+    // "small" | "medium" | "large" | "full"
+    // If none provided, default is "full"
+    maxWidth="small"
+/>
+```
