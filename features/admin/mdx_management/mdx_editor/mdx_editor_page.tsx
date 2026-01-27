@@ -9,6 +9,8 @@ import React, { type ReactNode } from "react";
 import { MdxEditorClientContainer } from "./editor/mdx_editor_client_container";
 import { MdxPreviewClientContainer } from "./mdx_preview_client_container";
 import { MdxEditorProvider } from "./state/mdx_editor_context";
+import { EditorSaveIndicator } from "./editor_save_indicator";
+import { MdxIdSelectModal } from "../mdx_id_select_modal";
 
 interface MdxEditorPageProps {
     editingItem: MdxContent | null;
@@ -21,8 +23,11 @@ export const MdxEditorPageComponent = ({
         <MdxEditorProvider
             initialValues={{
                 value: editingItem ? editingItem.body : "",
+                mdxContentId: editingItem?.id ?? null,
             }}
         >
+            <EditorSaveIndicator />
+            <MdxIdSelectModal />
             <ResizablePanelGroup dir="horizontal" className="h-screen min-h-screen">
                 <ResizablePanel className="w-full">
                     <MdxEditorClientContainer initialValue={editingItem?.body ?? ""} />

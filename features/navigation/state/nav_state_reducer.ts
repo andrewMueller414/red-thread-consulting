@@ -11,8 +11,18 @@ const slice = createSlice({
                 open: action.payload === "toggle" ? !state.drawer.open : action.payload,
             };
         },
+        setEditorSaveSuccessOpen(state, action: PayloadAction<boolean>) {
+            state.showSavedEditorIndicator = action.payload;
+        },
+        setEditorMdxIdModalOpen(state, action: PayloadAction<boolean>) {
+            state.mdxIdModalOpen = action.payload;
+        },
     },
 });
 
-export const { setDrawerOpen } = slice.actions;
+export const {
+    setDrawerOpen,
+    setEditorSaveSuccessOpen,
+    setEditorMdxIdModalOpen,
+} = slice.actions;
 export default slice.reducer;

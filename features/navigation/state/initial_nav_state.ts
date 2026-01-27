@@ -4,4 +4,6 @@ export const initialNavState: NavigationState = {
     drawer: {
         open: false,
     },
+    showSavedEditorIndicator: false,
+    mdxIdModalOpen: false,
 };

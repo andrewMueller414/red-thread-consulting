@@ -4,4 +4,6 @@ export interface MobileDrawerState {
 
 export interface NavigationState {
     drawer: MobileDrawerState;
+    showSavedEditorIndicator: boolean;
+    mdxIdModalOpen: boolean;
 }

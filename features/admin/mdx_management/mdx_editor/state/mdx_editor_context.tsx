@@ -2,63 +2,74 @@
 import { ReactNode, createContext, useReducer, useContext } from "react";
 
 export interface MdxEditorState {
-  value: string;
+    value: string;
+    mdxContentId: string | null;
 }
 
 const defaultInitialValues: MdxEditorState = {
-  value: "",
+    value: "",
+    mdxContentId: null,
 };
 
 export const MdxEditorContext =
-  createContext<MdxEditorState>(defaultInitialValues);
+    createContext<MdxEditorState>(defaultInitialValues);
 
-type MdxEditorContextActions = {
-  type: "setValue";
-  payload: string;
-};
+type MdxEditorContextActions =
+    | {
+        type: "setValue";
+        payload: string;
+    }
+    | {
+        type: "setMdxContentId";
+        payload: string | null;
+    };
 
 export const MdxEditorDispatchContext = createContext<
-  React.Dispatch<MdxEditorContextActions>
+    React.Dispatch<MdxEditorContextActions>
 >(null!);
 
 export const useMdxEditorContext = () => useContext(MdxEditorContext);
 export const useMdxEditorDispatch = () => useContext(MdxEditorDispatchContext);
 
 export const MdxEditorContextReducer = (
-  state: MdxEditorState,
-  action: MdxEditorContextActions,
+    state: MdxEditorState,
+    action: MdxEditorContextActions,
 ): MdxEditorState => {
-  switch (action.type) {
-    case "setValue": {
-      return {
-        ...state,
-        value: action.payload,
-      };
+    switch (action.type) {
+        case "setValue": {
+            return {
+                ...state,
+                value: action.payload,
+            };
+        }
+        case "setMdxContentId": {
+            console.log(`Here?`);
+            return {
+                ...state,
+                mdxContentId: action.payload,
+            };
+        }
     }
-    default: {
-      return state;
-    }
-  }
 };
 
 MdxEditorContextReducer.displayName = "MdxEditorContextReducer";
 
 interface MdxEditorProviderProps {
-  children: ReactNode;
-  initialValues: MdxEditorState;
+    children: ReactNode;
+    initialValues: MdxEditorState;
 }
 
 export const MdxEditorProvider = ({
-  children,
-  initialValues,
+    children,
+    initialValues,
 }: MdxEditorProviderProps) => {
-  const [state, dispatch] = useReducer(MdxEditorContextReducer, initialValues);
+    const [state, dispatch] = useReducer(MdxEditorContextReducer, initialValues);
 
-  return (
-    <MdxEditorContext.Provider value={state}>
-      <MdxEditorDispatchContext.Provider value={dispatch}>
-        {children}
-      </MdxEditorDispatchContext.Provider>
-    </MdxEditorContext.Provider>
-  );
+    return (
+        <MdxEditorContext.Provider value={state}>
+            <MdxEditorDispatchContext.Provider value={dispatch}>
+                {children}
+            </MdxEditorDispatchContext.Provider>
+        </MdxEditorContext.Provider>
+    );
 };

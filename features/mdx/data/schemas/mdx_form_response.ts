@@ -10,8 +10,9 @@ export const formDataValueSchema = z.union([
 export const formDataSchema = z.record(z.string(), formDataValueSchema);
 
 export const mdxFormSchema = z.object({
-    id: z.number(),
+    formId: z.string().min(1, "The formId can't be empty."),
     data: formDataSchema,
+    mdxSourceId: z.string().nullish(),
     ctime: z.date(),
     reviewed_at: z.date().nullish(),
 });

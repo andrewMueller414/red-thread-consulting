@@ -1,3 +1,4 @@
+import z from "zod";
 import type { trpcServer } from "./server";
 
 export type TrpcServerClient = Awaited<ReturnType<typeof trpcServer>>;

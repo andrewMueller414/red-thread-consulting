@@ -7,6 +7,7 @@ import { MobileHeader } from "@/features/navigation/mobile_header";
 import { GlobalProvider } from "@/core/state/provider";
 import { FooterContainer } from "@/features/navigation/footer/footer_container";
 import { NavigationResizeObserver } from "@/features/navigation/navigation_resize_observer";
+import { NotificationsContainer } from "@/features/notifications/presentation/notifications_container";
 
 const bellefair = Bellefair({
     variable: "--font-bellefair",
@@ -44,6 +45,7 @@ export default function RootLayout({
                 className={`${bellefair.variable} ${plexMono.variable} antialiased font-sans`}
             >
                 <GlobalProvider>
+                    <NotificationsContainer />
                     <LargeHeader />
                     <MobileHeader />
                     <NavigationResizeObserver />

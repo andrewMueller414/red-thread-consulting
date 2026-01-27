@@ -1,6 +1,7 @@
 "use client";
 import React, {
     ComponentProps,
+    useCallback,
     useEffect,
     useRef,
     useState,
@@ -18,6 +19,12 @@ import {
     useMdxEditorContext,
     useMdxEditorDispatch,
 } from "../state/mdx_editor_context";
+import { trpc } from "@/features/trpc/trpc_provider";
+import { useDispatch } from "react-redux";
+import {
+    setEditorMdxIdModalOpen,
+    setEditorSaveSuccessOpen,
+} from "@/features/navigation/state/nav_state_reducer";
 
 export interface MdxEditorProps {
     initialValue: string;
@@ -37,8 +44,15 @@ export const EDITOR_THEME: BundledTheme = "light-plus";
 
 export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
     const editorRef = useRef<StandaloneEditor | null>(null);
+    const articleIdRef = useRef<null | string>(null); // Horrible hack to get around state issue.
     const monaco = useMonaco();
-    const { value: body } = useMdxEditorContext();
+    const globalDispatch = useDispatch();
+    const mdxMutation = trpc.mdx.save.useMutation();
+    const { value: body, mdxContentId } = useMdxEditorContext();
+
+    useEffect(() => {
+        articleIdRef.current = mdxContentId;
+    }, [mdxContentId]);
     const dispatch = useMdxEditorDispatch();
     const setBody = (value: string): void => {
         dispatch({
@@ -92,6 +106,33 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
         initShiki();
     }, [monaco]);
 
+    const handleSave = useCallback(async () => {
+        console.log(`Attempting to save mdx: `, articleIdRef.current);
+        if (!articleIdRef.current?.length) {
+            globalDispatch(setEditorMdxIdModalOpen(true));
+            return;
+        }
+        const val = editorRef.current?.getValue();
+        if (!val) {
+            return;
+        }
+
+        mdxMutation.mutate(
+            {
+                id: articleIdRef.current!,
+                body: val,
+            },
+            {
+                onError: (err) => {
+                    console.error("Error: ", err.message);
+                },
+                onSuccess: () => {
+                    globalDispatch(setEditorSaveSuccessOpen(true));
+                },
+            },
+        );
+    }, [mdxMutation, globalDispatch]);
+
     if (!monaco || !isReady) {
         return (
             <div className="w-full h-full flex flex-col justify-center items-center px-8">
@@ -99,14 +140,6 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
             </div>
         );
     }
-
-    const handleSave = (): void => {
-        const val = editorRef.current?.getValue();
-        if (!val) {
-            return;
-        }
-        console.log(`Value: ${val}`);
-    };
 
     return (
         <Editor

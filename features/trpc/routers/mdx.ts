@@ -27,7 +27,6 @@ export const mdxRouter = createTRPCRouter({
             select: {
                 id: true,
                 ctime: true,
-                formId: true,
                 utime: true,
             },
         });
@@ -37,7 +36,7 @@ export const mdxRouter = createTRPCRouter({
         .mutation(async ({ input }) => {
             return await compileMdxServer(input);
         }),
-    save: baseProcedure.input(mdxContentSchema).query(async ({ input }) => {
+    save: baseProcedure.input(mdxContentSchema).mutation(async ({ input }) => {
         return await prisma.mdxContent.upsert({
             where: {
                 id: input.id,
@@ -54,7 +53,6 @@ export const mdxRouter = createTRPCRouter({
         .input(z.string().default("embeddable_components.mdx"))
         .query(async ({ input }) => {
             const p = path.resolve(process.cwd(), "content", "component_docs", input);
-            console.log("p: ", p);
             if (fs.existsSync(p)) {
                 return await fs.promises.readFile(p, {
                     encoding: "utf-8",

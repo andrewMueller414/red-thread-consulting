@@ -1,49 +1,31 @@
 "use client";
-import React, {
-    useEffect,
-    useEffectEvent,
-    useState,
-    type ReactNode,
-} from "react";
-import { useMdxClientParse } from "../hooks/use_mdx_client_parse";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { MdxContent } from "../../../mdx/presentation/mdx_content";
 import { useMdxEditorContext } from "./state/mdx_editor_context";
+
+const DEBOUNCE = 250; // Just to avoid parsing mdx on every keystroke.
 
 export interface MdxEditorChangeEventProps {
     value: string;
 }
 
-declare global {
-    interface WindowEventMap {
-        "mdx-editor-change": CustomEvent<MdxEditorChangeEventProps>;
-    }
-}
-
 export const MdxPreview = (): ReactNode => {
+    const timer = useRef<NodeJS.Timeout | null>(null);
+    const [debounced, setDebounced] = useState("");
     const { value } = useMdxEditorContext();
-    const [Component, setMdx] = useMdxClientParse();
-
-    const handleMdx = useEffectEvent((newContent: string) => setMdx(newContent));
-    useEffect(() => {
-        const handleEditorChange = (
-            e: CustomEvent<MdxEditorChangeEventProps>,
-        ): void => {
-            handleMdx(e.detail.value);
-        };
-        window.addEventListener("mdx-editor-change", handleEditorChange);
-        return () =>
-            window.removeEventListener("mdx-editor-change", handleEditorChange);
-    }, []);
 
     useEffect(() => {
-        if (!Component) {
-            window.dispatchEvent(new CustomEvent("request-editor-content"));
+        if (timer.current) {
+            clearTimeout(timer.current);
         }
-    }, [Component]);
+        timer.current = setTimeout(() => {
+            setDebounced(value);
+        }, DEBOUNCE);
+    }, [value]);
 
     return (
         <div className="w-full h-full min-h-screen py-8 px-6 @container/mdx">
-            <MdxContent mdx={value} />
+            <MdxContent mdx={debounced} />
         </div>
     );
 };

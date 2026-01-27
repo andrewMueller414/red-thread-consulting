@@ -18,15 +18,6 @@ datasource db {
     provider = "postgresql"
 }
 
-enum PriorityId {
-    GROWTH
-    FINANCIAL_INDEPENDENCE
-    COMMITTMENT
-    IMPACT
-    GIVING_BACK
-    SOCIAL_WELFARE
-}
-
 model FormResponse {
     formId      String     @id @unique
     mdxSource   MdxContent @relation(fields: [mdxSourceId], references: [id])
@@ -40,8 +31,6 @@ model MdxContent {
     id        String         @id @unique
     responses FormResponse[]
     body      String
-    /// Will always be present if the form represents a form.
-    formId    String?
     /// "Created at"
     ctime     DateTime       @default(now())
     /// "Updated at"
