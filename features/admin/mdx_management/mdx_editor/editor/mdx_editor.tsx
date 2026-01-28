@@ -107,7 +107,6 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
     }, [monaco]);
 
     const handleSave = useCallback(async () => {
-        console.log(`Attempting to save mdx: `, articleIdRef.current);
         if (!articleIdRef.current?.length) {
             globalDispatch(setEditorMdxIdModalOpen(true));
             return;
@@ -151,6 +150,9 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
             onMount={(editor) => {
                 editor.updateOptions({
                     wordWrap: "on",
+                    minimap: {
+                        enabled: false,
+                    },
                 });
                 editor.addAction({
                     label: "Save",

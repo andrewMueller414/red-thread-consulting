@@ -61,4 +61,15 @@ export const mdxRouter = createTRPCRouter({
                 return false;
             }
         }),
+    deleteByIds: baseProcedure
+        .input(z.string().array())
+        .mutation(async ({ input }) => {
+            return await prisma.mdxContent.deleteMany({
+                where: {
+                    id: {
+                        in: input,
+                    },
+                },
+            });
+        }),
 });

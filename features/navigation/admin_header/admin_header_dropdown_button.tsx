@@ -25,6 +25,10 @@ const dropdownItems: DropdownButton[] = [
         href: "/admin/mdx",
     },
     {
+        label: "Media",
+        href: "/admin/media",
+    },
+    {
         label: "Documentation",
         href: "/docs",
     },
@@ -38,11 +42,11 @@ export const AdminButtonDropdownHeader = (): ReactNode => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button className="bg-matcha hover:bg-matcha/90 text-pine">
+                <Button className="bg-matcha hover:bg-matcha/90 text-pine absolute top-4 right-4">
                     Admin
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-matcha text-pine hover:bg-matcha/80 transition-colors duration-300">
+            <DropdownMenuContent className="bg-matcha text-pine">
                 {dropdownItems.map((item) => {
                     if ("href" in item) {
                         return (

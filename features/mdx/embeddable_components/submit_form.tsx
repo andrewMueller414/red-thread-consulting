@@ -18,7 +18,9 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
     const { form: formId, label } = submitFormProps.parse(props);
     const form = useForm<FormResponse>();
 
-    const setFormId = useEffectEvent((fi: string) => form.setValue("formId", fi));
+    const setFormId = useEffectEvent((fi: string) =>
+        form.setValue("mdxSourceId", fi),
+    );
 
     useEffect(() => {
         setFormId(formId);

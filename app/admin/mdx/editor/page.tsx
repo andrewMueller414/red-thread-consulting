@@ -6,9 +6,9 @@ import { redirect } from "next/navigation";
 import React, { type ReactNode } from "react";
 
 interface MdxEditorPageProps {
-    searchParams: {
+    searchParams: Promise<{
         id?: string;
-    };
+    }>;
 }
 
 const MdxEditorPage = async ({
@@ -18,9 +18,10 @@ const MdxEditorPage = async ({
     if (!session) {
         return redirect("/admin");
     }
-    const item = searchParams.id
+    const { id } = await searchParams;
+    const item = id
         ? await trpc.mdx.getById({
-            id: searchParams.id,
+            id,
         })
         : null;
     return <MdxEditorPageComponent editingItem={item} />;

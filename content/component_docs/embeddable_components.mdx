@@ -1,5 +1,9 @@
 # Docs
 
+## Editor
+
+Use option+s to save. This is not done automatically to avoid a huge number of writes to the database that would increase operational cost.
+
 ## Mdx
 
 Mdx is a superset of markdown, a combination of [React's](https://react.dev/) `jsx` language with markdown, the (ironically, 'markup' language) that's used in apps like [Notion](https://www.notion.com/).  
@@ -22,7 +26,7 @@ The children in this case will be a paragraph of text that says 'The children...
 </MyComponent>
 ```
 
-If it is not, you don't need the second instance of it's name and you can just write as follows. This is common for things like inputs where nothing really belongs inside of it.
+If does is not, you don't need the second instance of it's name and you can just write as follows. This is common for things like inputs where nothing really belongs inside of it.
 
 
 ```tsx
@@ -37,7 +41,7 @@ There are a handful of different types of properties you can provide to mdx comp
 
 #### String
 
-This is the most common, and unfortunately the only one that's even remotely challenging. Since the 'x' in mdx is really just 'jsx', you have to know how javascript handles strings. The key points are:
+This is the most common, and unfortunately the only one that's even remotely challenging. Since the 'x' in mdx is really just 'jsx', it's required to know a little about how javascript handles strings. The key points are:
 
 1. You can use any quotation mark, so long as you use the same quotation mark to both open and close the string.
 2. Wrapping the value, including the quotation marks with curly brackets `{}` is optional for both `'` and `"`, but is required for `\``
@@ -87,6 +91,8 @@ options={[
     }
 ]}
 ```
+
+While the spacing within the string will appear as whitespace within that string, the pretty indendentation is completely optional.
 
 # Components, the 'x' in mdx
 

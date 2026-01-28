@@ -1,17 +1,17 @@
 export enum MdxSummaryTableColId {
-    firstName = "fistName",
-    lastName = "lastName",
+    select = "select",
     id = "id",
-    reviewedAt = "reviewedAt",
     utime = "utime",
+    ctime = "ctime",
+    actions = "action",
 }
 
 export const mdxSummaryTableColumnLabelMap: {
     [K in MdxSummaryTableColId]: string;
 } = {
+    [MdxSummaryTableColId.select]: "Select",
     [MdxSummaryTableColId.id]: "Database Id",
     [MdxSummaryTableColId.utime]: "Updated at",
-    [MdxSummaryTableColId.reviewedAt]: "Reviewed",
-    [MdxSummaryTableColId.lastName]: "Last Name",
-    [MdxSummaryTableColId.firstName]: "First Name",
+    [MdxSummaryTableColId.ctime]: "Created at",
+    [MdxSummaryTableColId.actions]: "Actions",
 };

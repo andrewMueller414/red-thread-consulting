@@ -26,13 +26,13 @@ import {
     useOnboardingResponseTableContext,
     useOnboardingResponseTableDispatch,
 } from "../../state/onboarding_response_table_context";
-import { OnboardingTableFooter } from "./onboarding_table_footer";
 import { OnboardingResponseTableFilterRow } from "./onboarding_response_table_filter_row";
 import { OnboardingSummaryTableColumnId } from "./onboarding_table_column_label_map";
 import { AdminHeaderPortal } from "@/features/navigation/admin_header/admin_header_portal";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/features/trpc/trpc_provider";
 import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
+import { PaginationTableFooter } from "@/core/shared_components/table_utils/table_footer_row";
 
 export const OnboardingResponseTable = (): ReactNode => {
     const tableState = useOnboardingResponseTableContext();
@@ -172,7 +172,7 @@ export const OnboardingResponseTable = (): ReactNode => {
                     </TableBody>
                 </Table>
             </div>
-            <OnboardingTableFooter table={table} />
+            <PaginationTableFooter table={table} />
             {table.getFilteredSelectedRowModel().rows.length ? (
                 <AdminHeaderPortal>
                     <Button onClick={handleDelete} variant="destructive">

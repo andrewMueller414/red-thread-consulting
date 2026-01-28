@@ -1,0 +1,35 @@
+import { NoneFoundView } from "@/core/shared_components/none_found_view";
+import { MdxContent } from "@/features/mdx/presentation/mdx_content";
+import { trpc } from "@/features/trpc/server";
+import React, { type ReactNode } from "react";
+
+interface ArticleViewPageProps {
+    params: Promise<{
+        docId: string;
+    }>;
+}
+
+const ArticleViewPage = async ({
+    params,
+}: ArticleViewPageProps): Promise<ReactNode> => {
+    const { docId } = await params;
+    const res = await trpc.mdx.getById({
+        id: decodeURI(docId),
+    });
+    if (!res) {
+        return (
+            <div className="w-full h-full flex flex-col justify-center items-center min-h-[calc(100vh-64px)]">
+                <NoneFoundView body="This note could not be found. If you feel like this is an error, please contact the developer." />
+            </div>
+        );
+    }
+    return (
+        <div className="min-h-screen w-full px-8 lg:px-16 py-16 flex flex-col justify-start items-center">
+            <MdxContent className="w-full max-w-[min(1080px,90vw)] " mdx={res.body} />
+        </div>
+    );
+};
+
+ArticleViewPage.displayName = "ArticleViewPage";
+
+export default ArticleViewPage;

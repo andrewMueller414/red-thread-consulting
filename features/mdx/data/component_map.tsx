@@ -20,6 +20,10 @@ import {
     SubmitForm,
     SubmitFormProps,
 } from "../embeddable_components/submit_form";
+import {
+    EmbeddableImage,
+    EmbeddableImageProps,
+} from "../embeddable_components/media/image";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -55,6 +59,14 @@ export const getComponentMap = (): Record<string, FC<any>> => {
             return (
                 <MdxErrorBoundary>
                     <SubmitForm {...props} />
+                </MdxErrorBoundary>
+            );
+        },
+        // Media
+        Image: (props: EmbeddableImageProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <EmbeddableImage {...props} />
                 </MdxErrorBoundary>
             );
         },

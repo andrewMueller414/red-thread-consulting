@@ -10,4 +10,6 @@ export const formResponseSchema = z.object({
     data: formDataSchema,
     ctime: z.date(),
     reviewed_at: z.date().nullish(),
+    /** The id of the mdx content that produced this form response. */
+    mdxSourceId: z.string(),
 });

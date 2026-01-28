@@ -2,6 +2,7 @@
 import React, { type ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { TRPCProvider } from "@/features/trpc/trpc_provider";
+import { AdminButtonDropdownHeader } from "../../features/navigation/admin_header/admin_header_dropdown_button";
 
 interface AdminLayoutProps {
     children: ReactNode;
@@ -10,7 +11,10 @@ interface AdminLayoutProps {
 const AdminLayout = (props: AdminLayoutProps): ReactNode => {
     return (
         <SessionProvider>
-            <TRPCProvider>{props.children}</TRPCProvider>
+            <TRPCProvider>
+                {props.children}
+                <AdminButtonDropdownHeader />
+            </TRPCProvider>
         </SessionProvider>
     );
 };

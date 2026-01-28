@@ -24,7 +24,7 @@ export const MdxPreview = (): ReactNode => {
     }, [value]);
 
     return (
-        <div className="w-full h-full min-h-screen py-8 px-6 @container/mdx">
+        <div className="w-full min-h-screen py-8 pb-12 px-6 @container/mdx">
             <MdxContent mdx={debounced} />
         </div>
     );

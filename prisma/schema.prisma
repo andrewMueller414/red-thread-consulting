@@ -19,7 +19,7 @@ datasource db {
 }
 
 model FormResponse {
-    formId      String     @id @unique
+    id          Int        @id @default(autoincrement())
     mdxSource   MdxContent @relation(fields: [mdxSourceId], references: [id])
     mdxSourceId String
     data        Json
