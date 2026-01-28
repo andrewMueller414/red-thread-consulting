@@ -1,10 +1,10 @@
 "use client";
-import { ListObjectsOutput } from "@aws-sdk/client-s3";
+import type { ListObjectsOutput } from "@aws-sdk/client-s3";
 import React, { useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useEventListener } from "@/core/state/hooks/use_event_listener";
 import { imageIdToUrl } from "../data/media_utils";
-import { Copy, Search } from "lucide-react";
+import { Copy } from "lucide-react";
 import {
     InputGroup,
     InputGroupInput,

@@ -6,14 +6,13 @@ import {
     DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { getActiveResourcesInfo } from "process";
 
 export const getAws = () => {
     console.log("process.env.AWS_REGION: ", process.env.AWS_REGION);
     return new S3Client({
         region: process.env.AWS_REGION!,
         credentials: {
-            accessKeyId: process.env.AWS_ACCESS_KEY!,
+            accessKeyId: process.env.AWS_MEDIA_ACCESS_KEY!,
             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
         },
     });
