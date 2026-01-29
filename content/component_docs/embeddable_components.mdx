@@ -2,13 +2,15 @@
 
 ## Editor
 
-Use option+s to save. This is not done automatically to avoid a huge number of writes to the database that would increase operational cost.
+Use option+s to save. This is required or all data will be lost. This is not done automatically to avoid a huge number of writes to the database that would increase operational cost.
 
 ## Mdx
 
 Mdx is a superset of markdown, a combination of [React's](https://react.dev/) `jsx` language with markdown, the (ironically, 'markup' language) that's used in apps like [Notion](https://www.notion.com/).  
 
-Mdx gets parsed to html, which can be styled to blend in and function along with our existing application. There's a solid breakdown of the default markdown elements [here](https://www.markdownguide.org/basic-syntax/) and how they convert to html, along with examples of all of the syntax. Before the jsx is even added, there are multiple popular 'flavors' of markdown, with the 'github flavor' being the most popular with added support for things like footnotes. With the addition of jsx to markdown however, a developer can write components that interact with the entire application that also compile to html, but in a more complex way. This uses a special `jsx` syntax. I'll do my best to cover what I think isn't obvious from the examples here.
+Mdx gets parsed to html, which can be styled to blend in and function along with our existing application. There's a solid breakdown of the default markdown elements [here](https://www.markdownguide.org/basic-syntax/) and how they convert to html, along with examples of all of the syntax. Before the jsx is even added, there are multiple popular 'flavors' of markdown, with the 'github flavor' being the most popular with added support for things like footnotes. All Github Flavoered Markdown features are enabled in this application. 
+
+With the addition of jsx to markdown however, a developer can write components that interact with the entire application that also compile to html, but in a more complex way. This uses a special `jsx` syntax. I'll do my best to cover what I think isn't obvious from the examples here.
 
 ### Jsx
 

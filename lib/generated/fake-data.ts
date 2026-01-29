@@ -6,7 +6,7 @@ import Decimal from 'decimal.js';
 
 export function fakeFormResponse() {
   return {
-    data: JSON.stringify({"foo":"2dca5c55-6359-4650-836d-b3a3e47ad47b","bar":2238915014789796,"bike":"d","a":"0","b":0.8441851681253104,"name":"Cortney","prop":"0b1"}),
+    data: JSON.stringify({"foo":"dc3ef707-bc83-4f02-b2fa-f703aa5968cf","bar":351069459981835,"bike":"0","a":"f","b":0.5133048000896631,"name":"Kory","prop":"0b1"}),
     reviewed_at: undefined,
   };
 }
@@ -14,7 +14,7 @@ export function fakeFormResponseComplete() {
   return {
     id: faker.number.int({ max: 2147483647 }),
     mdxSourceId: faker.string.uuid(),
-    data: JSON.stringify({"foo":"8cc5f899-43ac-40fa-bf3a-caa0a616405a","bar":1378915198169813,"bike":"6","a":"r","b":0.08756120321609184,"name":"Aiyana","prop":"0b0"}),
+    data: JSON.stringify({"foo":"675c4636-a6dc-42bb-b464-f0e345ebe8fd","bar":2162811789692410,"bike":"9","a":"t","b":0.9789810477325115,"name":"Paula","prop":"0b1"}),
     ctime: new Date(),
     reviewed_at: undefined,
   };

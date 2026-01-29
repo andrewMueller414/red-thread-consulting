@@ -5,7 +5,7 @@ export default function Home() {
         <div className="w-full min-h-screen flex flex-col justify-center items-center">
             <NoneFoundView
                 label="Nothing to show here..."
-                body="Moved pretty much all of the functionality to the admin page for now."
+                body="This app is a work in progress."
             />
         </div>
     );
