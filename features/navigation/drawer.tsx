@@ -27,9 +27,9 @@ export const Drawer = connector((props: DrawerProps): ReactNode => {
 
     useEffect(() => {
         if (props.open) {
-            disableBodyScroll(document.body);
+            disableBodyScroll(document.querySelector("html") ?? document.body);
         } else {
-            enableBodyScroll(document.body);
+            enableBodyScroll(document.querySelector("html") ?? document.body);
         }
     }, [props.open]);
     return (

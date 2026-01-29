@@ -4,6 +4,7 @@ import { trpc } from "@/features/trpc/server";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React, { type ReactNode } from "react";
+import { SaveEditorNotification } from "../../../../features/notifications/presentation/save_editor_notification";
 
 interface MdxEditorPageProps {
     searchParams: Promise<{
@@ -24,7 +25,12 @@ const MdxEditorPage = async ({
             id,
         })
         : null;
-    return <MdxEditorPageComponent editingItem={item} />;
+    return (
+        <>
+            <MdxEditorPageComponent editingItem={item} />;
+            <SaveEditorNotification />
+        </>
+    );
 };
 
 MdxEditorPage.displayName = "MdxEditorPage";

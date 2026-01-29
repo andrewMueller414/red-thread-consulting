@@ -8,6 +8,9 @@ import { GlobalProvider } from "@/core/state/provider";
 import { FooterContainer } from "@/features/navigation/footer/footer_container";
 import { NavigationResizeObserver } from "@/features/navigation/navigation_resize_observer";
 import { NotificationsContainer } from "@/features/notifications/presentation/notifications_container";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { AdminFloatingButton } from "@/features/navigation/admin_floating_button/admin_floating_button";
 
 const bellefair = Bellefair({
     variable: "--font-bellefair",
@@ -25,11 +28,12 @@ export const metadata: Metadata = {
     title: "Red Thread Consulting Onboarding",
 };
 
-export default function RootLayout({
+const RootLayout = async ({
     children,
 }: Readonly<{
     children: React.ReactNode;
-}>) {
+}>) => {
+    const session = await getServerSession(authOptions);
     return (
         <html lang="en">
             <Head>
@@ -51,8 +55,15 @@ export default function RootLayout({
                     <NavigationResizeObserver />
                     {children}
                     <FooterContainer />
+                    {session ? (
+                        <>
+                            <AdminFloatingButton />
+                        </>
+                    ) : null}
                 </GlobalProvider>
             </body>
         </html>
     );
-}
+};
+
+export default RootLayout;

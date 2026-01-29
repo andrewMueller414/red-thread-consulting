@@ -2,13 +2,13 @@
 
 ## Editor
 
-Use option+s to save. This is required or all data will be lost. This is not done automatically to avoid a huge number of writes to the database that would increase operational cost.
+Use ⌥+s (option+s) to save. This is required or all data will be lost. This is not done automatically to avoid a huge number of writes to the database that would increase operational cost.
 
 ## Mdx
 
-Mdx is a superset of markdown, a combination of [React's](https://react.dev/) `jsx` language with markdown, the (ironically, 'markup' language) that's used in apps like [Notion](https://www.notion.com/).  
+Mdx is a superset of markdown, a combination of [React's](https://react.dev/) `jsx` language with markdown, the (ironically, 'markup' language) that's used in apps like [Notion](https://www.notion.com/) and [Obsidian](https://obsidian.md/).  
 
-Mdx gets parsed to html, which can be styled to blend in and function along with our existing application. There's a solid breakdown of the default markdown elements [here](https://www.markdownguide.org/basic-syntax/) and how they convert to html, along with examples of all of the syntax. Before the jsx is even added, there are multiple popular 'flavors' of markdown, with the 'github flavor' being the most popular with added support for things like footnotes. All Github Flavoered Markdown features are enabled in this application. 
+Mdx gets parsed to html, which can be styled to blend in and function along with our existing application. There's a solid breakdown of the default markdown elements [here](https://www.markdownguide.org/basic-syntax/) and how they convert to html, along with examples of all of the syntax. Before the jsx is even added, there are multiple popular 'flavors' of markdown, with the 'github flavor' being the most popular with added support for things like footnotes. All Github Flavored Markdown features are enabled in this application. 
 
 With the addition of jsx to markdown however, a developer can write components that interact with the entire application that also compile to html, but in a more complex way. This uses a special `jsx` syntax. I'll do my best to cover what I think isn't obvious from the examples here.
 
@@ -16,9 +16,9 @@ With the addition of jsx to markdown however, a developer can write components t
 
 Components will always start with a capital letter, be one word, and will never include any special characters. To call a component, you use an opening `<` bracket followed by the component's name, a list of properties that is unique to each component type, and a set of closing brackets. There are actually two types of closing brackets, with the only difference being if the component is being passed any 'children'. 
 
-`children` is just a special property that represents things that go inside of the parent. The reason this property is written this way is for nothing more than convenience and it allows us to write mdx in a way that more closely aligns with the way we naturally organize things in our head. Think of a layout component like a `Column`, that doesn't display anything itself, but rather aligns things that go inside of it. This is when a component might accept `children`, but it's not a strict requirement that this only occurs when a component returns nothing on it's own, it can do both.
+`children` is just a special property that represents things that go inside of the parent. A big part of why `jsx` was created was to more easily model this `children` property in a way that aligns with the way we naturally organize this type of property in our heads, making things much easier to read, but in the end this `children` property is just like any other property, only implemented in a different way.  Think of a layout component like our `Align` component. This component doesn't render anything on it's own, although that's not a strict requirement of components that accept `children`, but it changes the position of the components that are inside of it; this is when developers usually choose to represent a property as a 'child'.
 
-**Remember:** Sometimes the children property will be just regular markdown, other times it might be expecting a specific type of children. If that's the case that will be noted with the component's examples below.
+**Remember:** Sometimes the children property will be just regular markdown, other times it might be expecting a specific type of children like a specific component or a specific number of children to implement the intended layout. If that's the case that will be noted with the component's examples below. This type of error will not cause an issue with the computer and will possibly go unnoticed, but it can cause unintended layouts at different screen sizes.
 
 If a component accepts a child, it is written as:
 
@@ -94,7 +94,7 @@ options={[
 ]}
 ```
 
-While the spacing within the string will appear as whitespace within that string, the pretty indendentation is completely optional.
+While the spacing within the string will appear as white space within that string, the pretty indentation is completely optional.
 
 # Components, the 'x' in mdx
 
@@ -161,6 +161,23 @@ All of the properties here are the same as in the `EmbeddableTextInput` componen
     placeholder="Company Name"
     maxWidth="medium"
 />
+
+
+### Checkbox Input
+
+For boolean questions like 'should I contact you by email', you can use a checkbox. 
+
+```tsx
+<Checkbox
+    name="My name that never changes"
+    title="My title"
+    subtitle="This subtitle is optional." 
+/>
+```
+
+
+<Checkbox name="My name that never changes" title="My title" subtitle="This subtitle is optional." />
+
 
 
 ### Reorder Input
@@ -285,3 +302,57 @@ It accepts the following properties:
 | width | "fit", "full" | "full" |
 
 Leaving the properties empty will apply all of the defaults, centering the content as in the example above.
+
+
+## General UI Components
+
+### Image
+
+Markdown has it's own image syntax, `![Some descriptive text](linkToImageHere)`, but there is also a much more powerful component available. The natively supported markdown images inserted with the syntax mentioned previously are styled to not completely ruin the style of the application, but it's not possible to style a component for every use case. That's where jsx's properties excel. The image component has several properties, many of which are optional, but you're almost always going to want to apply a `maxWidth` property and either a `left` or a `right` property for most vertical layouts.
+
+
+
+| Property | Options | Default |
+| -------- | ------- | ------- |
+| url | any string (the url of the image) | Required property |
+| alt | any string | Required property |
+| maxWidth | "small", "medium", "large" or any number | undefined |
+| maxHeight | "small", "medium", "large" or any number | undefined |
+| left | true, false | false |
+| right | true, false | false |
+
+Here, the `left` property 'floats' the image to the left when the screen is large enough, wrapping text around the image. `right` of course does the same thing on the other side. The `alt` property is some alternative text to display for people with visual disabilities and search engines, and the `url` property is the url of the image itself. The only two properties that are required are `url` and `alt`, but when the component is not wrapped in another layout component, you'll almost always want to use `maxWidth` and either `left` or `right`.
+
+
+#### An example with some lorem ipsum text to demonstrate text wrapping
+
+This is some example text wrapping around an image with the following content:
+
+```tsx
+<Image 
+    // picsum is a random image provider,
+    // this app has the ability to provide your 
+    // own via AWS. See the media page...
+   url={"https://picsum.photos/200/300?grayscale"}
+   alt="Some alternative description here."
+   maxWidth="medium"
+   left
+/>
+```
+
+Pharetra integer nulla volutpat pharetra convallis tristique magna nulla cursus. Nec morbi nunc arcu, a eu eget ut at diam. Dignissim pretium ut, porttitor lacus convallis diam, elit lectus id. Imperdiet nisl id dictum dictum, vulputate, vestibulum facilisis sed nullam. Ultricies laoreet consectetur est amet turpis, lectus consectetur cursus velit.
+
+<Image 
+   url={"https://picsum.photos/200/300?grayscale"}
+   alt="Some alternative description here."
+   maxWidth="medium"
+   left
+/>
+
+Tempor maximus dignissim viverra sed eu aliquet, massa platea porta. Convallis eget pretium amet sed aliquam ligula aliquam porta in. Turpis libero condimentum sed ac congue ac luctus auctor sed. Risus metus montes, ornare laoreet ut hac, ultrices ultricies risus. Nisl et velit velit, nibh ornare urna tincidunt dictumst enim.
+
+Erat, consectetur, nec faucibus gravida id sed aenean elit rhoncus. In lorem lobortis consectetur vel iaculis et adipiscing, eu etiam. Nisl montes lacus praesent, nunc ultrices eget praesent ipsum vulputate. Quis ut diam a praesent pellentesque dictumst pharetra volutpat, tempor. Posuere laoreet metus et nibh at eget nullam efficitur nunc.
+
+Sit id massa ac nibh velit phasellus, condimentum vel, suscipit. Diam duis porta massa dignissim ut dui laoreet convallis augue. Placerat proin eget, ac arcu tristique lacus pharetra elit suscipit. Convallis vestibulum nullam luctus, faucibus amet praesent in consectetur tempor. Tristique porta, nullam faucibus diam in nisl sed efficitur ipsum.
+
+Ullamcorper id, dignissim iaculis ante faucibus varius, venenatis metus praesent. At aliquam, ligula purus augue nibh at malesuada risus, bibendum. Tristique vulputate laoreet nisi, dui faucibus quis, diam purus et. Aenean eget dui elit quam congue id, elementum, cursus ac. Dignissim ut convallis imperdiet, aliquam id dignissim tincidunt dignissim ligula.

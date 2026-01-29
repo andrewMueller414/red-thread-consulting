@@ -1,21 +1,18 @@
-"use client";
 import React, { type ReactNode } from "react";
-import { SessionProvider } from "next-auth/react";
-import { TRPCProvider } from "@/features/trpc/trpc_provider";
-import { AdminButtonDropdownHeader } from "../../features/navigation/admin_header/admin_header_dropdown_button";
+import { AdminHome } from "../../features/admin/admin_home";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 interface AdminLayoutProps {
     children: ReactNode;
 }
 
-const AdminLayout = (props: AdminLayoutProps): ReactNode => {
+const AdminLayout = async (props: AdminLayoutProps): Promise<ReactNode> => {
+    const session = await getServerSession(authOptions);
     return (
-        <SessionProvider>
-            <TRPCProvider>
-                {props.children}
-                <AdminButtonDropdownHeader />
-            </TRPCProvider>
-        </SessionProvider>
+        <>
+            <AdminHome authenticated={Boolean(session)}>{props.children}</AdminHome>
+        </>
     );
 };
 

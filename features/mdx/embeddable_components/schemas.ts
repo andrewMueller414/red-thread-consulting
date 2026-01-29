@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { embeddableInputSchema } from "./shared_schemas";
 
-export const textInputPropsSchema = z.object({
+export const textInputPropsSchema = embeddableInputSchema.extend({
     label: z.string({ message: "A label is required" }),
     name: z
         .string({ message: "A name field is required." })

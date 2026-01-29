@@ -24,6 +24,10 @@ import {
     EmbeddableImage,
     EmbeddableImageProps,
 } from "../embeddable_components/media/image";
+import {
+    EmbeddableCheckbox,
+    EmbeddableCheckboxProps,
+} from "../embeddable_components/inputs/checkbox";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -52,6 +56,13 @@ export const getComponentMap = (): Record<string, FC<any>> => {
             return (
                 <MdxErrorBoundary>
                     <ReorderInput {...props} />
+                </MdxErrorBoundary>
+            );
+        },
+        Checkbox: (props: EmbeddableCheckboxProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <EmbeddableCheckbox {...props} />
                 </MdxErrorBoundary>
             );
         },

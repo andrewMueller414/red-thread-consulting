@@ -14,7 +14,7 @@ export const FooterColumn = (props: FooterColumnProps): ReactNode => {
             {props.items.map((item) => {
                 return (
                     <a
-                        className="text-sm mb-4 hover:text-pine/90 transition-colors duration-200"
+                        className="text-[12px] mb-4 hover:text-pine/90 transition-colors duration-200"
                         key={`footer-item-${item.href}`}
                         href={item.href}
                     >

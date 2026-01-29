@@ -20,7 +20,11 @@ const MessageList = ({ errors }: { errors: string }): ReactNode => {
         return errors;
     }
     if (res.length === 1) {
-        return <div className="w-fit py-2 text-red-700">{res[0].message}</div>;
+        return (
+            <div className="w-fit py-2 text-red-700 text-center">
+                {res[0].message}
+            </div>
+        );
     }
     return (
         <div className="w-full flex flex-col justify-center items-center max-w-100">

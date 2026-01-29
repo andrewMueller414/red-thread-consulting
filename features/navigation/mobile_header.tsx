@@ -33,7 +33,7 @@ export const MobileHeader = connector(
                     id="mobile-header-container"
                 >
                     <a
-                        className="w-fit flex flex-col justify-center items-center"
+                        className="w-fit flex flex-col justify-center items-center max-2xl:max-w-[150px]"
                         href="https://www.redthreadconsulting.co"
                     >
                         <Image
