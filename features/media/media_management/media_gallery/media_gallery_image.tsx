@@ -37,7 +37,6 @@ export const MediaGalleryImage = ({
                 src={imageIdToUrl(item.Key)}
                 alt="Red Thread Consulting media image."
                 className="w-full h-full object-cover cursor-pointer"
-                onClick={viewImageDetails}
             />
             <XIcon
                 className={cn(
@@ -56,7 +55,7 @@ export const MediaGalleryImage = ({
             />
             <motion.div
                 /* @ts-expect-error -- Type error on framer-motion's end. */
-                className="bg-dust absolute top-0 left-0 right-0 bottom-0 h-full w-full"
+                className="bg-dust absolute top-0 left-0 right-0 bottom-0 h-full w-full cursor-pointer"
                 animate={hover ? "hover" : "notHover"}
                 initial={"notHover"}
                 variants={{
@@ -69,6 +68,7 @@ export const MediaGalleryImage = ({
                         scale: 0,
                     },
                 }}
+                onClick={viewImageDetails}
             />
         </div>
     );

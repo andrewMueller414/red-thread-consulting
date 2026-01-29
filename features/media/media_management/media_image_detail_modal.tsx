@@ -51,7 +51,7 @@ export const MediaImageDetailModal = (): ReactNode => {
         >
             <motion.div
                 /* @ts-expect-error -- Type error on framer-motion's end. */
-                className="bg-pine text-fog px-4 py-3 rounded"
+                className="bg-pine text-fog px-4 py-3 rounded grid grid-cols-1 grid-rows-[1fr_auto]"
                 onClick={(e: Event) => {
                     e.stopPropagation();
                 }}
@@ -69,7 +69,7 @@ export const MediaImageDetailModal = (): ReactNode => {
                 <img
                     src={url}
                     alt="Red Thread Consulting media image."
-                    className="w-full h-full object-contain max-h-[min(600px,calc(100vh-8rem))] max-w-[90vw] rounded"
+                    className="w-full h-full object-contain max-h-[min(600px,calc(100vh-12rem))] max-w-[90vw] w-auto rounded"
                 />
                 <InputGroup
                     className="mt-4 min-w-full"
