@@ -67,6 +67,7 @@ export const LiquidGlassCard = ({
         ? {
             variants: undefined,
             animate: undefined,
+            /* @ts-expect-error -- Type error on framer-motion's end. */
             onClick: undefined,
             drag: draggable,
             dragConstraints: draggable
@@ -115,6 +116,7 @@ export const LiquidGlassCard = ({
                 </defs>
             </svg>
             <motion.div
+                /* @ts-expect-error -- Type error on framer-motion's end. */
                 className={cn(
                     `relative ${draggable ? "cursor-grab active:cursor-grabbing" : ""}`,
                     className,

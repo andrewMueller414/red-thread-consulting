@@ -29,6 +29,7 @@ export const SaveEditorNotification = (): ReactNode => {
 
     return (
         <motion.div
+            /* @ts-expect-error -- Type error on framer-motion's end. */
             className="w-[min(90vw,450px)] h-fit grid grid-cols-[1fr_80px] rounded-lg fixed bottom-4 left-4 place-items-center gap-x-4 bg-pine text-fog px-3 py-2 z-99"
             initial={"hide"}
             animate="show"

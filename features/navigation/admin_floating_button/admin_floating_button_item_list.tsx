@@ -50,6 +50,7 @@ export const AdminFloatingButtonList = ({
     }, []);
     return (
         <motion.div
+            /* @ts-expect-error -- Type error on framer-motion's end. */
             className="w-fit h-fit fixed bottom-20 right-4 flex flex-col justify-end items-end bg-fog/90 border border-pine/30 rounded-lg origin-bottom"
             animate="show"
             initial="hide"
@@ -81,6 +82,7 @@ export const AdminFloatingButtonList = ({
                             transition={{
                                 delay: idx * 0.1,
                             }}
+                            /* @ts-expect-error -- Type error on framer-motion's end. */
                             className="flex flex-row justify-end items-center w-full"
                         >
                             <Link
@@ -102,6 +104,7 @@ export const AdminFloatingButtonList = ({
                 } else {
                     return (
                         <motion.a
+                            /* @ts-expect-error -- Type error on framer-motion's end. */
                             role="button"
                             key={item.label}
                             variants={{

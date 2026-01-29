@@ -16,6 +16,7 @@ export const AdminFloatingButton = (): ReactNode => {
                 blurIntensity="lg"
                 draggable={false}
                 className="rounded-[100%] p-4 fixed bottom-4 right-4 h-12 w-12"
+                /* @ts-expect-error -- Type error on framer-motion's end. */
                 onClick={() => setOpen(!open)}
             >
                 <IconSearch className="text-dust absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />

@@ -55,6 +55,7 @@ export const MediaGalleryImage = ({
                 }}
             />
             <motion.div
+                /* @ts-expect-error -- Type error on framer-motion's end. */
                 className="bg-dust absolute top-0 left-0 right-0 bottom-0 h-full w-full"
                 animate={hover ? "hover" : "notHover"}
                 initial={"notHover"}
