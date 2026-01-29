@@ -37,6 +37,7 @@ export const MediaGalleryImage = ({
                 src={imageIdToUrl(item.Key)}
                 alt="Red Thread Consulting media image."
                 className="w-full h-full object-cover cursor-pointer"
+                onClick={viewImageDetails}
             />
             <XIcon
                 className={cn(
