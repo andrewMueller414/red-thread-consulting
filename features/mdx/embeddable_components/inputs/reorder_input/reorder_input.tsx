@@ -8,14 +8,20 @@ import {
 } from "./reorder_types";
 import { ReorderItem } from "./reorder_item";
 import { H2 } from "../../../../../core/shared_components/typography";
+import { InputId, MdxFormData } from "../../../data/schemas/mdx_form_response";
+import { useFormInitialValue } from "../../../state/hooks/use_form_initial_value";
 
 export const ReorderInput = (props: ReorderInputProps): ReactNode => {
     const { options, title, subtitle, name } = reorderInputProps.parse(props);
-    const form = useForm();
+    const form = useForm<MdxFormData>();
     const timer = useRef<NodeJS.Timeout | null>(null);
     const [items, setItems] = useState<ReorderInputItem[]>(options);
     const updateStateHack = useRef(JSON.stringify(items));
-
+    useFormInitialValue(
+        name,
+        InputId.reorder,
+        options.map((n) => n.value as string),
+    );
     const handleReorder = (newOrder: ReorderInputItem[]): void => {
         const s = JSON.stringify(newOrder);
         if (s !== updateStateHack.current) {
@@ -30,10 +36,10 @@ export const ReorderInput = (props: ReorderInputProps): ReactNode => {
             clearTimeout(timer.current);
         }
         timer.current = setTimeout(() => {
-            form.setValue(
-                name,
-                items.map((item) => item.value),
-            );
+            form.setValue(name, {
+                value: items.map((item) => item.value) as string[],
+                inputId: InputId.reorder,
+            });
         }, 500);
     }, [items]);
 

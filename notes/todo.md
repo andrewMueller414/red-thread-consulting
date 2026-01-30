@@ -23,3 +23,9 @@
 ## Admin Improvements
 
 - [ ] Handle authentication fail page and setup authentication page to redirect to our auth page. Currently it's redirecting to the default next-auth pages and they're hideous.
+
+---
+
+## Bugs
+
+- [ ] There is _massive_ overscroll on the editor page once the mardown renders if it is long enough. Fix this **immediately**.

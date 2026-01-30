@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { textInputPropsSchema } from "../schemas";
 import { cn } from "@/lib/utils";
 import { getMaxWidthProp } from "../embeddable_component_utils";
+import { InputId, MdxFormData } from "../../data/schemas/mdx_form_response";
+import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 
 const textAreaInputProps = textInputPropsSchema.extend({
     rows: z.number().int().default(3),
@@ -19,13 +21,19 @@ export const EmbeddableTextAreaInput = (
 ): ReactNode => {
     const { maxWidth, label, placeholder, name, rows } =
         textAreaInputProps.parse(props);
-    const form = useForm();
+    const form = useForm<MdxFormData>();
+    useFormInitialValue(name, InputId.textArea, "");
     return (
         <Field className={cn("mt-8 w-full", getMaxWidthProp(maxWidth))}>
             <FieldLabel>{label}</FieldLabel>
             <Textarea
-                value={form.watch(name) as string}
-                onChange={(e) => form.setValue(name, e.target.value)}
+                value={(form.watch(name)?.value as string) ?? ""}
+                onChange={(e) =>
+                    form.setValue(name, {
+                        value: e.target.value,
+                        inputId: InputId.textArea,
+                    })
+                }
                 placeholder={placeholder}
                 className="w-full"
                 rows={rows}

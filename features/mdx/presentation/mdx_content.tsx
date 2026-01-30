@@ -22,7 +22,9 @@ export const MdxContent = ({ mdx, className }: MdxContentProps): ReactNode => {
 
     if (Component) {
         return (
-            <div className={cn("max-w-270 @container/mdx prose", className)}>
+            <div
+                className={cn("max-w-270 @container/mdx prose max-h-full", className)}
+            >
                 <MdxFormContainer>
                     {/* @ts-expect-error -- Need to create component during render. */}
                     <Component components={getComponentMap()} />

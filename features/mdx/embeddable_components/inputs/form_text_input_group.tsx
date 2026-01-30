@@ -4,6 +4,8 @@ import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
+import { InputId, MdxFormData } from "../../data/schemas/mdx_form_response";
+import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 
 interface FormTextInputGroupProps {
     label: string;
@@ -30,8 +32,9 @@ export const FormTextInputGroup = ({
     classes = {},
     styles = {},
 }: FormTextInputGroupProps): ReactNode => {
-    const form = useForm();
-    const value = form.watch(name) as string;
+    const form = useForm<MdxFormData>();
+    const value = form.watch(name);
+    useFormInitialValue(name, InputId.text, "");
     return (
         <Field className={classes.container} style={styles.container}>
             <FieldLabel>{label}</FieldLabel>
@@ -40,8 +43,13 @@ export const FormTextInputGroup = ({
                 type="text"
                 placeholder={placeholder}
                 required={required}
-                value={value}
-                onChange={(e) => form.setValue(name, e.target.value)}
+                value={(value?.value as string) ?? ""}
+                onChange={(e) =>
+                    form.setValue(name, {
+                        value: e.target.value,
+                        inputId: InputId.text,
+                    })
+                }
                 className={classes.input}
             />
             <ErrorMessage

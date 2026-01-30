@@ -28,16 +28,15 @@ export const MdxEditorPageComponent = ({
         >
             <EditorSaveIndicator />
             <MdxIdSelectModal />
-            <ResizablePanelGroup
-                dir="horizontal"
-                className="h-screen min-h-screen max-h-screen"
-            >
+            <ResizablePanelGroup dir="horizontal" className="h-screen">
                 <ResizablePanel className="w-full">
                     <MdxEditorClientContainer initialValue={editingItem?.body ?? ""} />
                 </ResizablePanel>
                 <ResizableHandle className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-pine/40 focus-visible:bg-pine transition-colors duration-150" />
-                <ResizablePanel className="overflow-y-auto">
-                    <MdxPreviewClientContainer />
+                <ResizablePanel>
+                    <div className="overflow-y-auto max-h-screen min-h-0">
+                        <MdxPreviewClientContainer />
+                    </div>
                 </ResizablePanel>
             </ResizablePanelGroup>
         </MdxEditorProvider>

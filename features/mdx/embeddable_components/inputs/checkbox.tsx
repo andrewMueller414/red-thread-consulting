@@ -8,6 +8,15 @@ import {
 } from "../../../../components/ui/field";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { embeddableInputSchema } from "../shared_schemas";
+import { useForm } from "react-hook-form";
+import {
+    InputId,
+    MdxForm,
+    MdxFormData,
+    MdxFormInput,
+    NestedFormValue,
+} from "../../data/schemas/mdx_form_response";
+import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 
 const checkboxPropsSchema = embeddableInputSchema.extend({
     title: z
@@ -21,10 +30,21 @@ export type EmbeddableCheckboxProps = z.infer<typeof checkboxPropsSchema>;
 export const EmbeddableCheckbox = (
     props: EmbeddableCheckboxProps,
 ): ReactNode => {
-    const { title, subtitle } = checkboxPropsSchema.parse(props);
+    const { title, subtitle, name } = checkboxPropsSchema.parse(props);
+    const form = useForm<MdxFormData>();
+    const value = form.watch(name) as NestedFormValue;
+    useFormInitialValue(name, InputId.checkbox, false);
     return (
         <Field orientation="horizontal">
-            <Checkbox />
+            <Checkbox
+                checked={(value?.value as boolean) ?? false}
+                onCheckedChange={(checked) =>
+                    form.setValue(name, {
+                        value: checked,
+                        inputId: InputId.checkbox,
+                    })
+                }
+            />
             <FieldContent>
                 <FieldTitle>{title}</FieldTitle>
                 <FieldDescription>{subtitle}</FieldDescription>
