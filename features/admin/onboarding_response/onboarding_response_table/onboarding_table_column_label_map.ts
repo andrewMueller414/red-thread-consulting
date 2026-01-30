@@ -1,6 +1,5 @@
 export enum OnboardingSummaryTableColumnId {
-    firstName = "fistName",
-    lastName = "lastName",
+    mdxSourceId = "mdx",
     id = "id",
     reviewedAt = "reviewedAt",
     ctime = "ctime",
@@ -12,6 +11,5 @@ export const onboardingResponseTableColumnLabelMap: {
     [OnboardingSummaryTableColumnId.id]: "Database Id",
     [OnboardingSummaryTableColumnId.ctime]: "Submitted on",
     [OnboardingSummaryTableColumnId.reviewedAt]: "Reviewed",
-    [OnboardingSummaryTableColumnId.lastName]: "Last Name",
-    [OnboardingSummaryTableColumnId.firstName]: "First Name",
+    [OnboardingSummaryTableColumnId.mdxSourceId]: "Source",
 };

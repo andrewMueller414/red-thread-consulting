@@ -35,11 +35,11 @@ export const responseTableColumns: ColumnDef<OnboardingSummaryResponseItem>[] =
             enableHiding: false,
         },
         {
-            id: OnboardingSummaryTableColumnId.lastName,
-            accessorKey: "name_last",
+            id: OnboardingSummaryTableColumnId.mdxSourceId,
+            accessorKey: "mdxSourceId",
             header: () => (
                 <OnboardingTableHeaderById
-                    id={OnboardingSummaryTableColumnId.lastName}
+                    id={OnboardingSummaryTableColumnId.mdxSourceId}
                 />
             ),
             cell: ({ row }) => {
@@ -47,25 +47,7 @@ export const responseTableColumns: ColumnDef<OnboardingSummaryResponseItem>[] =
                     <Link
                         href={`/admin/viewOnboardingResponse/${row.getValue(OnboardingSummaryTableColumnId.id)}`}
                     >
-                        {row.getValue(OnboardingSummaryTableColumnId.lastName)}
-                    </Link>
-                );
-            },
-        },
-        {
-            id: OnboardingSummaryTableColumnId.firstName,
-            accessorKey: "name_first",
-            header: () => (
-                <OnboardingTableHeaderById
-                    id={OnboardingSummaryTableColumnId.firstName}
-                />
-            ),
-            cell: ({ row }) => {
-                return (
-                    <Link
-                        href={`/admin/viewOnboardingResponse/${row.getValue(OnboardingSummaryTableColumnId.id)}`}
-                    >
-                        {row.getValue(OnboardingSummaryTableColumnId.firstName)}
+                        {row.getValue(OnboardingSummaryTableColumnId.mdxSourceId)}
                     </Link>
                 );
             },

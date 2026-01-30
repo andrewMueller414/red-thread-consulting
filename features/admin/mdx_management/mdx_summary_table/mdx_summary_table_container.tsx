@@ -106,6 +106,7 @@ export const MdxSummaryTableContainer = ({
                                 ids: idList,
                             });
                         }}
+                        className="bg-red-700 text-fog hover:bg-red-800 hover:text-fog cursor-pointer"
                     >
                         Delete
                     </Button>
