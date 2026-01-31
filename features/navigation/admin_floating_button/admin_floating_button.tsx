@@ -11,7 +11,7 @@ export const AdminFloatingButton = (): ReactNode => {
             {open ? <AdminFloatingButtonList close={() => setOpen(false)} /> : null}
             <LiquidGlassCard
                 glowIntensity="sm"
-                shadowIntensity="sm"
+                shadowIntensity="xs"
                 borderRadius="12px"
                 blurIntensity="lg"
                 draggable={false}

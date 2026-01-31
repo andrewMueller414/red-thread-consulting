@@ -3,7 +3,7 @@ import React, { CSSProperties, type ReactNode } from "react";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@hookform/error-message";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { InputId, MdxFormData } from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 
@@ -32,7 +32,7 @@ export const FormTextInputGroup = ({
     classes = {},
     styles = {},
 }: FormTextInputGroupProps): ReactNode => {
-    const form = useForm<MdxFormData>();
+    const form = useFormContext<MdxFormData>();
     const value = form.watch(name);
     useFormInitialValue(name, InputId.text, "");
     return (

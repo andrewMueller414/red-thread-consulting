@@ -6,6 +6,11 @@
   - [x] Show indicator to admin indicating that content was saved.
 - [x] Add 'view full page' option to table of results. This can be the same link that will be sendable to others.
 - [x] Implement side-by-side image grid component in mdx similar to layout used previously once image storage solutions are figured out.
+- [ ] Handle form submission
+- [ ] Document form submit button
+- [ ] Handle response page
+  - [ ] Build a component for each `InputId` and create a switch component that renders each item according to it's `inputId` field.
+
 - [ ] Add these components:
   - [ ] Hr html element
   - [ ] Date Picker with the following formats:

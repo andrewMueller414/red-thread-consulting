@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { dbEntityIdSchema } from "@/features/db/schemas/database_utility_schemas";
 import z from "zod";
 import { formResponseSchema } from "@/features/db/schemas/form_response_schema";
+import { Prisma } from "@/lib/generated/prisma/client";
+import { RedThreadError } from "@/core/errors/red_thread_error";
 
 export const formRouter = createTRPCRouter({
     create: baseProcedure
@@ -14,17 +16,45 @@ export const formRouter = createTRPCRouter({
             }),
         )
         .mutation(async ({ input }) => {
+            console.log("input: ", input);
             try {
                 delete (input as { id?: number }).id;
                 await prisma.formResponse.create({
                     data: {
                         ...input,
                         ctime: new Date(),
+                        reviewed_at: null,
                     },
                 });
                 return true;
             } catch (err) {
-                console.error("Error: ", err);
+                if (err instanceof Prisma.PrismaClientKnownRequestError) {
+                    if (err.code === "P2003") {
+                        const meta = err.meta as {
+                            driverAdapterError?: {
+                                cause?: {
+                                    kind?: string;
+                                    constraint?: {
+                                        index?: string;
+                                    };
+                                };
+                            };
+                        };
+                        if (
+                            meta?.driverAdapterError?.cause?.kind ===
+                            "ForeignKeyConstraintViolation" &&
+                            meta?.driverAdapterError?.cause?.constraint?.index ===
+                            "FormResponse_mdxSourceId_fkey"
+                        ) {
+                            throw new Error(
+                                "The formId provided to the FormSubmit component does not appear to exist.",
+                                {
+                                    cause: RedThreadError.formIdDoesNotExist,
+                                },
+                            );
+                        }
+                    }
+                }
                 return false;
             }
         }),

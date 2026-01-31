@@ -12,7 +12,7 @@ export const AdminHome = ({
 }): ReactNode => {
     return (
         <SessionProvider>
-            <TRPCProvider>{children}</TRPCProvider>
+            {children}
         </SessionProvider>
     );
 };

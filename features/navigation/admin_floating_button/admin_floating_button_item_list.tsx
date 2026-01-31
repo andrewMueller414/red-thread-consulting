@@ -1,41 +1,22 @@
-import React, { useEffect, type ReactNode } from "react";
+import React, { useEffect, useMemo, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { AppRoutes } from "@/.next/dev/types/routes";
 
 export type DropdownButton =
     | {
         label: string;
+        filter?: (pathname: AppRoutes) => boolean;
         onSelect: () => void;
     }
     | {
         label: string;
+        filter?: (pathname: AppRoutes) => boolean;
         href: string;
     };
-
-export const adminDropdownItems: DropdownButton[] = [
-    {
-        label: "Admin Home",
-        href: "/admin",
-    },
-    {
-        label: "Manage Mdx",
-        href: "/admin/mdx",
-    },
-    {
-        label: "Media",
-        href: "/admin/media",
-    },
-    {
-        label: "Documentation",
-        href: "/docs",
-    },
-    {
-        label: "Logout",
-        onSelect: signOut,
-    },
-];
 
 interface AdminFloatingButtonListProps {
     close: () => void;
@@ -44,10 +25,48 @@ interface AdminFloatingButtonListProps {
 export const AdminFloatingButtonList = ({
     close,
 }: AdminFloatingButtonListProps): ReactNode => {
+    const pathname = usePathname();
     useEffect(() => {
         document.addEventListener("click", close);
         return () => document.removeEventListener("click", close);
     }, []);
+    const adminDropdownItems: DropdownButton[] = useMemo(() => {
+        return (
+            [
+                {
+                    label: "Admin Home",
+                    href: "/admin",
+                },
+                {
+                    label: "Manage Mdx",
+                    href: "/admin/mdx",
+                },
+                {
+                    label: "New Article",
+                    href: "/admin/mdx/editor",
+                    filter: (pn) => pn !== "/admin/mdx/editor",
+                },
+                {
+                    label: "Media",
+                    href: "/admin/media",
+                },
+                {
+                    label: "Documentation",
+                    href: "/docs",
+                },
+                {
+                    label: "Logout",
+                    onSelect: signOut,
+                },
+            ] as DropdownButton[]
+        ).filter((item) => {
+            if (item.filter) {
+                return item.filter(pathname as AppRoutes);
+            } else {
+                return true;
+            }
+        });
+    }, [pathname]);
     return (
         <motion.div
             /* @ts-expect-error -- Type error on framer-motion's end. */
@@ -87,13 +106,17 @@ export const AdminFloatingButtonList = ({
                         >
                             <Link
                                 href={item.href}
+                                aria-disabled={item.href === pathname}
                                 className={cn(
-                                    "w-full h-full text-right px-2 py-3 hover:bg-mist/20 ",
+                                    "w-full h-full text-right px-2 py-2",
                                     i === 0
                                         ? "rounded-tl-lg rounded-tr-lg"
                                         : i === adminDropdownItems.length
                                             ? "rounded-bl-lg rounded-br-lg"
                                             : "",
+                                    item.href === pathname
+                                        ? "bg-mist/10 cursor-default"
+                                        : "hover:bg-mist/20",
                                 )}
                                 onClick={close}
                             >
@@ -119,7 +142,7 @@ export const AdminFloatingButtonList = ({
                                 delay: idx * 0.1,
                             }}
                             className={cn(
-                                "w-full h-full text-right px-2 py-3 cursor-pointer",
+                                "w-full h-full text-right px-2 py-2 cursor-pointer",
                                 item.label.toLowerCase() === "logout"
                                     ? "hover:bg-red-700/20"
                                     : "hover:bg-mist/20 ",

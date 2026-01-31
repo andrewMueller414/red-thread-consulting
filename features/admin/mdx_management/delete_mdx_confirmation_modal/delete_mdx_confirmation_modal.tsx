@@ -8,9 +8,7 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { useEventListener } from "@/core/state/hooks/use_event_listener";
 import React, { useState, type ReactNode } from "react";
 import { DeleteMdxConfirmationModalState } from "./delete_mdx_confirmation_modal_actions";
@@ -52,8 +50,11 @@ export const DeleteMdxConfirmationModal = (): ReactNode => {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel className="bg-matcha hover:bg-matcha/80 transition-colors duration-300">
+                        Cancel
+                    </AlertDialogCancel>
                     <AlertDialogAction
+                        variant={"destructive"}
                         onClick={async () => {
                             if (!open) {
                                 return;
@@ -78,7 +79,7 @@ export const DeleteMdxConfirmationModal = (): ReactNode => {
                             });
                         }}
                     >
-                        Continue
+                        Delete
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

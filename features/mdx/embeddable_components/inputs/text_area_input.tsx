@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { type ReactNode } from "react";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { textInputPropsSchema } from "../schemas";
 import { cn } from "@/lib/utils";
 import { getMaxWidthProp } from "../embeddable_component_utils";
@@ -21,7 +21,7 @@ export const EmbeddableTextAreaInput = (
 ): ReactNode => {
     const { maxWidth, label, placeholder, name, rows } =
         textAreaInputProps.parse(props);
-    const form = useForm<MdxFormData>();
+    const form = useFormContext<MdxFormData>();
     useFormInitialValue(name, InputId.textArea, "");
     return (
         <Field className={cn("mt-8 w-full", getMaxWidthProp(maxWidth))}>

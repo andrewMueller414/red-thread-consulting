@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
     InputId,
     MdxFormData,
@@ -12,7 +12,7 @@ export const useFormInitialValue = (
     inputId: InputId,
     value: MdxFormValue,
 ) => {
-    const form = useForm<MdxFormData>();
+    const form = useFormContext<MdxFormData>();
 
     useEffect(() => {
         form.setValue(name, {

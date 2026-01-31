@@ -1,7 +1,7 @@
 import { createTRPCRouter } from "./trpc_init";
-import { formRouter } from "./routers/onboarding_router";
 import { mdxRouter } from "./routers/mdx";
 import { adminRouter } from "./routers/admin";
+import { formRouter } from "./routers/form";
 
 export const appRouter = createTRPCRouter({
     form: formRouter,

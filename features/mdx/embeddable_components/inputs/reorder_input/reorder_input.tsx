@@ -1,6 +1,6 @@
 import { LayoutGroup, Reorder } from "framer-motion";
 import React, { useEffect, useRef, useState, type ReactNode } from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
     ReorderInputProps,
     reorderInputProps,
@@ -13,7 +13,7 @@ import { useFormInitialValue } from "../../../state/hooks/use_form_initial_value
 
 export const ReorderInput = (props: ReorderInputProps): ReactNode => {
     const { options, title, subtitle, name } = reorderInputProps.parse(props);
-    const form = useForm<MdxFormData>();
+    const form = useFormContext<MdxFormData>();
     const timer = useRef<NodeJS.Timeout | null>(null);
     const [items, setItems] = useState<ReorderInputItem[]>(options);
     const updateStateHack = useRef(JSON.stringify(items));

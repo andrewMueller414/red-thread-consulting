@@ -11,6 +11,7 @@ import { NotificationsContainer } from "@/features/notifications/presentation/no
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { AdminFloatingButton } from "@/features/navigation/admin_floating_button/admin_floating_button";
+import { TRPCProvider } from "@/features/trpc/trpc_provider";
 
 const bellefair = Bellefair({
     variable: "--font-bellefair",
@@ -49,17 +50,19 @@ const RootLayout = async ({
                 className={`${bellefair.variable} ${plexMono.variable} antialiased font-sans`}
             >
                 <GlobalProvider>
-                    <NotificationsContainer />
-                    <LargeHeader />
-                    <MobileHeader />
-                    <NavigationResizeObserver />
-                    {children}
-                    <FooterContainer />
-                    {session ? (
-                        <>
-                            <AdminFloatingButton />
-                        </>
-                    ) : null}
+                    <TRPCProvider>
+                        <NotificationsContainer />
+                        <LargeHeader />
+                        <MobileHeader />
+                        <NavigationResizeObserver />
+                        {children}
+                        <FooterContainer />
+                        {session ? (
+                            <>
+                                <AdminFloatingButton />
+                            </>
+                        ) : null}
+                    </TRPCProvider>
                 </GlobalProvider>
             </body>
         </html>

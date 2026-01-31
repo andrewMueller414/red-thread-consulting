@@ -41,7 +41,7 @@ export const MediaGalleryImage = ({
             />
             <XIcon
                 className={cn(
-                    "absolute top-3 left-3 w-3 h-3 text-fog cursor-pointer rounded transition-colors duration-300 z-10",
+                    "absolute top-3 left-3 w-3 h-3 text-fog cursor-pointer rounded transition-colors duration-300 z-10 origin-bottom-right delay-75",
                     hover ? "bg-red-700" : "bg-dust/50",
                 )}
                 onClick={() => {
@@ -68,6 +68,9 @@ export const MediaGalleryImage = ({
                         opacity: 0,
                         scale: 0,
                     },
+                }}
+                transition={{
+                    bounce: 0,
                 }}
                 onClick={viewImageDetails}
             />

@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { type ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { mdxFormSchema } from "../data/schemas/mdx_form_response";
+import { formDataSchema } from "../data/schemas/mdx_form_response";
 import { MdxFormProvider } from "../state/form_context";
 
 export const MdxFormContainer = ({
@@ -11,7 +11,7 @@ export const MdxFormContainer = ({
     children: ReactNode;
 }): ReactNode => {
     const form = useForm({
-        resolver: zodResolver(mdxFormSchema),
+        resolver: zodResolver(formDataSchema),
     });
 
     return (

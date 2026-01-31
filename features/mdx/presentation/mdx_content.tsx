@@ -20,22 +20,21 @@ export const MdxContent = ({ mdx, className }: MdxContentProps): ReactNode => {
         _setContent(mdx);
     }, [mdx]);
 
-    if (Component) {
-        return (
-            <div
-                className={cn("max-w-270 @container/mdx prose max-h-full", className)}
-            >
-                <MdxFormContainer>
+    return (
+        <MdxFormContainer>
+            {Component ? (
+                <div
+                    className={cn("max-w-270 @container/mdx prose max-h-full", className)}
+                >
                     {/* @ts-expect-error -- Need to create component during render. */}
                     <Component components={getComponentMap()} />
-                </MdxFormContainer>
-            </div>
-        );
-    }
-    return (
-        <div className="w-full h-full flex flex-col justify-center items-center">
-            <LoadingComponent />
-        </div>
+                </div>
+            ) : (
+                <div className="w-full h-full flex flex-col justify-center items-center">
+                    <LoadingComponent />
+                </div>
+            )}
+        </MdxFormContainer>
     );
 };
 

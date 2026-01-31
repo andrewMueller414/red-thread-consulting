@@ -8,12 +8,10 @@ import {
 } from "../../../../components/ui/field";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { embeddableInputSchema } from "../shared_schemas";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
     InputId,
-    MdxForm,
     MdxFormData,
-    MdxFormInput,
     NestedFormValue,
 } from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
@@ -31,7 +29,7 @@ export const EmbeddableCheckbox = (
     props: EmbeddableCheckboxProps,
 ): ReactNode => {
     const { title, subtitle, name } = checkboxPropsSchema.parse(props);
-    const form = useForm<MdxFormData>();
+    const form = useFormContext<MdxFormData>();
     const value = form.watch(name) as NestedFormValue;
     useFormInitialValue(name, InputId.checkbox, false);
     return (

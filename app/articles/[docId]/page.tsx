@@ -1,4 +1,5 @@
 import { NoneFoundView } from "@/core/shared_components/none_found_view";
+import { RenderedMdxFormProvider } from "@/features/forms/state/rendered_mdx_form_context";
 import { MdxContent } from "@/features/mdx/presentation/mdx_content";
 import { trpc } from "@/features/trpc/server";
 import React, { type ReactNode } from "react";
@@ -13,8 +14,9 @@ const ArticleViewPage = async ({
     params,
 }: ArticleViewPageProps): Promise<ReactNode> => {
     const { docId } = await params;
+    const mdxSourceId = decodeURI(docId);
     const res = await trpc.mdx.getById({
-        id: decodeURI(docId),
+        id: mdxSourceId,
     });
     if (!res) {
         return (
@@ -24,9 +26,18 @@ const ArticleViewPage = async ({
         );
     }
     return (
-        <div className="min-h-screen w-full px-8 lg:px-16 py-16 flex flex-col justify-start items-center">
-            <MdxContent className="w-full max-w-[min(1080px,90vw)] " mdx={res.body} />
-        </div>
+        <RenderedMdxFormProvider
+            initialValues={{
+                mdxSourceId,
+            }}
+        >
+            <div className="min-h-screen w-full px-8 lg:px-16 py-16 flex flex-col justify-start items-center">
+                <MdxContent
+                    className="w-full max-w-[min(1080px,90vw)] "
+                    mdx={res.body}
+                />
+            </div>
+        </RenderedMdxFormProvider>
     );
 };
 
