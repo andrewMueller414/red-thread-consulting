@@ -16,20 +16,26 @@ import { FormResponseInputView } from "../../../forms/presentation/form_response
 dayjs.extend(advancedFormat);
 
 interface OnboardingResponseViewReviewedSectionProps {
-    item: OnboardingSummaryResponseItem;
+    item: Exclude<OnboardingSummaryResponseItem, false>;
 }
 
 export const OnboardingResponseViewReviewedSection = ({
     item,
 }: OnboardingResponseViewReviewedSectionProps): ReactNode => {
-    const [reviewedAt, setReviewedAt] = useState(item.reviewed_at);
+    const [reviewedAt, setReviewedAt] = useState<Date | null>(
+        item?.reviewed_at ?? null,
+    );
     const [reviewedAtPopoverOpen, setReviewedAtPopoverOpen] = useState(false);
     const markReviewed = trpc.form.markReviewedById.useMutation();
     const toggleReviewed = useCallback(() => {
+        const id = item?.id;
+        if (!id) {
+            return;
+        }
         markReviewed.mutate(
             {
                 reviewed: !Boolean(reviewedAt),
-                ids: [item.id],
+                ids: [id],
             },
             {
                 onError: (e) => {
@@ -65,22 +71,22 @@ export const OnboardingResponseViewReviewedSection = ({
                 </DropdownMenuContent>
             </DropdownMenu>
             <div className="w-full max-w-[min(1080px,90vw)]">
-                {Object.keys(item.data ?? {}).map((dataKey, i, a) => {
-                    if (item.data) {
+                {item?.data
+                    ? item.mdxSource.formFieldNames.map((dataKey, i, a) => {
                         return (
-                            <>
+                            <div key={dataKey} className="w-full h-fit">
                                 <FormResponseInputView
-                                    data={item.data[dataKey as keyof typeof item.data]}
+                                    data={item.data![dataKey as keyof typeof item.data]}
                                     name={dataKey}
                                     key={dataKey}
                                 />
                                 {i <= a.length - 1 ? (
                                     <div className="w-full bg-moss/20 h-0.5 mt-8" />
                                 ) : null}
-                            </>
+                            </div>
                         );
-                    }
-                })}
+                    })
+                    : null}
             </div>
         </div>
     );

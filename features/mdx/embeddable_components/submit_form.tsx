@@ -1,9 +1,4 @@
-import React, {
-    MouseEventHandler,
-    useEffect,
-    useEffectEvent,
-    type ReactNode,
-} from "react";
+import React, { MouseEventHandler, type ReactNode } from "react";
 import z from "zod";
 import { Button } from "../../../components/ui/button";
 import { useFormContext } from "react-hook-form";
@@ -43,19 +38,7 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
     const pathname = usePathname() as AppRoutes;
     const { mdxSourceId } = useRenderedMdxFormContext();
     const form = useFormContext<MdxFormData>();
-    const dispatch = useMdxFormDispatch();
     const formMutation = trpc.form.create.useMutation();
-
-    const setFormId = useEffectEvent((fi: string) =>
-        dispatch({
-            type: "setMdxSourceId",
-            payload: fi,
-        }),
-    );
-
-    useEffect(() => {
-        setFormId(mdxSourceId);
-    }, [mdxSourceId]);
 
     const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (
         e,

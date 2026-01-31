@@ -61,12 +61,12 @@ export const MediaGalleryImage = ({
                 initial={"notHover"}
                 variants={{
                     hover: {
-                        scale: 1,
+                        /* scale: 1, */
                         opacity: 0.3,
                     },
                     notHover: {
                         opacity: 0,
-                        scale: 0,
+                        /* scale: 0, */
                     },
                 }}
                 transition={{

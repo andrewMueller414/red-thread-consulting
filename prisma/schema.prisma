@@ -28,11 +28,12 @@ model FormResponse {
 }
 
 model MdxContent {
-    id        String         @id @unique
-    responses FormResponse[]
-    body      String
+    id             String         @id @unique
+    responses      FormResponse[]
+    body           String
+    formFieldNames String[]
     /// "Created at"
-    ctime     DateTime       @default(now())
+    ctime          DateTime       @default(now())
     /// "Updated at"
-    utime     DateTime       @default(now())
+    utime          DateTime       @default(now())
 }

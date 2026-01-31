@@ -10,7 +10,6 @@ interface OnboardingResponseTableContainerProps {
 export const OnboardingResponseTableContainer = (
     props: OnboardingResponseTableContainerProps,
 ): ReactNode => {
-    console.log("props.items: ", props.items);
     return (
         <div className="w-full max-w-[min(1080px,90vw)]">
             <OnboardingResponseTableProvider

@@ -6,6 +6,7 @@
         "db:generate": "wireit",
         "db:migrate_prod": "wireit",
         "db:migrate_dev": "wireit",
+        "db:migrate": "wireit",
         "db:studio": "./node_modules/@dotenvx/dotenvx/src/cli/dotenvx.js run -f ./.env.local -- npx prisma studio",
         "db:studio_prod": "./node_modules/@dotenvx/dotenvx/src/cli/dotenvx.js run -f ./.env.prod -- npx prisma studio",
         "dev": "next dev",
@@ -20,6 +21,9 @@
     "wireit": {
         "db:migrate_prod": {
             "command": "./node_modules/@dotenvx/dotenvx/src/cli/dotenvx.js run -f ./.env.prod -- npx prisma migrate deploy"
+        },
+        "db:migrate": {
+            "command": "./node_modules/@dotenvx/dotenvx/src/cli/dotenvx.js run -f ./.env.local -- npx prisma migrate dev"
         },
         "db:migrate_dev": {
             "command": "./node_modules/@dotenvx/dotenvx/src/cli/dotenvx.js run -f ./.env.local -- npx prisma migrate deploy"

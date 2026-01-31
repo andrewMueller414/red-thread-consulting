@@ -16,7 +16,6 @@ export const formRouter = createTRPCRouter({
             }),
         )
         .mutation(async ({ input }) => {
-            console.log("input: ", input);
             try {
                 delete (input as { id?: number }).id;
                 await prisma.formResponse.create({
@@ -80,6 +79,18 @@ export const formRouter = createTRPCRouter({
             const res = await prisma.formResponse.findFirst({
                 where: {
                     id: input.id,
+                },
+                select: {
+                    reviewed_at: true,
+                    data: true,
+                    ctime: true,
+                    id: true,
+                    mdxSource: {
+                        select: {
+                            id: true,
+                            formFieldNames: true,
+                        },
+                    },
                 },
             });
             return res;

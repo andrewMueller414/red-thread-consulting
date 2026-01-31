@@ -99,7 +99,7 @@ export const AdminFloatingButtonList = ({
                                 },
                             }}
                             transition={{
-                                delay: idx * 0.1,
+                                delay: idx * 0.05,
                             }}
                             /* @ts-expect-error -- Type error on framer-motion's end. */
                             className="flex flex-row justify-end items-center w-full"

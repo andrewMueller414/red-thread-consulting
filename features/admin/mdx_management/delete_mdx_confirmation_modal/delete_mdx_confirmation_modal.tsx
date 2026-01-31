@@ -41,20 +41,23 @@ export const DeleteMdxConfirmationModal = (): ReactNode => {
                 }
             }}
         >
-            <AlertDialogContent>
+            <AlertDialogContent className="bg-matcha text-fog">
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogTitle className="text-dust">
+                        Are you absolutely sure?
+                    </AlertDialogTitle>
                     <AlertDialogDescription>
                         This action cannot be undone. This will permanently delete these
                         articles from the database.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel className="bg-matcha hover:bg-matcha/80 transition-colors duration-300">
+                    <AlertDialogCancel className="bg-dust hover:bg-dust/80 text-fog hover:text-fog transition-colors duration-300">
                         Cancel
                     </AlertDialogCancel>
                     <AlertDialogAction
                         variant={"destructive"}
+                        className="bg-red-700 hover:bg-red-800 transition-colors-duration-300"
                         onClick={async () => {
                             if (!open) {
                                 return;

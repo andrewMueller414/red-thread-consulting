@@ -33,7 +33,7 @@ const ArticleViewPage = async ({
         >
             <div className="min-h-screen w-full px-8 lg:px-16 py-16 flex flex-col justify-start items-center">
                 <MdxContent
-                    className="w-full max-w-[min(1080px,90vw)] "
+                    className="w-full mx-auto  max-w-[min(1080px,90vw)] "
                     mdx={res.body}
                 />
             </div>

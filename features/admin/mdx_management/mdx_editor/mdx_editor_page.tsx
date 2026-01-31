@@ -24,6 +24,7 @@ export const MdxEditorPageComponent = ({
             initialValues={{
                 value: editingItem ? editingItem.body : "",
                 mdxContentId: editingItem?.id ?? null,
+                formFieldNames: [],
             }}
         >
             <EditorSaveIndicator />

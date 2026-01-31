@@ -8,10 +8,12 @@ type TrpcResponseData<
     L extends keyof TrpcServerClient[K],
 > = Awaited<ReturnType<TrpcServerClient[K][L]>>;
 
-export type OnboardingSummaryResponseItem = TrpcResponseData<
+export type OnboardingSummaryResponseSummary = TrpcResponseData<
     "form",
     "getMany"
 >[number];
+
+export type OnboardingSummaryResponseItem = TrpcResponseData<"form", "getById">;
 
 export type MdxSummaryItem = Awaited<
     ReturnType<TrpcServerClient["mdx"]["getSummaries"]>

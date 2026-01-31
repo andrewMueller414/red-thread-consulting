@@ -58,7 +58,6 @@ export const FormResponseInputSwitch = (
             const meta = props.data.meta as ReorderMeta;
             const options = [];
             const value = props.data.value as string[];
-            console.log("meta: ", meta);
             for (const val of value) {
                 const opt = meta.options.find((f) => f.value === val);
                 if (opt) {

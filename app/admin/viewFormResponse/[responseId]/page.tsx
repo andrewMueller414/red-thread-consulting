@@ -7,32 +7,32 @@ import { redirect } from "next/navigation";
 import React, { type ReactNode } from "react";
 
 interface OnboardingResponseByIdPageProps {
-  params: Promise<{
-    responseId: string;
-  }>;
+    params: Promise<{
+        responseId: string;
+    }>;
 }
 
 const OnboardingResponseByIdPage = async ({
-  params,
+    params,
 }: OnboardingResponseByIdPageProps): Promise<ReactNode> => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return redirect("/admin");
-  }
-  const { responseId } = await params;
-  const trpc = await trpcServer();
-  const item = await trpc.form.getById({
-    id: parseInt(responseId),
-  });
-  return (
-    <div className="w-full flex flex-col justify-center items-center">
-      {item ? (
-        <OnboardingResponseViewContainer item={item} />
-      ) : (
-        <ResponseNotFoundView />
-      )}
-    </div>
-  );
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return redirect("/admin");
+    }
+    const { responseId } = await params;
+    const trpc = await trpcServer();
+    const item = await trpc.form.getById({
+        id: parseInt(responseId),
+    });
+    return (
+        <div className="w-full flex flex-col justify-center items-center">
+            {item ? (
+                <OnboardingResponseViewContainer item={item} />
+            ) : (
+                <ResponseNotFoundView />
+            )}
+        </div>
+    );
 };
 
 OnboardingResponseByIdPage.displayName = "OnboardingResponseByIdPage";

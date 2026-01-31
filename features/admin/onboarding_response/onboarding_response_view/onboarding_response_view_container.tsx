@@ -1,9 +1,10 @@
 import { FormResponse } from "@/lib/generated/prisma/client";
 import React, { type ReactNode } from "react";
 import { OnboardingResponseViewReviewedSection } from "./onboarding_response_viewed_section";
+import { OnboardingSummaryResponseItem } from "../../../trpc/trpc_types";
 
 interface OnboardingResponseViewContainerProps {
-    item: FormResponse;
+    item: Exclude<OnboardingSummaryResponseItem, false>;
 }
 
 export const OnboardingResponseViewContainer = ({

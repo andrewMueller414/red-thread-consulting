@@ -6,11 +6,12 @@
   - [x] Show indicator to admin indicating that content was saved.
 - [x] Add 'view full page' option to table of results. This can be the same link that will be sendable to others.
 - [x] Implement side-by-side image grid component in mdx similar to layout used previously once image storage solutions are figured out.
-- [ ] Handle form submission
+- [x] Handle form submission
 - [ ] Document 'desc' property on text inputs.
+- [ ] Handle ordering of form inputs according to newly added field.
 - [ ] Add loading state to form submission to avoid dual submissions.
 - [ ] Fix issue with mdx content being unable to delete by red button.
-- [ ] Document form submit button
+- [x] Document form submit button
 - [ ] Fix issue with form input order on review page.
 - [ ] Handle response page
 - [ ] Add delete confirmation to form response when in selected state.
@@ -33,6 +34,7 @@
 ## Admin Improvements
 
 - [ ] Handle authentication fail page and setup authentication page to redirect to our auth page. Currently it's redirecting to the default next-auth pages and they're hideous.
+- [ ] per-form page that renders a table of each form field name as a column with all responses.
 
 ---
 

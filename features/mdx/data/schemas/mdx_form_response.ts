@@ -38,6 +38,7 @@ export const formDataSchema = z.record(z.string(), formDataNestedValueSchema);
 export const mdxFormSchema = z.object({
     formId: z.string().min(1, "The formId can't be empty."),
     data: formDataSchema,
+    formFieldNames: z.string().array().default([]),
     mdxSourceId: z.string().nullish(),
     ctime: z.date(),
     reviewed_at: z.date().nullish(),

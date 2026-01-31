@@ -1,14 +1,24 @@
 "use client";
-import { ReactNode, createContext, useReducer, useContext } from "react";
+import { useEventListener } from "@/core/state/hooks/use_event_listener";
+import {
+    ReactNode,
+    createContext,
+    useReducer,
+    useContext,
+    useEffect,
+} from "react";
+import { FormFieldNameListener } from "./mdx_editor_form_field_name_listener";
 
 export interface MdxEditorState {
     value: string;
     mdxContentId: string | null;
+    formFieldNames: string[];
 }
 
 const defaultInitialValues: MdxEditorState = {
     value: "",
     mdxContentId: null,
+    formFieldNames: [],
 };
 
 export const MdxEditorContext =
@@ -22,6 +32,10 @@ type MdxEditorContextActions =
     | {
         type: "setMdxContentId";
         payload: string | null;
+    }
+    | {
+        type: "appendFormFieldName";
+        payload: string;
     };
 
 export const MdxEditorDispatchContext = createContext<
@@ -49,6 +63,14 @@ export const MdxEditorContextReducer = (
                 mdxContentId: action.payload,
             };
         }
+        case "appendFormFieldName": {
+            return {
+                ...state,
+                formFieldNames: state.formFieldNames.includes(action.payload)
+                    ? state.formFieldNames
+                    : [...state.formFieldNames, action.payload],
+            };
+        }
     }
 };
 
@@ -65,9 +87,22 @@ export const MdxEditorProvider = ({
 }: MdxEditorProviderProps) => {
     const [state, dispatch] = useReducer(MdxEditorContextReducer, initialValues);
 
+    useEventListener("set-new-form-name", (e) => {
+        if (!state.formFieldNames.includes(e.detail)) {
+            dispatch({
+                type: "appendFormFieldName",
+                payload: e.detail,
+            });
+        }
+    });
+
+    useEffect(() => {
+        console.log("state: ", state);
+    }, [state]);
     return (
         <MdxEditorContext.Provider value={state}>
             <MdxEditorDispatchContext.Provider value={dispatch}>
+                <FormFieldNameListener />
                 {children}
             </MdxEditorDispatchContext.Provider>
         </MdxEditorContext.Provider>

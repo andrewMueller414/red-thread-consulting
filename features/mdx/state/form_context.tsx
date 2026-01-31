@@ -1,12 +1,15 @@
 "use client";
+import { useEventListener } from "@/core/state/hooks/use_event_listener";
 import { ReactNode, createContext, useReducer, useContext } from "react";
 
 export interface MdxFormState {
-  mdxSourceId: string | null;
+    mdxSourceId: string | null;
+    orderedFormNames: string[];
 }
 
 const defaultInitialValues: MdxFormState = {
-  mdxSourceId: null,
+    mdxSourceId: null,
+    orderedFormNames: [],
 };
 
 export const MdxFormContext = createContext<MdxFormState>(defaultInitialValues);
@@ -14,51 +17,50 @@ export const MdxFormContext = createContext<MdxFormState>(defaultInitialValues);
 type MdxFormContextActions = { type: "setMdxSourceId"; payload: string | null };
 
 export const MdxFormDispatchContext = createContext<
-  React.Dispatch<MdxFormContextActions>
+    React.Dispatch<MdxFormContextActions>
 >(null!);
 
 export const useMdxFormContext = () => useContext(MdxFormContext);
 export const useMdxFormDispatch = () => useContext(MdxFormDispatchContext);
 
 export const MdxFormContextReducer = (
-  state: MdxFormState,
-  action: MdxFormContextActions,
+    state: MdxFormState,
+    action: MdxFormContextActions,
 ): MdxFormState => {
-  switch (action.type) {
-    case "setMdxSourceId":
-      return {
-        ...state,
-        mdxSourceId: action.payload,
-      };
-    default: {
-      return state;
+    switch (action.type) {
+        case "setMdxSourceId":
+            return {
+                ...state,
+                mdxSourceId: action.payload,
+            };
+        default: {
+            return state;
+        }
     }
-  }
 };
 
 MdxFormContextReducer.displayName = "MdxFormContextReducer";
 
 interface MdxFormProviderProps {
-  children: ReactNode;
-  initialValues?: Partial<MdxFormState>;
+    children: ReactNode;
+    initialValues?: Partial<MdxFormState>;
 }
 
 export const MdxFormProvider = ({
-  children,
-  initialValues,
+    children,
+    initialValues,
 }: MdxFormProviderProps) => {
-  const [state, dispatch] = useReducer(
-    MdxFormContextReducer,
-    initialValues
-      ? { ...initialValues, ...defaultInitialValues }
-      : defaultInitialValues,
-  );
-
-  return (
-    <MdxFormContext.Provider value={state}>
-      <MdxFormDispatchContext.Provider value={dispatch}>
-        {children}
-      </MdxFormDispatchContext.Provider>
-    </MdxFormContext.Provider>
-  );
+    const [state, dispatch] = useReducer(
+        MdxFormContextReducer,
+        initialValues
+            ? { ...initialValues, ...defaultInitialValues }
+            : defaultInitialValues,
+    );
+    return (
+        <MdxFormContext.Provider value={state}>
+            <MdxFormDispatchContext.Provider value={dispatch}>
+                {children}
+            </MdxFormDispatchContext.Provider>
+        </MdxFormContext.Provider>
+    );
 };

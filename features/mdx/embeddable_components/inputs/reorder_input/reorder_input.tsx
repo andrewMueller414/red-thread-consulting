@@ -55,7 +55,6 @@ export const ReorderInput = (
             clearTimeout(timer.current);
         }
         timer.current = setTimeout(() => {
-            console.log("items: ", items);
             form.setValue(name, {
                 value: items.map((item) => item.value) as string[],
                 inputId: InputId.reorder,

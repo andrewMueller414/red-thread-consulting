@@ -45,10 +45,11 @@ export const EDITOR_THEME: BundledTheme = "light-plus";
 export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
     const editorRef = useRef<StandaloneEditor | null>(null);
     const articleIdRef = useRef<null | string>(null); // Horrible hack to get around state issue.
+    const formFieldNamesRef = useRef<string[]>([]);
     const monaco = useMonaco();
     const globalDispatch = useDispatch();
     const mdxMutation = trpc.mdx.save.useMutation();
-    const { value: body, mdxContentId } = useMdxEditorContext();
+    const { value: body, mdxContentId, formFieldNames } = useMdxEditorContext();
 
     useEffect(() => {
         articleIdRef.current = mdxContentId;
@@ -106,6 +107,10 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
         initShiki();
     }, [monaco]);
 
+    useEffect(() => {
+        formFieldNamesRef.current = formFieldNames;
+    }, [formFieldNames]);
+
     const handleSave = useCallback(async () => {
         if (!articleIdRef.current?.length) {
             globalDispatch(setEditorMdxIdModalOpen(true));
@@ -120,6 +125,7 @@ export const MdxEditor = ({ initialValue }: MdxEditorProps): ReactNode => {
             {
                 id: articleIdRef.current!,
                 body: val,
+                formFieldNames: formFieldNamesRef.current, // This is the laziest hack I may have ever written.
             },
             {
                 onError: (err) => {

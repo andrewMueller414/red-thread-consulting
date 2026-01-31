@@ -6,7 +6,13 @@ import {
     MdxFormValue,
     NestedFormValue,
 } from "../../data/schemas/mdx_form_response";
-import { useEffect } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
+
+declare global {
+    interface WindowEventMap {
+        "set-new-form-name": CustomEvent<string>;
+    }
+}
 
 export const useFormInitialValue = <T extends NestedFormValue["meta"]>(
     name: string,
@@ -14,13 +20,27 @@ export const useFormInitialValue = <T extends NestedFormValue["meta"]>(
     value: MdxFormValue,
     meta: T,
 ) => {
+    const [haveSet, setHaveSet] = useState(false);
     const form = useFormContext<MdxFormData>();
 
-    useEffect(() => {
+    const handleInitialData = useEffectEvent(() => {
+        if (haveSet) {
+            return;
+        }
         form.setValue(name, {
             inputId,
             value,
             meta,
         });
-    }, [name, value]);
+        window.dispatchEvent(
+            new CustomEvent("set-new-form-name", {
+                detail: name,
+            }),
+        );
+        setHaveSet(true);
+    });
+
+    useEffect(() => {
+        handleInitialData();
+    }, [name, value, inputId, meta]);
 };
