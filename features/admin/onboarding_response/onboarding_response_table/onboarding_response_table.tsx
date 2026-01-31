@@ -1,5 +1,5 @@
 "use client";
-import React, { type ReactNode } from "react";
+import React, { useState, type ReactNode } from "react";
 import {
     ColumnFiltersState,
     flexRender,
@@ -33,11 +33,16 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/features/trpc/trpc_provider";
 import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
 import { PaginationTableFooter } from "@/core/shared_components/table_utils/table_footer_row";
+import { DeleteFormResponseConfirmationModal } from "./delete_form_response_confirmation_modal";
 
 export const OnboardingResponseTable = (): ReactNode => {
     const tableState = useOnboardingResponseTableContext();
     const tableDispatch = useOnboardingResponseTableDispatch();
-    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [sorting, setSorting] = useState<SortingState>([]);
+    const [
+        showDeleteFormResponseConfirmation,
+        setShowDeleteFormResponseConfirmation,
+    ] = useState(false);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         [],
     );
@@ -46,7 +51,6 @@ export const OnboardingResponseTable = (): ReactNode => {
             [OnboardingSummaryTableColumnId.id as string]: false,
         });
     const [rowSelection, setRowSelection] = React.useState({});
-    const deleteById = trpc.form.deleteById.useMutation();
     const markRead = trpc.form.markReviewedById.useMutation();
     const table = useReactTable({
         data: tableState.filteredSummaries,
@@ -107,23 +111,6 @@ export const OnboardingResponseTable = (): ReactNode => {
             },
         );
     };
-    const handleDelete = (): void => {
-        const selectedIds = getSelectedIds();
-
-        deleteById.mutate(selectedIds, {
-            onError: (err) => console.error("Error: ", err.message),
-            onSuccess: (responseData) => {
-                console.log("responseData: ", responseData);
-                if (responseData) {
-                    tableDispatch({
-                        type: OnboardingResponseTableAction.filterSummariesByIds,
-                        payload: selectedIds.map((n) => n.id),
-                    });
-                }
-                table.resetRowSelection();
-            },
-        });
-    };
     return (
         <>
             <OnboardingResponseTableFilterRow table={table} />
@@ -175,7 +162,10 @@ export const OnboardingResponseTable = (): ReactNode => {
             <PaginationTableFooter table={table} />
             {table.getFilteredSelectedRowModel().rows.length ? (
                 <AdminHeaderPortal>
-                    <Button onClick={handleDelete} variant="destructive">
+                    <Button
+                        onClick={() => setShowDeleteFormResponseConfirmation(true)}
+                        variant="destructive"
+                    >
                         Delete
                     </Button>
                     <Button
@@ -186,6 +176,17 @@ export const OnboardingResponseTable = (): ReactNode => {
                     </Button>
                 </AdminHeaderPortal>
             ) : null}
+            <DeleteFormResponseConfirmationModal
+                open={showDeleteFormResponseConfirmation}
+                close={() => setShowDeleteFormResponseConfirmation(false)}
+                getSelectedRowIds={getSelectedIds}
+                onSuccess={(ids) => {
+                    tableDispatch({
+                        type: OnboardingResponseTableAction.removeByIds,
+                        payload: ids,
+                    });
+                }}
+            />
         </>
     );
 };

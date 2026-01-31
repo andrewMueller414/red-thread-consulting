@@ -1,37 +1,50 @@
-import { Field, FieldLabel } from "@/components/ui/field";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { type ReactNode } from "react";
 import { z } from "zod";
 import { useFormContext } from "react-hook-form";
-import { textInputPropsSchema } from "../schemas";
 import { cn } from "@/lib/utils";
 import { getMaxWidthProp } from "../embeddable_component_utils";
-import { InputId, MdxFormData } from "../../data/schemas/mdx_form_response";
+import {
+    InputId,
+    MdxFormData,
+    PreviewComponentProps,
+    TextAreaMeta,
+} from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
-
-const textAreaInputProps = textInputPropsSchema.extend({
-    rows: z.number().int().default(3),
-});
+import { textAreaInputProps } from "../../data/schemas/input_props_schemas";
 
 export type EmbeddableTextAreaInputProps = z.input<typeof textAreaInputProps>;
 
 export const EmbeddableTextAreaInput = (
-    props: EmbeddableTextAreaInputProps,
+    props: EmbeddableTextAreaInputProps & PreviewComponentProps<string>,
 ): ReactNode => {
-    const { maxWidth, label, placeholder, name, rows } =
+    const { maxWidth, label, placeholder, name, rows, desc } =
         textAreaInputProps.parse(props);
     const form = useFormContext<MdxFormData>();
-    useFormInitialValue(name, InputId.textArea, "");
+    useFormInitialValue<TextAreaMeta>(name, InputId.textArea, "", {
+        label,
+        placeholder,
+        desc,
+        rows,
+    });
     return (
         <Field className={cn("mt-8 w-full", getMaxWidthProp(maxWidth))}>
             <FieldLabel>{label}</FieldLabel>
             <Textarea
-                value={(form.watch(name)?.value as string) ?? ""}
+                value={props.valueOverride ?? (form.watch(name)?.value as string) ?? ""}
+                disabled={props.disabled}
                 onChange={(e) =>
                     form.setValue(name, {
                         value: e.target.value,
                         inputId: InputId.textArea,
+                        meta: {
+                            label,
+                            placeholder,
+                            desc,
+                            rows,
+                        } satisfies TextAreaMeta,
                     })
                 }
                 placeholder={placeholder}
@@ -46,6 +59,7 @@ export const EmbeddableTextAreaInput = (
                     );
                 }}
             />
+            {desc ? <FieldDescription>{desc}</FieldDescription> : null}
         </Field>
     );
 };

@@ -1,5 +1,4 @@
 "use client";
-
 import { Checkbox } from "@/components/ui/checkbox";
 import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -8,6 +7,21 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import { OnboardingTableHeaderById } from "./onboarding_table_header_by_id";
 import { OnboardingSummaryTableColumnId } from "./onboarding_table_column_label_map";
 import Link from "next/link";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "../../../../components/ui/dropdown-menu";
+import { Button } from "../../../../components/ui/button";
+import { cn } from "../../../../lib/utils";
+import { trpc } from "../../../trpc/trpc_provider";
+import {
+    OnboardingResponseTableAction,
+    useOnboardingResponseTableDispatch,
+} from "../../state/onboarding_response_table_context";
+import { ReactNode } from "react";
 dayjs.extend(advancedFormat);
 
 export const responseTableColumns: ColumnDef<OnboardingSummaryResponseItem>[] =
@@ -45,7 +59,7 @@ export const responseTableColumns: ColumnDef<OnboardingSummaryResponseItem>[] =
             cell: ({ row }) => {
                 return (
                     <Link
-                        href={`/admin/viewOnboardingResponse/${row.getValue(OnboardingSummaryTableColumnId.id)}`}
+                        href={`/admin/viewFormResponse/${row.getValue(OnboardingSummaryTableColumnId.id)}`}
                     >
                         {row.getValue(OnboardingSummaryTableColumnId.mdxSourceId)}
                     </Link>
@@ -73,23 +87,60 @@ export const responseTableColumns: ColumnDef<OnboardingSummaryResponseItem>[] =
                     id={OnboardingSummaryTableColumnId.reviewedAt}
                 />
             ),
-            cell: ({ row }) => {
+            cell: ({ row }): ReactNode => {
                 const reviewedAt = row.getValue(
                     OnboardingSummaryTableColumnId.reviewedAt,
                 ) as string | null;
-                if (reviewedAt) {
-                    return (
-                        <div className="bg-green-700 text-fog px-2 py-1 rounded w-fit">
-                            True
-                        </div>
-                    );
-                } else {
-                    return (
-                        <div className="bg-red-700 text-fog px-2 py-1 rounded w-fit">
-                            False
-                        </div>
-                    );
-                }
+                /* eslint-disable-next-line  -- This actually is a react component... */
+                const dispatch = useOnboardingResponseTableDispatch();
+                const rowId = row.getValue(OnboardingSummaryTableColumnId.id) as
+                    | number
+                    | null;
+                const mutation = trpc.form.markReviewedById.useMutation();
+                const handleToggle = async (): Promise<void> => {
+                    if (rowId) {
+                        mutation.mutate(
+                            {
+                                reviewed: !Boolean(reviewedAt),
+                                ids: [rowId],
+                            },
+                            {
+                                onSuccess: () => {
+                                    dispatch({
+                                        type: OnboardingResponseTableAction.setReviewedAt,
+                                        payload: {
+                                            id: rowId,
+                                            value: reviewedAt ? null : new Date(),
+                                        },
+                                    });
+                                },
+                            },
+                        );
+                    }
+                };
+                return (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                className={cn(
+                                    "",
+                                    reviewedAt
+                                        ? "bg-matcha/80 hover:bg-matcha/90 text-pine"
+                                        : "bg-red-700/70 hover:bg-red-700/90 text-fog",
+                                )}
+                            >
+                                {reviewedAt ? "True" : "False"}
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-matcha">
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem className="bg-matcha" onClick={handleToggle}>
+                                    {reviewedAt ? "Clear" : "Mark Reviewed"}
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                );
             },
         },
         {

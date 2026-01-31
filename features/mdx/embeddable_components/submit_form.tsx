@@ -94,6 +94,7 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
                                     duration: 5000,
                                     variant: "info",
                                 });
+                                form.reset();
                             } else {
                                 showNotification({
                                     title: notificationErrorTitle,

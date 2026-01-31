@@ -4,20 +4,29 @@ import { motion, useDragControls } from "framer-motion";
 import { GripVertical } from "lucide-react";
 import { Reorder } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ReorderInputItem } from "./reorder_types";
+import { ReorderInputItem } from "../../../data/schemas/input_props_schemas";
 
 const MotionDragHandle = motion(GripVertical);
 
 interface ReorderItemProps {
     item: ReorderInputItem;
+    disabled?: boolean;
+    className?: string;
 }
 
-export const ReorderItem = ({ item }: ReorderItemProps): ReactNode => {
+export const ReorderItem = ({
+    item,
+    disabled,
+    className,
+}: ReorderItemProps): ReactNode => {
     const controls = useDragControls();
     const [dragging, setDragging] = useState(false);
     return (
         <Reorder.Item
-            className="text-xl font-bellefair border rounded px-4 py-3 bg-matcha w-full select-none touch-none flex flex-row justify-start items-center gap-x-4 overflow-clip my-0!"
+            className={cn(
+                "text-xl font-bellefair border rounded px-4 py-3 bg-matcha w-full select-none touch-none flex flex-row justify-start items-center gap-x-4 overflow-clip my-0!",
+                className,
+            )}
             dragListener={false}
             dragControls={controls}
             value={item}
@@ -33,8 +42,8 @@ export const ReorderItem = ({ item }: ReorderItemProps): ReactNode => {
                 background: "var(--matcha)",
                 color: "var(--pine)",
             }}
-            onDragStart={() => setDragging(true)}
-            onDragEnd={() => setDragging(false)}
+            onDragStart={() => (disabled ? {} : setDragging(true))}
+            onDragEnd={() => (disabled ? {} : setDragging(false))}
         >
             <MotionDragHandle
                 className={cn(
@@ -42,7 +51,9 @@ export const ReorderItem = ({ item }: ReorderItemProps): ReactNode => {
                     dragging ? "stroke-fog/40" : "stroke-pine/40",
                 )}
                 onPointerDown={(e) => {
-                    controls.start(e);
+                    if (!disabled) {
+                        controls.start(e);
+                    }
                     e.preventDefault();
                     e.stopPropagation();
                 }}

@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { formDataSchema } from "../data/schemas/mdx_form_response";
 import { MdxFormProvider } from "../state/form_context";
 
-export const MdxFormContainer = ({
+export const MdxFormWrapper = ({
     children,
 }: {
     children: ReactNode;
@@ -13,19 +13,28 @@ export const MdxFormContainer = ({
     const form = useForm({
         resolver: zodResolver(formDataSchema),
     });
-
     return (
         <FormProvider {...form}>
-            <MdxFormProvider>
-                <form
-                    className={
-                        "w-full min-w-full h-full min-h-0 prose prose-h2:mt-0 prose-h3:my-4 prose-blockquote:border-dust"
-                    }
-                >
-                    {children}
-                </form>
-            </MdxFormProvider>
+            <MdxFormProvider>{children}</MdxFormProvider>
         </FormProvider>
+    );
+};
+
+export const MdxFormContainer = ({
+    children,
+}: {
+    children: ReactNode;
+}): ReactNode => {
+    return (
+        <MdxFormWrapper>
+            <form
+                className={
+                    "w-full min-w-full h-full min-h-0 prose prose-h2:mt-0 prose-h3:my-4 prose-blockquote:border-dust"
+                }
+            >
+                {children}
+            </form>
+        </MdxFormWrapper>
     );
 };
 

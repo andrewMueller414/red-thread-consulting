@@ -10,7 +10,7 @@ const DocsPage = async (): Promise<ReactNode> => {
     if (!session) {
         redirect("/admin");
     }
-    const docItem = await trpc.mdx.getDocByFilePath("embeddable_components.mdx");
+    const docItem = await trpc.mdx.getDocByFilePath("docs.mdx");
     if (!docItem) {
         return (
             <div className="w-full h-full flex flex-col justify-center items-center px-8 py-12">

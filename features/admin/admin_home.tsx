@@ -1,7 +1,6 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
 import React, { type ReactNode } from "react";
-import { TRPCProvider } from "../trpc/trpc_provider";
 
 export const AdminHome = ({
     children,
@@ -10,11 +9,7 @@ export const AdminHome = ({
     children: ReactNode;
     authenticated: boolean;
 }): ReactNode => {
-    return (
-        <SessionProvider>
-            {children}
-        </SessionProvider>
-    );
+    return <SessionProvider>{children}</SessionProvider>;
 };
 
 AdminHome.displayName = "AdminHome";

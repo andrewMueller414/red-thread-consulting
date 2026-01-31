@@ -4,7 +4,11 @@ import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { InputId, MdxFormData } from "../../data/schemas/mdx_form_response";
+import {
+    InputId,
+    MdxFormData,
+    PreviewComponentProps,
+} from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 
 interface FormTextInputGroupProps {
@@ -29,12 +33,18 @@ export const FormTextInputGroup = ({
     placeholder,
     name,
     required,
+    disabled,
+    valueOverride,
     classes = {},
     styles = {},
-}: FormTextInputGroupProps): ReactNode => {
+}: FormTextInputGroupProps & PreviewComponentProps<string>): ReactNode => {
     const form = useFormContext<MdxFormData>();
     const value = form.watch(name);
-    useFormInitialValue(name, InputId.text, "");
+    useFormInitialValue(name, InputId.text, "", {
+        placeholder,
+        label,
+        desc,
+    });
     return (
         <Field className={classes.container} style={styles.container}>
             <FieldLabel>{label}</FieldLabel>
@@ -42,12 +52,18 @@ export const FormTextInputGroup = ({
             <Input
                 type="text"
                 placeholder={placeholder}
+                disabled={disabled}
                 required={required}
-                value={(value?.value as string) ?? ""}
+                value={valueOverride ?? (value?.value as string) ?? ""}
                 onChange={(e) =>
                     form.setValue(name, {
                         value: e.target.value,
                         inputId: InputId.text,
+                        meta: {
+                            placeholder,
+                            label,
+                            desc,
+                        },
                     })
                 }
                 className={classes.input}

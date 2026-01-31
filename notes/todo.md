@@ -7,8 +7,13 @@
 - [x] Add 'view full page' option to table of results. This can be the same link that will be sendable to others.
 - [x] Implement side-by-side image grid component in mdx similar to layout used previously once image storage solutions are figured out.
 - [ ] Handle form submission
+- [ ] Document 'desc' property on text inputs.
+- [ ] Add loading state to form submission to avoid dual submissions.
+- [ ] Fix issue with mdx content being unable to delete by red button.
 - [ ] Document form submit button
+- [ ] Fix issue with form input order on review page.
 - [ ] Handle response page
+- [ ] Add delete confirmation to form response when in selected state.
   - [ ] Build a component for each `InputId` and create a switch component that renders each item according to it's `inputId` field.
 
 - [ ] Add these components:

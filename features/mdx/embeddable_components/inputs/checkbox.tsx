@@ -7,39 +7,45 @@ import {
     FieldTitle,
 } from "../../../../components/ui/field";
 import { Checkbox } from "../../../../components/ui/checkbox";
-import { embeddableInputSchema } from "../shared_schemas";
 import { useFormContext } from "react-hook-form";
 import {
     InputId,
     MdxFormData,
     NestedFormValue,
+    PreviewComponentProps,
 } from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
-
-const checkboxPropsSchema = embeddableInputSchema.extend({
-    title: z
-        .string({ message: "Please provide a title" })
-        .describe("The titledisplayed with the checkbox."),
-    subtitle: z.string().optional(),
-});
+import { checkboxPropsSchema } from "../../data/schemas/input_props_schemas";
 
 export type EmbeddableCheckboxProps = z.infer<typeof checkboxPropsSchema>;
 
 export const EmbeddableCheckbox = (
-    props: EmbeddableCheckboxProps,
+    props: EmbeddableCheckboxProps & PreviewComponentProps<boolean>,
 ): ReactNode => {
     const { title, subtitle, name } = checkboxPropsSchema.parse(props);
     const form = useFormContext<MdxFormData>();
     const value = form.watch(name) as NestedFormValue;
-    useFormInitialValue(name, InputId.checkbox, false);
+    useFormInitialValue(name, InputId.checkbox, false, {
+        title,
+        subtitle,
+    });
     return (
         <Field orientation="horizontal">
             <Checkbox
-                checked={(value?.value as boolean) ?? false}
+                checked={
+                    typeof props.valueOverride === "boolean"
+                        ? props.valueOverride
+                        : ((value?.value as boolean) ?? false)
+                }
+                disabled={props.disabled}
                 onCheckedChange={(checked) =>
                     form.setValue(name, {
                         value: checked,
                         inputId: InputId.checkbox,
+                        meta: {
+                            title,
+                            subtitle,
+                        },
                     })
                 }
             />

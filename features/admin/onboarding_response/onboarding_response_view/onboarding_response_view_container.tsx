@@ -9,7 +9,6 @@ interface OnboardingResponseViewContainerProps {
 export const OnboardingResponseViewContainer = ({
     item,
 }: OnboardingResponseViewContainerProps): ReactNode => {
-    console.log("item: ", item);
     return (
         <div className="w-full max-w-[min(1080px,90vw)] py-16 px-8 lg:px-12 space-y-8">
             <OnboardingResponseViewReviewedSection item={item} />

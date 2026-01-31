@@ -240,6 +240,27 @@ For boolean questions like 'should I contact you by email', you can use a checkb
 />
 
 
+### Submit
+
+This is a simple button that submits the form, but has several useful properties. Below are the default values. All properties are optional, so it can just be written as `<Submit />` if the defaults are ok.
+
+```tsx
+<Submit 
+    // The text content of the button.
+    label={"Submit"}
+    // The notification if the submission
+    // is successful.
+    notificationTitle={"Thank you"}
+    notificationBody={"Form submitted successfully"}
+    // The notification if the submission
+    // encounters an error.
+    notificationErrorTitle={"Oh no."}
+    notificationErrorBody={"An error occurred. Someone will address this as soon as possible."}
+/>
+```
+
+On the editor page, this component will print out the form's data to the browser's developer console (cmd+opt+i in chrome) instead of writing it to the database.
+
 
 ## Layout Components
 

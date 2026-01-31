@@ -4,9 +4,16 @@ import { MediaDeleteModal } from "@/features/media/media_management/media_delete
 import { MediaManagementGallery } from "@/features/media/media_management/media_gallery/media_management_gallery";
 import { MediaImageDetailModal } from "@/features/media/media_management/media_image_detail_modal";
 import { MediaManagementHeader } from "@/features/media/media_management/media_management_header";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import React, { type ReactNode } from "react";
+import { authOptions } from "../../api/auth/[...nextauth]/route";
 
 const MediaManagementPage = async (): Promise<ReactNode> => {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return redirect("/admin");
+    }
     const imageData = await listImageObjects();
     return (
         <div className="w-full h-fit min-h-screen flex flex-col justify-start items-center gap-y-6 pt-12 pb-16 px-8">

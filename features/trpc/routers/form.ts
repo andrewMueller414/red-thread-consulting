@@ -95,6 +95,7 @@ export const formRouter = createTRPCRouter({
                     id: true,
                     data: true,
                     ctime: true,
+                    mdxSourceId: true,
                     reviewed_at: true,
                 },
                 orderBy: {

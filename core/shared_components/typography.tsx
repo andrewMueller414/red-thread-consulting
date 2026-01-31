@@ -25,5 +25,9 @@ export const H3 = ({ children, className }: TypographyProps): ReactNode => {
 };
 
 export const H4 = ({ children, className }: TypographyProps): ReactNode => {
-    return <h4 className={cn("", className)}>{children}</h4>;
+    return (
+        <h4 className={cn("text-lg text-moss font-semibold", className)}>
+            {children}
+        </h4>
+    );
 };

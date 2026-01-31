@@ -50,7 +50,7 @@ export const mdxRouter = createTRPCRouter({
         });
     }),
     getDocByFilePath: baseProcedure
-        .input(z.string().default("embeddable_components.mdx"))
+        .input(z.string().default("docs.mdx"))
         .query(async ({ input }) => {
             const p = path.resolve(process.cwd(), "content", "component_docs", input);
             if (fs.existsSync(p)) {

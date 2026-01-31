@@ -25,6 +25,8 @@ export enum OnboardingResponseTableAction {
     filterSummariesByIds,
     setReviewedByIds,
     updateItem,
+    setReviewedAt,
+    removeByIds,
 }
 
 type OnboardingResponseTableContextActions =
@@ -50,6 +52,17 @@ type OnboardingResponseTableContextActions =
     | {
         type: OnboardingResponseTableAction.setFilterText;
         payload: string;
+    }
+    | {
+        type: OnboardingResponseTableAction.setReviewedAt;
+        payload: {
+            id: number;
+            value: Date | null;
+        };
+    }
+    | {
+        type: OnboardingResponseTableAction.removeByIds;
+        payload: { id: number }[];
     };
 
 export const OnboardingResponseTableDispatchContext = createContext<
@@ -128,6 +141,43 @@ export const OnboardingResponseTableContextReducer = (
                     state.responseSummaries,
                     action.payload,
                 ),
+            };
+        }
+        case OnboardingResponseTableAction.setReviewedAt: {
+            return {
+                ...state,
+                responseSummaries: state.responseSummaries.map((item) => {
+                    if (item.id === action.payload.id) {
+                        return {
+                            ...item,
+                            reviewed_at: action.payload.value,
+                        };
+                    } else {
+                        return item;
+                    }
+                }),
+                filteredSummaries: state.filteredSummaries.map((item) => {
+                    if (item.id === action.payload.id) {
+                        return {
+                            ...item,
+                            reviewed_at: action.payload.value,
+                        };
+                    } else {
+                        return item;
+                    }
+                }),
+            };
+        }
+        case OnboardingResponseTableAction.removeByIds: {
+            const ids = action.payload.map((n) => n.id);
+            return {
+                ...state,
+                responseSummaries: state.responseSummaries.filter((f) => {
+                    return !ids.includes(f.id);
+                }),
+                filteredSummaries: state.filteredSummaries.filter((f) => {
+                    return !ids.includes(f.id);
+                }),
             };
         }
     }
