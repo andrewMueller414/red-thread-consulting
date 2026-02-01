@@ -94,6 +94,7 @@
         "react-resizable-panels": "^4.5.2",
         "react-responsive": "^10.0.1",
         "react-spinners": "^0.17.0",
+        "rehype-callouts": "^2.1.2",
         "remark-gfm": "^4.0.1",
         "sass": "^1.97.3",
         "shiki": "^3.21.0",

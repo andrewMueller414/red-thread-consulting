@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { H1, H2, H3, H4 } from "../../../core/shared_components/typography";
 import {
     EmbeddableTextInput,
@@ -28,6 +28,10 @@ import {
     EmbeddableCheckboxProps,
 } from "../embeddable_components/inputs/checkbox";
 import { ReorderInputProps } from "./schemas/input_props_schemas";
+import {
+    Callout,
+    CalloutProps,
+} from "../embeddable_components/layout/callout/callout";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -93,6 +97,13 @@ export const getComponentMap = (): Record<string, FC<any>> => {
             return (
                 <MdxErrorBoundary>
                     <EmbeddableAlignmentComponent {...props} />
+                </MdxErrorBoundary>
+            );
+        },
+        Callout: (props: CalloutProps & { children: ReactNode }) => {
+            return (
+                <MdxErrorBoundary>
+                    <Callout {...props} />
                 </MdxErrorBoundary>
             );
         },

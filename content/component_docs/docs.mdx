@@ -150,7 +150,7 @@ All of the properties here are the same as in the `EmbeddableTextInput` componen
     // The input is resizable, but this will be
     // it's initial size
     // defaults to 3 if not present.
-    rows={5}
+    rows={3}
 />
 ```
 
@@ -159,6 +159,7 @@ All of the properties here are the same as in the `EmbeddableTextInput` componen
     label={`My Label`}
     name={"anyUniqueNameThatNeverChanges2"}
     placeholder="Company Name"
+    rows={3}
     maxWidth="medium"
 />
 
@@ -377,3 +378,103 @@ Erat, consectetur, nec faucibus gravida id sed aenean elit rhoncus. In lorem lob
 Sit id massa ac nibh velit phasellus, condimentum vel, suscipit. Diam duis porta massa dignissim ut dui laoreet convallis augue. Placerat proin eget, ac arcu tristique lacus pharetra elit suscipit. Convallis vestibulum nullam luctus, faucibus amet praesent in consectetur tempor. Tristique porta, nullam faucibus diam in nisl sed efficitur ipsum.
 
 Ullamcorper id, dignissim iaculis ante faucibus varius, venenatis metus praesent. At aliquam, ligula purus augue nibh at malesuada risus, bibendum. Tristique vulputate laoreet nisi, dui faucibus quis, diam purus et. Aenean eget dui elit quam congue id, elementum, cursus ac. Dignissim ut convallis imperdiet, aliquam id dignissim tincidunt dignissim ligula.
+
+### "Callouts"
+
+```tsx
+<Callout title={"This is a _note_ callout"} type="note">
+Some content is displayed directly without the '-'
+</Callout>
+
+<Callout title={"This is a **tip** callout"} type="tip" foldable>
+Set 'foldable' to make the callout foldable.
+</Callout>
+
+<Callout title={"This is a **important** callout"} type="important" foldable folded={false}>
+Set 'folded={false}' to start in an expanded state when 'foldable'
+</Callout>
+
+<Callout title={"This is a **warning** callout"} type="warning" foldable>
+Set 'foldable' to make the callout foldable.
+</Callout>
+
+<Callout title={"This is a **caution** callout"} type="caution" foldable>
+Set 'foldable' to make the callout foldable.
+</Callout>
+
+<Callout title={"This is a **Pine** callout"} type="pine" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Mist** callout"} type="mist" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Fog** callout"} type="fog" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Moss** callout"} type="moss" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Dust** callout"} type="dust" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Matcha** callout"} type="matcha" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Cream** callout"} type="cream" foldable>
+Some content shown after opening!
+</Callout>
+```
+
+<Callout title={"This is a _note_ callout"} type="note">
+Some content is displayed directly without the '-'
+</Callout>
+
+<Callout title={"This is a **tip** callout"} type="tip" foldable>
+Set 'foldable' to make the callout foldable.
+</Callout>
+
+<Callout title={"This is a **important** callout"} type="important" foldable folded={false}>
+Set `folded={false}` to start in an expanded state when 'foldable'
+</Callout>
+
+<Callout title={"This is a **warning** callout"} type="warning" foldable>
+Set 'foldable' to make the callout foldable.
+</Callout>
+
+<Callout title={"This is a **caution** callout"} type="caution" foldable>
+Set 'foldable' to make the callout foldable.
+</Callout>
+
+<Callout title={"This is a **Pine** callout"} type="pine" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Mist** callout"} type="mist" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Fog** callout"} type="fog" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Moss** callout"} type="moss" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Dust** callout"} type="dust" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Matcha** callout"} type="matcha" foldable>
+Some content shown after opening!
+</Callout>
+
+<Callout title={"This is a **Cream** callout"} type="cream" foldable>
+Some content shown after opening!
+</Callout>

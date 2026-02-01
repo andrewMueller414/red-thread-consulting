@@ -1,0 +1,75 @@
+@use "rehype-callouts/theme/vitepress";
+
+.callout-title-icon {
+  display: none;
+}
+
+.callout-title-text {
+  strong {
+    font-weight: 800;
+  }
+}
+
+[data-callout="note"] {
+  background-color: #ebe7e2;
+}
+
+[data-callout="tip"] {
+  background-color: #e4e2f0;
+}
+
+[data-callout="important"] {
+  background-color: #ede3ed;
+}
+
+[data-callout="warning"] {
+  background-color: #f9ecd3;
+}
+
+[data-callout="caution"] {
+  background-color: #fcdcd9;
+}
+
+[data-callout="pine"] {
+  background-color: var(--pine);
+
+  * {
+    color: var(--cream);
+  }
+}
+
+[data-callout="mist"] {
+  background-color: var(--mist);
+
+  * {
+    color: var(--fog);
+  }
+}
+
+[data-callout="fog"] {
+  background-color: var(--fog);
+}
+
+[data-callout="moss"] {
+  background-color: var(--moss);
+
+  * {
+    color: var(--fog);
+  }
+}
+
+[data-callout="dust"] {
+  background-color: var(--dust);
+
+  * {
+    color: var(--fog);
+  }
+}
+
+[data-callout="matcha"] {
+  background-color: var(--matcha);
+}
+
+[data-callout="cream"] {
+  background-color: var(--cream);
+}
