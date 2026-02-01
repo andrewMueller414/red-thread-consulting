@@ -35,6 +35,7 @@ const ArticleViewPage = async ({
                 <MdxContent
                     className="w-full mx-auto  max-w-[min(1080px,90vw)] "
                     mdx={res.body}
+                    expandLoading
                 />
             </div>
         </RenderedMdxFormProvider>

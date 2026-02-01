@@ -23,10 +23,11 @@ const calloutPropsSchema = z.object({
         "matcha",
         "cream",
     ]),
-
     title: z.string(),
     foldable: z.boolean().default(false),
     folded: z.boolean().default(true),
+    right: z.boolean().optional(),
+    left: z.boolean().optional(),
 });
 
 export type CalloutProps = z.infer<typeof calloutPropsSchema>;
@@ -36,7 +37,8 @@ export const Callout = ({
     ...props
 }: CalloutProps & { children: ReactNode }): ReactNode => {
     console.log("typeof props.title: ", props.title);
-    const { type, title, folded, foldable } = calloutPropsSchema.parse(props);
+    const { type, title, folded, foldable, left, right } =
+        calloutPropsSchema.parse(props);
     const [open, setOpen] = useState(foldable && folded ? false : true);
     return (
         <motion.div
@@ -44,7 +46,13 @@ export const Callout = ({
             initial={open}
             data-callout={type}
             /* @ts-expect-error -- This type works, but there's a type error on framer-motion's end. */
-            className="px-4 py-3 rounded-lg my-6"
+            className={cn(
+                "px-4 py-3 rounded-md my-6",
+                left &&
+                "@5xl/mdx:float-left @5xl/mdx:w-1/3 @5xl/mdx:mr-4 @5xl/mdx:min-w-87.5",
+                right &&
+                "@5xl/mdx:float-right @5xl/mdx:w-1/3 @5xl/mdx:ml-4 @5xl/mdx:min-w-87.5",
+            )}
         >
             <div
                 className={cn(

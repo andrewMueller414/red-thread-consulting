@@ -21,7 +21,7 @@ const DocsPage = async (): Promise<ReactNode> => {
     return (
         <div className="px-8 py-16 flex flex-col justify-start items-center">
             <div className="max-w-270 w-full prose">
-                <MdxContent mdx={docItem} />
+                <MdxContent mdx={docItem} expandLoading />
             </div>
         </div>
     );

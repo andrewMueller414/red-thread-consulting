@@ -38,7 +38,10 @@ export const FooterContainer = (): ReactNode => {
         ],
     };
     return (
-        <div className="w-full min-h-52 flex flex-col justify-center items-center">
+        <div
+            className="w-full min-h-52 flex flex-col justify-center items-center"
+            id="footer-container"
+        >
             <div className="w-full max-w-270 flex flex-col lg:flex-row lg:justify-center lg:items-center px-8 py-6">
                 <Image
                     src="/logo/connection_advocacy_logo.svg"

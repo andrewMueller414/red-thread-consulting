@@ -32,6 +32,8 @@ import {
     Callout,
     CalloutProps,
 } from "../embeddable_components/layout/callout/callout";
+import { DateTimeInputSchema } from "../embeddable_components/inputs/datetime/date_time_input_schema";
+import { DateTimeInputSwitch } from "../embeddable_components/inputs/datetime/date_time_input_switch";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -67,6 +69,13 @@ export const getComponentMap = (): Record<string, FC<any>> => {
             return (
                 <MdxErrorBoundary>
                     <EmbeddableCheckbox {...props} />
+                </MdxErrorBoundary>
+            );
+        },
+        DateInput: (props: DateTimeInputSchema & { time?: boolean }) => {
+            return (
+                <MdxErrorBoundary>
+                    <DateTimeInputSwitch {...props} />
                 </MdxErrorBoundary>
             );
         },

@@ -180,6 +180,22 @@ For boolean questions like 'should I contact you by email', you can use a checkb
 <Checkbox name="My name that never changes" title="My title" subtitle="This subtitle is optional." />
 
 
+### Date-Time Input
+
+**With Time:**
+
+```tsx
+<DateInput 
+    name="My unique, descriptive name."
+    time
+/>
+```
+
+<DateInput 
+    name="My unique, descriptive name."
+    time
+/>
+
 
 ### Reorder Input
 
@@ -383,7 +399,7 @@ Ullamcorper id, dignissim iaculis ante faucibus varius, venenatis metus praesent
 
 ```tsx
 <Callout title={"This is a _note_ callout"} type="note">
-Some content is displayed directly without the '-'
+If not foldable, this will be displayed directly and there won't be an icon.
 </Callout>
 
 <Callout title={"This is a **tip** callout"} type="tip" foldable>
@@ -426,13 +442,13 @@ Some content shown after opening!
 Some content shown after opening!
 </Callout>
 
-<Callout title={"This is a **Cream** callout"} type="cream" foldable>
+<Callout title={"This is a **Cream** callout"} type="cream" foldable right>
 Some content shown after opening!
 </Callout>
 ```
 
 <Callout title={"This is a _note_ callout"} type="note">
-Some content is displayed directly without the '-'
+If not foldable, this will be displayed directly and there won't be an icon.
 </Callout>
 
 <Callout title={"This is a **tip** callout"} type="tip" foldable>
@@ -475,6 +491,8 @@ Some content shown after opening!
 Some content shown after opening!
 </Callout>
 
-<Callout title={"This is a **Cream** callout"} type="cream" foldable>
+<Callout title={"This is a **Cream** callout"} type="cream" foldable right>
 Some content shown after opening!
 </Callout>
+
+Or pass either `right` or `left` as a boolean to float the callout to that side when the screen is large enough and text will wrap around it.

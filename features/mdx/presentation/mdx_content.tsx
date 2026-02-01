@@ -6,19 +6,24 @@ import { LoadingComponent } from "../../../core/shared_components/loading_compon
 import { cn } from "../../../lib/utils";
 import { MdxFormContainer } from "./mdx_form_container";
 import "../data/mdx.scss";
+import { useHeightWithoutNav } from "@/core/state/hooks/use_height_without_nav";
 
 interface MdxContentProps {
     mdx: string;
     className?: string;
     inline?: boolean;
+    expandLoading?: boolean;
 }
 
 export const MdxContent = ({
     mdx,
     inline,
     className,
+    expandLoading,
 }: MdxContentProps): ReactNode => {
     const [Component, setContent] = useMdxClientParse();
+
+    const heightWithoutNav = useHeightWithoutNav();
 
     const _setContent = useEffectEvent((_mdx: string) => setContent(_mdx));
 
@@ -46,7 +51,16 @@ export const MdxContent = ({
                     <Component components={getComponentMap()} />
                 </div>
             ) : (
-                <div className="w-full h-full flex flex-col justify-center items-center">
+                <div
+                    className={cn(
+                        "w-full h-full flex flex-col justify-center items-center",
+                    )}
+                    style={{
+                        ...(expandLoading && {
+                            minHeight: `${heightWithoutNav}px`,
+                        }),
+                    }}
+                >
                     <LoadingComponent />
                 </div>
             )}

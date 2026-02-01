@@ -1,5 +1,17 @@
 @use "rehype-callouts/theme/vitepress";
 
+td[data-selected="true"] {
+  background-color: transparent;
+}
+
+data-[selected-single="true"] {
+  &[data-selected-single="true"] {
+    button {
+      background-color: red;
+    }
+  }
+}
+
 .callout-title-icon {
   display: none;
 }

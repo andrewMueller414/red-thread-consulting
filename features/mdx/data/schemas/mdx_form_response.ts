@@ -6,11 +6,13 @@ import {
     textAreaInputProps,
     textInputPropsSchema,
 } from "./input_props_schemas";
+import { dateTimeInputSchema } from "../../embeddable_components/inputs/datetime/date_time_input_schema";
 
 export const formDataValueSchema = z.union([
     z.boolean(),
     z.string(),
     z.number(),
+    z.date(),
     z.string().array(),
     z.number().array(),
 ]);
@@ -20,17 +22,25 @@ export enum InputId {
     text = "text",
     textArea = "text-area",
     reorder = "reorder",
+    dateTime = "dt",
 }
 
 const checkboxMeta = checkboxPropsSchema.omit({ name: true });
 const textInputMeta = textInputPropsSchema.omit({ name: true, maxWidth: true });
 const textAreaMeta = textAreaInputProps.omit({ name: true, maxWidth: true });
 const reorderMeta = reorderInputProps.omit({ name: true });
+const dateTimeMeta = dateTimeInputSchema.omit({ name: true });
 
 export const formDataNestedValueSchema = z.object({
     inputId: z.nativeEnum(InputId),
     value: formDataValueSchema,
-    meta: z.union([reorderMeta, checkboxMeta, textInputMeta, textAreaMeta]),
+    meta: z.union([
+        reorderMeta,
+        checkboxMeta,
+        textInputMeta,
+        textAreaMeta,
+        dateTimeMeta,
+    ]),
 });
 
 export const formDataSchema = z.record(z.string(), formDataNestedValueSchema);
@@ -52,6 +62,9 @@ export type MdxFormData = z.infer<typeof formDataSchema>;
 
 export type NestedFormValue = z.infer<typeof formDataNestedValueSchema>;
 
+export type NestedFormValueOfType<T extends NestedFormValue["value"]> =
+    NestedFormValue & { value: T };
+
 export interface PreviewComponentProps<
     T extends string | boolean | ReorderInputItem[],
 > {
@@ -65,3 +78,4 @@ export type CheckboxMeta = z.infer<typeof checkboxMeta>;
 export type TextInputMeta = z.infer<typeof textInputMeta>;
 export type TextAreaMeta = z.infer<typeof textAreaMeta>;
 export type ReorderMeta = z.infer<typeof reorderMeta>;
+export type DateTimeMeta = z.infer<typeof dateTimeMeta>;
