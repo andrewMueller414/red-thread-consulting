@@ -2,7 +2,6 @@ import React, { MouseEventHandler, type ReactNode } from "react";
 import z from "zod";
 import { Button } from "../../../components/ui/button";
 import { useFormContext } from "react-hook-form";
-import { useMdxFormDispatch } from "../state/form_context";
 import { MdxFormData } from "../data/schemas/mdx_form_response";
 import { trpc } from "@/features/trpc/trpc_provider";
 import { showNotification } from "@/features/notifications/notification_utils";
@@ -10,7 +9,7 @@ import { RedThreadError } from "@/core/errors/red_thread_error";
 import { useSession } from "next-auth/react";
 import { useRenderedMdxFormContext } from "@/features/forms/state/rendered_mdx_form_context";
 import { usePathname } from "next/navigation";
-import { AppRoutes } from "@/.next/dev/types/routes";
+import { Route } from "next";
 
 const submitFormProps = z.object({
     label: z.string().default("Submit"),
@@ -35,7 +34,7 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
         notificationErrorTitle,
     } = submitFormProps.parse(props);
     const session = useSession();
-    const pathname = usePathname() as AppRoutes;
+    const pathname = usePathname() as Route;
     const { mdxSourceId } = useRenderedMdxFormContext();
     const form = useFormContext<MdxFormData>();
     const formMutation = trpc.form.create.useMutation();

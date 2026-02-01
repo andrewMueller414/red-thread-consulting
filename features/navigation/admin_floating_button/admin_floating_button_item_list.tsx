@@ -4,17 +4,17 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { AppRoutes } from "@/.next/dev/types/routes";
+import { Route } from "next";
 
 export type DropdownButton =
     | {
         label: string;
-        filter?: (pathname: AppRoutes) => boolean;
+        filter?: (pathname: Route) => boolean;
         onSelect: () => void;
     }
     | {
         label: string;
-        filter?: (pathname: AppRoutes) => boolean;
+        filter?: (pathname: Route) => boolean;
         href: string;
     };
 
@@ -61,7 +61,7 @@ export const AdminFloatingButtonList = ({
             ] as DropdownButton[]
         ).filter((item) => {
             if (item.filter) {
-                return item.filter(pathname as AppRoutes);
+                return item.filter(pathname as Route);
             } else {
                 return true;
             }
