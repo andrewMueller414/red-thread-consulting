@@ -3,10 +3,14 @@ import {
     checkboxPropsSchema,
     ReorderInputItem,
     reorderInputProps,
+    selectInputPropsSchema,
     textAreaInputProps,
     textInputPropsSchema,
 } from "./input_props_schemas";
-import { dateTimeInputSchema } from "../../embeddable_components/inputs/datetime/date_time_input_schema";
+import {
+    dateTimeInputPropsWithFutureTense,
+    dateTimeInputPropsWithYears,
+} from "../../embeddable_components/inputs/datetime/date_time_input_schema";
 
 export const formDataValueSchema = z.union([
     z.boolean(),
@@ -23,13 +27,19 @@ export enum InputId {
     textArea = "text-area",
     reorder = "reorder",
     dateTime = "dt",
+    select = "select",
 }
 
 const checkboxMeta = checkboxPropsSchema.omit({ name: true });
 const textInputMeta = textInputPropsSchema.omit({ name: true, maxWidth: true });
 const textAreaMeta = textAreaInputProps.omit({ name: true, maxWidth: true });
 const reorderMeta = reorderInputProps.omit({ name: true });
-const dateTimeMeta = dateTimeInputSchema.omit({ name: true });
+const selectMeta = selectInputPropsSchema.omit({ name: true });
+
+const dateTimeMeta = z.union([
+    dateTimeInputPropsWithFutureTense.omit({ name: true }),
+    dateTimeInputPropsWithYears.omit({ name: true }),
+]);
 
 export const formDataNestedValueSchema = z.object({
     inputId: z.nativeEnum(InputId),
@@ -40,6 +50,7 @@ export const formDataNestedValueSchema = z.object({
         textInputMeta,
         textAreaMeta,
         dateTimeMeta,
+        selectMeta,
     ]),
 });
 
@@ -66,7 +77,7 @@ export type NestedFormValueOfType<T extends NestedFormValue["value"]> =
     NestedFormValue & { value: T };
 
 export interface PreviewComponentProps<
-    T extends string | boolean | ReorderInputItem[],
+    T extends string | boolean | ReorderInputItem[] | Date,
 > {
     disabled?: boolean;
     valueOverride?: T;
@@ -79,3 +90,4 @@ export type TextInputMeta = z.infer<typeof textInputMeta>;
 export type TextAreaMeta = z.infer<typeof textAreaMeta>;
 export type ReorderMeta = z.infer<typeof reorderMeta>;
 export type DateTimeMeta = z.infer<typeof dateTimeMeta>;
+export type SelectMeta = z.infer<typeof selectMeta>;

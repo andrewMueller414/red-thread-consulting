@@ -8,6 +8,17 @@ export const sizeEnum = z.union([
     z.literal("large"),
 ]);
 
+export type SizeEnum = z.infer<typeof sizeEnum>;
+
+export const sizeEnumWithFull = z.union([
+    z.literal("small"),
+    z.literal("medium"),
+    z.literal("large"),
+    z.literal("full"),
+]);
+
+export type SizeEnumWithFull = z.infer<typeof sizeEnumWithFull>;
+
 const imageSchema = z.object({
     url: z.string().url(),
     alt: z.string({

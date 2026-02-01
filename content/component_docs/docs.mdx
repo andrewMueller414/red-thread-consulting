@@ -180,6 +180,42 @@ For boolean questions like 'should I contact you by email', you can use a checkb
 <Checkbox name="My name that never changes" title="My title" subtitle="This subtitle is optional." />
 
 
+### Select Input
+
+For choosing a single item from a list.
+
+
+```tsx
+<SelectInput
+    name="Preferred contact method"
+    options={[
+        "Email",
+        "Phone",
+        "Text",
+    ]}
+    label="Contact Method"
+    // This is the default placeholder.
+    placeholder="Search..."
+    // "small" | medium" | "large" | "full""
+    // Default: "medium"
+    width="medium"
+/>
+```
+
+
+<SelectInput
+    name="Preferred contact method"
+    options={[
+        "Email",
+        "Phone",
+        "Text",
+    ]}
+    label="Contact Method"
+    placholder="Search..."
+    width="medium"
+/>
+
+
 ### Date-Time Input
 
 **With Time:**
@@ -191,10 +227,53 @@ For boolean questions like 'should I contact you by email', you can use a checkb
 />
 ```
 
+You can include `time` to show a time component. 
+
 <DateInput 
     name="My unique, descriptive name."
     time
 />
+
+
+
+**Without Time:**
+
+```tsx
+<DateInput 
+    name="My unique, descriptive name two."
+/>
+```
+
+If you remove the `time` property only the button is shown.
+
+<DateInput 
+    name="My unique, descriptive name two."
+/>
+
+This accepts a set of other properties:
+
+| Key | Type | Default Value |
+| --- | ---- | ------------- |
+| dateLabel | string | "Date" |
+| datePlaceholder | string | "Select date" |
+| timeLabel | string | "Time" |
+| time | boolean | false |
+
+And then also one of the following two:
+
+Here, the `past` and `future` keys, if set to true will collect dates for 10 years in the past or future respectively.
+
+| Key | Type | Default Value |
+| --- | ---- | ------------- |
+| past | boolean | false |
+| future | boolean | false |
+
+Or you can set the years explicitly:
+
+| Key | Type | Default Value |
+| --- | ---- | ------------- |
+| toYear | number | undefined |
+| fromYear | number | undefined |
 
 
 ### Reorder Input

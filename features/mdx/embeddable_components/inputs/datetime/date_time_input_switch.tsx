@@ -15,14 +15,14 @@ import {
 import { useFormContext } from "react-hook-form";
 
 export const DateTimeInputSwitch = ({
-    time,
     ...props
-}: DateTimeInputSchema & { time?: boolean }): ReactNode => {
+}: DateTimeInputSchema): ReactNode => {
     const _props = dateTimeInputSchema.parse(props);
     useFormInitialValue<DateTimeMeta>(_props.name, InputId.dateTime, new Date(), {
         datePlaceholder: props.datePlaceholder,
         timeLabel: props.timeLabel,
         dateLabel: props.dateLabel,
+        time: props.time,
     });
     const form = useFormContext<MdxFormData>();
     const setDate = (newDate: Date): void => {
@@ -33,13 +33,14 @@ export const DateTimeInputSwitch = ({
                 datePlaceholder: props.datePlaceholder,
                 timeLabel: props.timeLabel,
                 dateLabel: props.dateLabel,
+                time: props.time,
             },
         });
     };
-    if (time) {
+    if (props.time) {
         return <DateTimeInput {..._props} setDate={setDate} />;
     } else {
-        return <DateInput {..._props} />;
+        return <DateInput {..._props} setDate={setDate} />;
     }
 };
 

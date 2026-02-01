@@ -1,5 +1,9 @@
 import { z } from "zod";
 import { embeddableInputSchema } from "../../embeddable_components/shared_schemas";
+import {
+    sizeEnum,
+    sizeEnumWithFull,
+} from "../../embeddable_components/media/image";
 
 export const checkboxPropsSchema = embeddableInputSchema.extend({
     title: z
@@ -43,3 +47,14 @@ export type ReorderInputProps = z.infer<typeof reorderInputProps>;
 export type ReorderInputItem = z.infer<
     typeof reorderInputProps
 >["options"][number];
+
+export const selectInputPropsSchema = embeddableInputSchema.extend({
+    options: z.string().array(),
+    label: z.string({
+        message: "Please provide a 'label' field for the select input.",
+    }),
+    placeholder: z.string().default("Select..."),
+    width: sizeEnumWithFull.default("medium"),
+});
+
+export type SelectInputProps = z.infer<typeof selectInputPropsSchema>;

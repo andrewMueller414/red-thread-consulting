@@ -27,13 +27,17 @@ import {
     EmbeddableCheckbox,
     EmbeddableCheckboxProps,
 } from "../embeddable_components/inputs/checkbox";
-import { ReorderInputProps } from "./schemas/input_props_schemas";
+import {
+    ReorderInputProps,
+    SelectInputProps,
+} from "./schemas/input_props_schemas";
 import {
     Callout,
     CalloutProps,
 } from "../embeddable_components/layout/callout/callout";
 import { DateTimeInputSchema } from "../embeddable_components/inputs/datetime/date_time_input_schema";
 import { DateTimeInputSwitch } from "../embeddable_components/inputs/datetime/date_time_input_switch";
+import { SelectInput } from "../embeddable_components/inputs/select";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -72,10 +76,17 @@ export const getComponentMap = (): Record<string, FC<any>> => {
                 </MdxErrorBoundary>
             );
         },
-        DateInput: (props: DateTimeInputSchema & { time?: boolean }) => {
+        DateInput: (props: DateTimeInputSchema) => {
             return (
                 <MdxErrorBoundary>
                     <DateTimeInputSwitch {...props} />
+                </MdxErrorBoundary>
+            );
+        },
+        SelectInput: (props: SelectInputProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <SelectInput {...props} />
                 </MdxErrorBoundary>
             );
         },

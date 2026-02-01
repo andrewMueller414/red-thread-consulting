@@ -5,6 +5,7 @@ import z from "zod";
 import { formResponseSchema } from "@/features/db/schemas/form_response_schema";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { RedThreadError } from "@/core/errors/red_thread_error";
+import superjson, { SuperJSONResult } from "superjson";
 
 export const formRouter = createTRPCRouter({
     create: baseProcedure
@@ -18,9 +19,12 @@ export const formRouter = createTRPCRouter({
         .mutation(async ({ input }) => {
             try {
                 delete (input as { id?: number }).id;
+                const data = superjson.serialize(input.data);
                 await prisma.formResponse.create({
                     data: {
                         ...input,
+                        /* eslint-disable-next-line  -- need to cast to any here  */
+                        data: data as any,
                         ctime: new Date(),
                         reviewed_at: null,
                     },
@@ -93,6 +97,11 @@ export const formRouter = createTRPCRouter({
                     },
                 },
             });
+            if (res) {
+                res.data = superjson.deserialize(
+                    res.data as unknown as SuperJSONResult,
+                );
+            }
             return res;
         } catch (err) {
             console.error("Error: ", err);
