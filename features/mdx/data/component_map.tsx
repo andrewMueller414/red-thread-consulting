@@ -15,7 +15,6 @@ import {
     EmbeddableAlignmentComponent,
 } from "../embeddable_components/layout/column/embeddable_column";
 import { ReorderInput } from "../embeddable_components/inputs/reorder_input/reorder_input";
-import { ReorderInputProps } from "../embeddable_components/inputs/reorder_input/reorder_types";
 import {
     SubmitForm,
     SubmitFormProps,
@@ -28,6 +27,7 @@ import {
     EmbeddableCheckbox,
     EmbeddableCheckboxProps,
 } from "../embeddable_components/inputs/checkbox";
+import { ReorderInputProps } from "./schemas/input_props_schemas";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {

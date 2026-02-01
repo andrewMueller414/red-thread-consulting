@@ -9,14 +9,6 @@ export const FormFieldNameListener = (): ReactNode => {
     const state = useMdxEditorContext();
     const dispatch = useMdxEditorDispatch();
 
-    useEventListener("set-new-form-name", (e) => {
-        if (!state.formFieldNames.includes(e.detail)) {
-            dispatch({
-                type: "appendFormFieldName",
-                payload: e.detail,
-            });
-        }
-    });
     return null;
 };
 

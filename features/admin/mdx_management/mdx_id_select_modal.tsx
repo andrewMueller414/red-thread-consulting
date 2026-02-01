@@ -31,7 +31,7 @@ export const MdxIdSelectModal = connector(({ open }: { open: boolean }) => {
     const dispatch = useDispatch();
     const mdxMutation = trpc.mdx.save.useMutation();
     const localDispatch = useMdxEditorDispatch();
-    const { value } = useMdxEditorContext();
+    const { value, formFieldNames } = useMdxEditorContext();
     const [inputValue, setInputValue] = useState("");
     const handleSave = async (): Promise<void> => {
         if (!inputValue.length) {
@@ -46,6 +46,7 @@ export const MdxIdSelectModal = connector(({ open }: { open: boolean }) => {
                 {
                     id: inputValue,
                     body: value,
+                    formFieldNames,
                 },
                 {
                     onSuccess: () => {

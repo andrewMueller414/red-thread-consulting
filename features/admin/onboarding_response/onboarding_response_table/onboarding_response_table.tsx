@@ -31,7 +31,10 @@ import { OnboardingSummaryTableColumnId } from "./onboarding_table_column_label_
 import { AdminHeaderPortal } from "@/features/navigation/admin_header/admin_header_portal";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/features/trpc/trpc_provider";
-import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
+import {
+    OnboardingSummaryResponseItem,
+    OnboardingSummaryResponseSummary,
+} from "@/features/trpc/trpc_types";
 import { PaginationTableFooter } from "@/core/shared_components/table_utils/table_footer_row";
 import { DeleteFormResponseConfirmationModal } from "./delete_form_response_confirmation_modal";
 
@@ -78,7 +81,7 @@ export const OnboardingResponseTable = (): ReactNode => {
         });
     };
     const anyItemIsNotReviewed = (
-        selectedRows: Row<OnboardingSummaryResponseItem>[],
+        selectedRows: Row<OnboardingSummaryResponseSummary>[],
     ) =>
         selectedRows.some(
             (n) => !n.getValue(OnboardingSummaryTableColumnId.reviewedAt),

@@ -1,9 +1,9 @@
-import { OnboardingSummaryResponseItem } from "../trpc/trpc_types";
+import { OnboardingSummaryResponseSummary } from "../trpc/trpc_types";
 
 export const getFilteredResponseSummaries = (
-    summaries: OnboardingSummaryResponseItem[],
+    summaries: OnboardingSummaryResponseSummary[],
     query: string,
-): OnboardingSummaryResponseItem[] => {
+): OnboardingSummaryResponseSummary[] => {
     return summaries.filter((item) => {
         const lowerCaseQuery = query.toLowerCase();
         /* eslint-disable-next-line  -- Need to use any here. */

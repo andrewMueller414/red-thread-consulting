@@ -1,12 +1,12 @@
 "use client";
-import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
+import { OnboardingSummaryResponseSummary } from "@/features/trpc/trpc_types";
 import { ReactNode, createContext, useReducer, useContext } from "react";
 import { getFilteredResponseSummaries } from "../admin_utils";
 
 export interface OnboardingResponseTableState {
-    responseSummaries: OnboardingSummaryResponseItem[];
+    responseSummaries: OnboardingSummaryResponseSummary[];
     filterText: string;
-    filteredSummaries: OnboardingSummaryResponseItem[];
+    filteredSummaries: OnboardingSummaryResponseSummary[];
 }
 
 const defaultInitialValues: OnboardingResponseTableState = {
@@ -32,7 +32,7 @@ export enum OnboardingResponseTableAction {
 type OnboardingResponseTableContextActions =
     | {
         type: OnboardingResponseTableAction.setResponseSummaries;
-        payload: OnboardingSummaryResponseItem[];
+        payload: OnboardingSummaryResponseSummary[];
     }
     | {
         type: OnboardingResponseTableAction.setReviewedByIds;
@@ -43,7 +43,7 @@ type OnboardingResponseTableContextActions =
     }
     | {
         type: OnboardingResponseTableAction.updateItem;
-        payload: OnboardingSummaryResponseItem;
+        payload: OnboardingSummaryResponseSummary;
     }
     | {
         type: OnboardingResponseTableAction.filterSummariesByIds;

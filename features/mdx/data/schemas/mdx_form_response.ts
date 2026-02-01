@@ -56,7 +56,7 @@ export interface PreviewComponentProps<
     T extends string | boolean | ReorderInputItem[],
 > {
     disabled?: boolean;
-    valueOverride: T;
+    valueOverride?: T;
 }
 
 export type MdxFormValue = z.infer<typeof formDataValueSchema>;

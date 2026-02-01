@@ -1,4 +1,4 @@
-import type { TextInputProps } from "./schemas";
+import { TextInputProps } from "../data/schemas/input_props_schemas";
 
 export const getMaxWidthProp = (
     maxWidth: TextInputProps["maxWidth"],
