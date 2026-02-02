@@ -11,12 +11,13 @@ import {
     DateTimeMeta,
     InputId,
     MdxFormData,
+    PreviewComponentProps,
 } from "@/features/mdx/data/schemas/mdx_form_response";
 import { useFormContext } from "react-hook-form";
 
 export const DateTimeInputSwitch = ({
     ...props
-}: DateTimeInputSchema): ReactNode => {
+}: DateTimeInputSchema & PreviewComponentProps<Date>): ReactNode => {
     const _props = dateTimeInputSchema.parse(props);
     useFormInitialValue<DateTimeMeta>(_props.name, InputId.dateTime, new Date(), {
         datePlaceholder: props.datePlaceholder,
@@ -38,9 +39,23 @@ export const DateTimeInputSwitch = ({
         });
     };
     if (props.time) {
-        return <DateTimeInput {..._props} setDate={setDate} />;
+        return (
+            <DateTimeInput
+                {..._props}
+                disabled={props.disabled}
+                valueOverride={props.valueOverride}
+                setDate={setDate}
+            />
+        );
     } else {
-        return <DateInput {..._props} setDate={setDate} />;
+        return (
+            <DateInput
+                {..._props}
+                disabled={props.disabled}
+                valueOverride={props.valueOverride}
+                setDate={setDate}
+            />
+        );
     }
 };
 

@@ -25,7 +25,7 @@
     --muted-foreground: oklch(0.553 0.013 58.071);
     --accent: oklch(0.97 0.001 106.424);
     --accent-foreground: oklch(0.216 0.006 56.043);
-    --destructive: oklch(0.577 0.245 27.325);
+    --destructive: oklch(50.5% 0.213 27.518);
     --border: oklch(0.923 0.003 48.717);
     --input: oklch(0.923 0.003 48.717);
     --ring: oklch(0.709 0.01 56.259);
@@ -127,5 +127,26 @@ body {
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+@layer base {
+
+    /* Change the color of the clock icon */
+    input[type="time"]::-webkit-calendar-picker-indicator {
+        filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);
+        background-color: red !important;
+        cursor: pointer;
+    }
+
+    /* Style the text inside the input */
+    input[type="time"]::-webkit-datetime-edit-text {
+        @apply text-muted-foreground px-1;
+    }
+
+    /* Style the hour/minute numbers */
+    input[type="time"]::-webkit-datetime-edit-hour-field,
+    input[type="time"]::-webkit-datetime-edit-minute-field {
+        @apply font-mono font-bold text-primary focus:bg-accent rounded;
     }
 }

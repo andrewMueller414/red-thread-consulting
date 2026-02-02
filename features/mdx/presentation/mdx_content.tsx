@@ -4,7 +4,6 @@ import { useMdxClientParse } from "../../admin/mdx_management/hooks/use_mdx_clie
 import { getComponentMap } from "../data/component_map";
 import { LoadingComponent } from "../../../core/shared_components/loading_component";
 import { cn } from "../../../lib/utils";
-import { MdxFormContainer } from "./mdx_form_container";
 import "../data/mdx.scss";
 import { useHeightWithoutNav } from "@/core/state/hooks/use_height_without_nav";
 
@@ -38,33 +37,27 @@ export const MdxContent = ({
         );
     }
 
-    return (
-        <MdxFormContainer>
-            {Component ? (
-                <div
-                    className={cn(
-                        "max-w-270 mdx @container/mdx prose max-h-full",
-                        className,
-                    )}
-                >
-                    {/* @ts-expect-error -- Need to create component during render. */}
-                    <Component components={getComponentMap()} />
-                </div>
-            ) : (
-                <div
-                    className={cn(
-                        "w-full h-full flex flex-col justify-center items-center",
-                    )}
-                    style={{
-                        ...(expandLoading && {
-                            minHeight: `${heightWithoutNav}px`,
-                        }),
-                    }}
-                >
-                    <LoadingComponent />
-                </div>
+    return Component ? (
+        <div
+            className={cn(
+                "max-w-270 w-full mdx @container/mdx max-h-full prose prose-h2:mt-0 prose-h3:my-4 prose-blockquote:border-dust prose-li:marker:text-mist",
+                className,
             )}
-        </MdxFormContainer>
+        >
+            {/* @ts-expect-error -- Need to create component during render. */}
+            <Component components={getComponentMap()} />
+        </div>
+    ) : (
+        <div
+            className={cn("w-full h-full flex flex-col justify-center items-center")}
+            style={{
+                ...(expandLoading && {
+                    minHeight: `${heightWithoutNav}px`,
+                }),
+            }}
+        >
+            <LoadingComponent />
+        </div>
     );
 };
 

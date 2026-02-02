@@ -18,26 +18,31 @@ import {
     InputId,
     MdxFormData,
     NestedFormValueOfType,
+    PreviewComponentProps,
     SelectMeta,
 } from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 import { Label } from "../../../../components/ui/label";
 
-export const SelectInput = (props: SelectInputProps): ReactNode => {
+export const SelectInput = ({
+    valueOverride,
+    disabled,
+    ...props
+}: SelectInputProps & PreviewComponentProps<string>): ReactNode => {
     const form = useFormContext<MdxFormData>();
     const { options, label, width, name, placeholder } =
         selectInputPropsSchema.parse(props);
     const sizes: { [K in SizeEnumWithFull]: string } = {
-        small: "@5xl/mdx:w-45",
-        medium: "@5xl/mdx:w-45",
-        large: "@5xl/mdx:w-60",
-        full: "@5xl/mdx:w-full",
+        small: "@sm/mdx:w-45",
+        medium: "@md/mdx:w-45",
+        large: "@2xl/mdx:w-60",
+        full: "",
     };
     useFormInitialValue<SelectMeta>(name, InputId.select, options[0], {
         label,
+        placeholder,
         width,
         options,
-        placeholder,
     });
     const data = form.watch(name) as
         | NestedFormValueOfType<string>
@@ -47,6 +52,7 @@ export const SelectInput = (props: SelectInputProps): ReactNode => {
         <div className="flex flex-col justify-start items-start h-fit">
             <Label className="mb-2">{label}</Label>
             <Select
+                disabled={disabled}
                 onValueChange={(val) => {
                     form.setValue(name, {
                         value: val,
@@ -59,7 +65,7 @@ export const SelectInput = (props: SelectInputProps): ReactNode => {
                         },
                     });
                 }}
-                value={data?.value ?? ""}
+                value={valueOverride ?? data?.value ?? ""}
             >
                 <SelectTrigger className={cn("w-full", sizes[width])}>
                     <SelectValue placeholder={placeholder} />

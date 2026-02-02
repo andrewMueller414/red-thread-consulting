@@ -46,6 +46,7 @@ export const mdxRouter = createTRPCRouter({
             },
             update: {
                 ...input,
+                utime: new Date(),
             },
         });
     }),

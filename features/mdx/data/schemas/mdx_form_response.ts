@@ -11,6 +11,7 @@ import {
     dateTimeInputPropsWithFutureTense,
     dateTimeInputPropsWithYears,
 } from "../../embeddable_components/inputs/datetime/date_time_input_schema";
+import { FormResponse } from "@/lib/generated/prisma/client";
 
 export const formDataValueSchema = z.union([
     z.boolean(),
@@ -45,33 +46,37 @@ export const formDataNestedValueSchema = z.object({
     inputId: z.nativeEnum(InputId),
     value: formDataValueSchema,
     meta: z.union([
+        selectMeta,
         reorderMeta,
         checkboxMeta,
         textInputMeta,
         textAreaMeta,
         dateTimeMeta,
-        selectMeta,
     ]),
 });
 
 export const formDataSchema = z.record(z.string(), formDataNestedValueSchema);
 
+export type MdxFormData = z.infer<typeof formDataSchema>;
+
+export type NestedFormValue = z.infer<typeof formDataNestedValueSchema>;
+
+export type TypedFormResponse<T = MdxFormData> = Omit<FormResponse, "data"> & {
+    data: T;
+};
+
 export const mdxFormSchema = z.object({
-    formId: z.string().min(1, "The formId can't be empty."),
+    id: z.number().int(),
     data: formDataSchema,
-    formFieldNames: z.string().array().default([]),
-    mdxSourceId: z.string().nullish(),
+    // formFieldNames: z.string().array().default([]),
+    mdxSourceId: z.string(),
     ctime: z.date(),
-    reviewed_at: z.date().nullish(),
-});
+    reviewed_at: z.date().nullable(),
+}) satisfies z.ZodType<TypedFormResponse>;
 
 export type MdxForm = z.infer<typeof mdxFormSchema>;
 /** The input of the MdxForm type and mdxForm schema. */
 export type MdxFormInput = z.input<typeof mdxFormSchema>;
-
-export type MdxFormData = z.infer<typeof formDataSchema>;
-
-export type NestedFormValue = z.infer<typeof formDataNestedValueSchema>;
 
 export type NestedFormValueOfType<T extends NestedFormValue["value"]> =
     NestedFormValue & { value: T };

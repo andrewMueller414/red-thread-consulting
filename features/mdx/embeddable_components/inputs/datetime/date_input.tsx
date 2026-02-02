@@ -51,7 +51,9 @@ export const DateInput = ({
                             disabled={disabled}
                         >
                             <CalendarIcon className="text-dust/80" />
-                            {date?.value ? (
+                            {props.valueOverride ? (
+                                dayjs(props.valueOverride).format("MMMM DD, YYYY")
+                            ) : date?.value ? (
                                 dayjs(date.value).format("MMMM DD, YYYY")
                             ) : (
                                 <span>{datePlaceholder}</span>

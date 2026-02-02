@@ -36,7 +36,6 @@ export const Callout = ({
     children,
     ...props
 }: CalloutProps & { children: ReactNode }): ReactNode => {
-    console.log("typeof props.title: ", props.title);
     const { type, title, folded, foldable, left, right } =
         calloutPropsSchema.parse(props);
     const [open, setOpen] = useState(foldable && folded ? false : true);

@@ -131,31 +131,35 @@ export const DateTimeInput = ({
                     defaultValue={
                         valueOverride ? getFormattedTime(valueOverride) : "10:30:00"
                     }
-                    className="bg-matcha focus-visible:bg-fog appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                    className="bg-matcha focus-visible:bg-fog appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none focus:bg-matcha"
                     disabled={disabled}
                     onChange={(e) => {
-                        if (date?.value) {
-                            let d = dayjs(date.value);
-                            e.target.value.split(":").forEach((s, i) => {
-                                if (i > 3) {
-                                    return;
+                        let d = dayjs(date?.value ?? new Date());
+                        e.target.value.split(":").forEach((s, i) => {
+                            if (i > 3) {
+                                return;
+                            }
+                            const unit: UnitType = (
+                                ["hours", "minutes", "seconds"] satisfies UnitType[]
+                            )[i];
+                            let val = parseInt(s);
+                            if (!Number.isNaN(val)) {
+                                if (unit === "hours" && val === 0) {
+                                    val = 1;
                                 }
-                                const unit: UnitType = (
-                                    ["hours", "minutes", "seconds"] satisfies UnitType[]
-                                )[i];
-                                d = d.set(unit, parseInt(s));
-                            });
-                            form.setValue(name, {
-                                inputId: InputId.dateTime,
-                                value: d.toDate(),
-                                meta: {
-                                    datePlaceholder,
-                                    timeLabel,
-                                    dateLabel,
-                                    time,
-                                },
-                            });
-                        }
+                                d = d.set(unit, val);
+                            }
+                        });
+                        form.setValue(name, {
+                            inputId: InputId.dateTime,
+                            value: d.toDate(),
+                            meta: {
+                                datePlaceholder,
+                                timeLabel,
+                                dateLabel,
+                                time,
+                            },
+                        });
                     }}
                 />
             </Field>

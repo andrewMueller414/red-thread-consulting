@@ -1,9 +1,11 @@
 import React, { type ReactNode } from "react";
 import {
     CheckboxMeta,
+    DateTimeMeta,
     InputId,
     MdxFormData,
     ReorderMeta,
+    SelectMeta,
     TextAreaMeta,
     TextInputMeta,
 } from "../../../../mdx/data/schemas/mdx_form_response";
@@ -11,6 +13,8 @@ import { EmbeddableCheckbox } from "../../../../mdx/embeddable_components/inputs
 import { EmbeddableTextAreaInput } from "../../../../mdx/embeddable_components/inputs/text_area_input";
 import { ReorderInput } from "../../../../mdx/embeddable_components/inputs/reorder_input/reorder_input";
 import { EmbeddableTextInput } from "../../../../mdx/embeddable_components/inputs/text_input";
+import { SelectInput } from "@/features/mdx/embeddable_components/inputs/select";
+import { DateTimeInputSwitch } from "@/features/mdx/embeddable_components/inputs/datetime/date_time_input_switch";
 
 interface FormResponseInputSwitchProps {
     data: MdxFormData[string];
@@ -73,6 +77,32 @@ export const FormResponseInputSwitch = (
                     classes={{
                         container: "py-0",
                     }}
+                />
+            );
+        }
+        case InputId.select: {
+            const meta = props.data.meta as SelectMeta;
+            return (
+                <SelectInput
+                    name="preview5"
+                    disabled
+                    valueOverride={props.data.value as string}
+                    {...meta}
+                />
+            );
+        }
+        case InputId.dateTime: {
+            const meta = props.data.meta as DateTimeMeta;
+            return (
+                <DateTimeInputSwitch
+                    {...meta}
+                    disabled
+                    valueOverride={
+                        props.data.value instanceof Date
+                            ? props.data.value
+                            : new Date(props.data.value as string)
+                    }
+                    name="preview6"
                 />
             );
         }

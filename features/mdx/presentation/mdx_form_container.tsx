@@ -1,9 +1,10 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { type ReactNode } from "react";
+import React, { CSSProperties, HTMLProps, type ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { formDataSchema } from "../data/schemas/mdx_form_response";
 import { MdxFormProvider } from "../state/form_context";
+import { cn } from "../../../lib/utils";
 
 export const MdxFormWrapper = ({
     children,
@@ -22,16 +23,14 @@ export const MdxFormWrapper = ({
 
 export const MdxFormContainer = ({
     children,
+    className,
 }: {
+    className?: string;
     children: ReactNode;
 }): ReactNode => {
     return (
         <MdxFormWrapper>
-            <form
-                className={
-                    "w-full min-w-full h-full min-h-0 prose prose-h2:mt-0 prose-h3:my-4 prose-blockquote:border-dust"
-                }
-            >
+            <form className={cn("w-full min-w-full h-full min-h-0", className)}>
                 {children}
             </form>
         </MdxFormWrapper>

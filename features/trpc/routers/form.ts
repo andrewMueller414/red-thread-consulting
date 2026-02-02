@@ -2,21 +2,22 @@ import { baseProcedure, createTRPCRouter } from "../trpc_init";
 import { prisma } from "@/lib/prisma";
 import { dbEntityIdSchema } from "@/features/db/schemas/database_utility_schemas";
 import z from "zod";
-import { formResponseSchema } from "@/features/db/schemas/form_response_schema";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { RedThreadError } from "@/core/errors/red_thread_error";
 import superjson, { SuperJSONResult } from "superjson";
+import { mdxFormSchema } from "@/features/mdx/data/schemas/mdx_form_response";
 
 export const formRouter = createTRPCRouter({
     create: baseProcedure
         .input(
-            formResponseSchema.omit({
+            mdxFormSchema.omit({
                 id: true,
                 ctime: true,
                 reviewed_at: true,
             }),
         )
         .mutation(async ({ input }) => {
+            console.dir(input, { colors: true, depth: 5 });
             try {
                 delete (input as { id?: number }).id;
                 const data = superjson.serialize(input.data);
@@ -58,6 +59,7 @@ export const formRouter = createTRPCRouter({
                         }
                     }
                 }
+                console.error("Error: ", err);
                 return false;
             }
         }),

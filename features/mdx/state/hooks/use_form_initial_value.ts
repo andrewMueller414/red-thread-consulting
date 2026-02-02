@@ -35,6 +35,7 @@ export const useFormInitialValue = <T extends NestedFormValue["meta"]>(
         window.dispatchEvent(
             new CustomEvent("set-new-form-name", {
                 detail: name,
+                bubbles: true,
             }),
         );
         setHaveSet(true);

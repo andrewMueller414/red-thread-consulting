@@ -4,6 +4,14 @@
 
 Use ⌥+s (option+s) to save. This is required or all data will be lost. This is not done automatically to avoid a huge number of writes to the database that would increase operational cost.
 
+### Important things to keep in mind:
+
+- No special characters in field names. The `name` field can be any string so long as it does not contain special characters (characters other than letters, numbers and white-space).
+  - This field is used as the 'key' for this field in the database, so it must be unique and never change once the form is created.
+  - Make it as descriptive as you like. This will be displayed along with the results, but is visible only to administrators.
+- Line breaks are only allowed in jsx strings started with a backtick quotation (top left of keyboard). 
+- Copy and paste the components as needed, and just modify their properties. The documentation of each component here is more of a reference than a guide, and can read on an as-needed basis.
+
 ## Mdx
 
 Mdx is a superset of markdown, a combination of [React's](https://react.dev/) `jsx` language with markdown, the (ironically, 'markup' language) that's used in apps like [Notion](https://www.notion.com/) and [Obsidian](https://obsidian.md/).  
@@ -222,7 +230,7 @@ For choosing a single item from a list.
 
 ```tsx
 <DateInput 
-    name="My unique, descriptive name."
+    name="My unique descriptive name."
     time
 />
 ```
@@ -230,7 +238,7 @@ For choosing a single item from a list.
 You can include `time` to show a time component. 
 
 <DateInput 
-    name="My unique, descriptive name."
+    name="My unique descriptive name."
     time
 />
 
@@ -240,14 +248,14 @@ You can include `time` to show a time component.
 
 ```tsx
 <DateInput 
-    name="My unique, descriptive name two."
+    name="My unique descriptive name two."
 />
 ```
 
 If you remove the `time` property only the button is shown.
 
 <DateInput 
-    name="My unique, descriptive name two."
+    name="My unique descriptive name two."
 />
 
 This accepts a set of other properties:

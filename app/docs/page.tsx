@@ -4,6 +4,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { MdxContent } from "../../features/mdx/presentation/mdx_content";
 import { trpc } from "../../features/trpc/server";
+import { MdxFormWrapper } from "../../features/mdx/presentation/mdx_form_container";
 
 const DocsPage = async (): Promise<ReactNode> => {
     const session = await getServerSession(authOptions);
@@ -20,9 +21,9 @@ const DocsPage = async (): Promise<ReactNode> => {
     }
     return (
         <div className="px-8 py-16 flex flex-col justify-start items-center">
-            <div className="max-w-270 w-full prose">
+            <MdxFormWrapper>
                 <MdxContent mdx={docItem} expandLoading />
-            </div>
+            </MdxFormWrapper>
         </div>
     );
 };

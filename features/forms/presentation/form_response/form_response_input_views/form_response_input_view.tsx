@@ -16,12 +16,15 @@ const inputIdLabelMap: { [K in InputId]: string } = {
     [InputId.textArea]: "Multiline Text Input",
     [InputId.checkbox]: "Checkbox Input",
     [InputId.reorder]: "Reorder Input",
+    [InputId.dateTime]: "Date Time Input",
+    [InputId.select]: "Select Input",
 };
 
 export const FormResponseInputView = ({
     data,
     name,
 }: FormResponseInputViewProps): ReactNode => {
+    console.log("data, name: ", data, name);
     return (
         <div className="w-full mt-8">
             <H2>{name}</H2>

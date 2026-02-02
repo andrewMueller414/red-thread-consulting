@@ -57,7 +57,6 @@ export const MdxEditorContextReducer = (
             };
         }
         case "setMdxContentId": {
-            console.log(`Here?`);
             return {
                 ...state,
                 mdxContentId: action.payload,
@@ -66,9 +65,7 @@ export const MdxEditorContextReducer = (
         case "appendFormFieldName": {
             return {
                 ...state,
-                formFieldNames: state.formFieldNames.includes(action.payload)
-                    ? state.formFieldNames
-                    : [...state.formFieldNames, action.payload],
+                formFieldNames: [...state.formFieldNames, action.payload],
             };
         }
     }
@@ -99,10 +96,10 @@ export const MdxEditorProvider = ({
     useEffect(() => {
         console.log("state: ", state);
     }, [state]);
+
     return (
         <MdxEditorContext.Provider value={state}>
             <MdxEditorDispatchContext.Provider value={dispatch}>
-                <FormFieldNameListener />
                 {children}
             </MdxEditorDispatchContext.Provider>
         </MdxEditorContext.Provider>

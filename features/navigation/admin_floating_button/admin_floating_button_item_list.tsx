@@ -34,7 +34,7 @@ export const AdminFloatingButtonList = ({
         return (
             [
                 {
-                    label: "Admin Home",
+                    label: "Form Responses",
                     href: "/admin",
                 },
                 {

@@ -8,6 +8,9 @@
 - [x] Implement side-by-side image grid component in mdx similar to layout used previously once image storage solutions are figured out.
 - [x] Handle form submission
 - [ ] Document 'desc' property on text inputs.
+- [ ] Finish view response methods for:
+  - [ ] `SelectInput`
+  - [ ] `DateInput`
 - [ ] Handle ordering of form inputs according to newly added field.
 - [ ] Add loading state to form submission to avoid dual submissions.
 - [ ] Fix issue with mdx content being unable to delete by red button.
@@ -36,8 +39,10 @@
 - [ ] Handle authentication fail page and setup authentication page to redirect to our auth page. Currently it's redirecting to the default next-auth pages and they're hideous.
 - [ ] per-form page that renders a table of each form field name as a column with all responses.
 
----
-
 ## Bugs
 
-- [ ] There is _massive_ overscroll on the editor page once the mardown renders if it is long enough. Fix this **immediately**.
+- [ ] Multiline text input not displaying data submitted on form
+- [ ] Verify that these inputs are working properly in the display response page:
+  - [ ] Reorder
+  - [ ] TextArea
+- [ ] Fix extra padding in time input creating shit alignment.

@@ -50,6 +50,9 @@ export const OnboardingResponseViewReviewedSection = ({
             },
         );
     }, [reviewedAt, markReviewed, item]);
+
+    console.log("Here: ", item?.data, item?.mdxSource.formFieldNames);
+
     return (
         <div className="w-full flex flex-col justify-start items-start">
             <OnboardingResponseSubtitle>Reviewed</OnboardingResponseSubtitle>
