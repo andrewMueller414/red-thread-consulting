@@ -9,7 +9,9 @@ import { OnboardingSummaryResponseItem } from "@/features/trpc/trpc_types";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
+    DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "../../../../components/ui/dropdown-menu";
 import { FormResponseInputView } from "../../../forms/presentation/form_response/form_response_input_views/form_response_input_view";
@@ -51,8 +53,6 @@ export const OnboardingResponseViewReviewedSection = ({
         );
     }, [reviewedAt, markReviewed, item]);
 
-    console.log("Here: ", item?.data, item?.mdxSource.formFieldNames);
-
     return (
         <div className="w-full flex flex-col justify-start items-start">
             <OnboardingResponseSubtitle>Reviewed</OnboardingResponseSubtitle>
@@ -68,12 +68,17 @@ export const OnboardingResponseViewReviewedSection = ({
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-matcha text-pine w-fit flex flex-col justify-center items-center">
-                    <DropdownMenuItem onClick={toggleReviewed}>
-                        {`Mark ${reviewedAt ? "Unreviewed" : "Reviewed"}`}
-                    </DropdownMenuItem>
+                    <DropdownMenuGroup>
+                        <DropdownMenuLabel className="text-[12px]">
+                            Actions
+                        </DropdownMenuLabel>
+                        <DropdownMenuItem onClick={toggleReviewed}>
+                            {`Mark ${reviewedAt ? "Unreviewed" : "Reviewed"}`}
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
                 </DropdownMenuContent>
             </DropdownMenu>
-            <div className="w-full max-w-[min(1080px,90vw)]">
+            <div className="w-full max-w-[min(1080px,90vw)] @container/mdx">
                 {item?.data
                     ? item.mdxSource.formFieldNames.map((dataKey, i, a) => {
                         return (

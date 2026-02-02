@@ -23,10 +23,10 @@
 - [ ] Add these components:
   - [ ] Hr html element
   - [ ] Date Picker with the following formats:
-    - [ ] `date`
-    - [ ] `dateAndTime` (default)
-    - [ ] `time`
-    - [ ] `calendar` (Show calendar and leave it visible, don't hide like a popover.)
+    - [x] `date`
+    - [x] `dateAndTime` (default)
+    - [x] `time`
+    - [x] `calendar` (Show calendar and leave it visible, don't hide like a popover.)
   - [ ] Radio Group
   - [ ] Slider
   - [ ] Tabs
@@ -38,11 +38,3 @@
 
 - [ ] Handle authentication fail page and setup authentication page to redirect to our auth page. Currently it's redirecting to the default next-auth pages and they're hideous.
 - [ ] per-form page that renders a table of each form field name as a column with all responses.
-
-## Bugs
-
-- [ ] Multiline text input not displaying data submitted on form
-- [ ] Verify that these inputs are working properly in the display response page:
-  - [ ] Reorder
-  - [ ] TextArea
-- [ ] Fix extra padding in time input creating shit alignment.

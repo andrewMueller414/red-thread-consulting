@@ -129,24 +129,3 @@ body {
         @apply bg-background text-foreground;
     }
 }
-
-@layer base {
-
-    /* Change the color of the clock icon */
-    input[type="time"]::-webkit-calendar-picker-indicator {
-        filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);
-        background-color: red !important;
-        cursor: pointer;
-    }
-
-    /* Style the text inside the input */
-    input[type="time"]::-webkit-datetime-edit-text {
-        @apply text-muted-foreground px-1;
-    }
-
-    /* Style the hour/minute numbers */
-    input[type="time"]::-webkit-datetime-edit-hour-field,
-    input[type="time"]::-webkit-datetime-edit-minute-field {
-        @apply font-mono font-bold text-primary focus:bg-accent rounded;
-    }
-}
