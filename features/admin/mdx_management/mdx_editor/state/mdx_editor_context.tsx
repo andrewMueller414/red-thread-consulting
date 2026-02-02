@@ -7,7 +7,6 @@ import {
     useContext,
     useEffect,
 } from "react";
-import { FormFieldNameListener } from "./mdx_editor_form_field_name_listener";
 
 export interface MdxEditorState {
     value: string;
