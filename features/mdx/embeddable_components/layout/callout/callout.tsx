@@ -46,16 +46,17 @@ export const Callout = ({
             data-callout={type}
             /* @ts-expect-error -- This type works, but there's a type error on framer-motion's end. */
             className={cn(
-                "px-4 py-3 rounded-md my-6",
+                "px-4 pt-2 pb-4 rounded-md my-6 cursor-default",
                 left &&
                 "@5xl/mdx:float-left @5xl/mdx:w-1/3 @5xl/mdx:mr-4 @5xl/mdx:min-w-87.5",
                 right &&
                 "@5xl/mdx:float-right @5xl/mdx:w-1/3 @5xl/mdx:ml-4 @5xl/mdx:min-w-87.5",
+                type === "fog" && "border border-pine/20",
             )}
         >
             <div
                 className={cn(
-                    "not-prose font-semibold text-[14px] [&>p]:my-0 py-2",
+                    "not-prose font-semibold text-[14px] [&>p]:my-0 pt-2 pb-0",
                     foldable && "grid grid-cols-[1fr_auto]",
                 )}
                 onClick={() => {
@@ -68,6 +69,7 @@ export const Callout = ({
                     <>
                         <MdxContent mdx={title} inline />
                         <ChevronDown
+                            className="py-0"
                             animate={open ? "show" : "hide"}
                             variants={{
                                 show: {
@@ -96,7 +98,12 @@ export const Callout = ({
                     },
                 }}
                 /* @ts-expect-error -- This type works, but there's a type error on framer-motion's end. */
-                className="[&>p]:my-0 text-sm"
+                onClick={() => {
+                    if (!open) {
+                        setOpen(true);
+                    }
+                }}
+                className="[&>p]:my-0 first:mt-0! last:mb-0! [&>*]:my-0 text-sm [&>*]:overflow-hidden"
             >
                 {children}
             </motion.div>

@@ -1,5 +1,12 @@
-import { FC, ReactNode } from "react";
-import { H1, H2, H3, H4 } from "../../../core/shared_components/typography";
+import { FC, HTMLProps, ReactNode } from "react";
+import {
+    H1,
+    H2,
+    H3,
+    H4,
+    H5,
+    H6,
+} from "../../../core/shared_components/typography";
 import {
     EmbeddableTextInput,
     EmbeddableTextInputProps,
@@ -28,6 +35,8 @@ import {
     EmbeddableCheckboxProps,
 } from "../embeddable_components/inputs/checkbox";
 import {
+    EmbeddabledTitleProps,
+    EmbeddableSliderProps,
     ReorderInputProps,
     SelectInputProps,
 } from "./schemas/input_props_schemas";
@@ -38,6 +47,10 @@ import {
 import { DateTimeInputSchema } from "../embeddable_components/inputs/datetime/date_time_input_schema";
 import { DateTimeInputSwitch } from "../embeddable_components/inputs/datetime/date_time_input_switch";
 import { SelectInput } from "../embeddable_components/inputs/select";
+import { IconArrowBackUp } from "@tabler/icons-react";
+import { EmbeddabledTitle } from "../embeddable_components/layout/title";
+import Image from "next/image";
+import { EmbeddableSlider } from "../embeddable_components/inputs/slider";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -47,6 +60,42 @@ export const getComponentMap = (): Record<string, FC<any>> => {
         h2: H2,
         h3: H3,
         h4: H4,
+        h5: H5,
+        h6: H6,
+        img: (props: { src: string; alt: string }) => {
+            console.log("image props: ", props);
+            return (
+                <Image
+                    className="max-w-[min(450px,90vw)] max-h-[90vh] object-contain"
+                    width={1080}
+                    height={1080}
+                    loading="lazy"
+                    alt={props.alt}
+                    src={props.src}
+                />
+            );
+        },
+        section: ({ children, ...props }) => {
+            if (props["data-footnotes"]) {
+                return (
+                    <section className="mt-12 border-t pt-4 text-sm" {...props}>
+                        <h2 className="sr-only">Footnotes</h2>
+                        {children}
+                    </section>
+                );
+            }
+            return <section {...props}>{children}</section>;
+        },
+        a: ({ children, ...props }) => {
+            if (typeof props["data-footnote-backref"] !== "undefined") {
+                return (
+                    <a {...props} className="hover:no-underline">
+                        <IconArrowBackUp className="inline h-3 w-3 text-dust" />
+                    </a>
+                );
+            }
+            return <a {...props}>{children}</a>;
+        },
         // Inputs
         TextInput: (props: EmbeddableTextInputProps) => {
             return (
@@ -90,6 +139,13 @@ export const getComponentMap = (): Record<string, FC<any>> => {
                 </MdxErrorBoundary>
             );
         },
+        SliderInput: (props: EmbeddableSliderProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <EmbeddableSlider {...props} />
+                </MdxErrorBoundary>
+            );
+        },
         Submit: (props: SubmitFormProps) => {
             return (
                 <MdxErrorBoundary>
@@ -117,6 +173,14 @@ export const getComponentMap = (): Record<string, FC<any>> => {
             return (
                 <MdxErrorBoundary>
                     <EmbeddableAlignmentComponent {...props} />
+                </MdxErrorBoundary>
+            );
+        },
+
+        Title: (props: EmbeddabledTitleProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <EmbeddabledTitle {...props} />
                 </MdxErrorBoundary>
             );
         },

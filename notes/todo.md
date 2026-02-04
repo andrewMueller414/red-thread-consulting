@@ -7,22 +7,25 @@
 - [x] Add 'view full page' option to table of results. This can be the same link that will be sendable to others.
 - [x] Implement side-by-side image grid component in mdx similar to layout used previously once image storage solutions are figured out.
 - [x] Handle form submission
+- [x] Finish implementing new font for body text.
+  - [x] Try re-installing with cdn to get to work and make sure this is the correct font, because currently it looks fucking horrendous.
+  - [ ] Document that along with 'compares to' column.
 - [ ] Document 'desc' property on text inputs.
-- [ ] Finish view response methods for:
-  - [ ] `SelectInput`
-  - [ ] `DateInput`
-- [ ] Handle ordering of form inputs according to newly added field.
-- [ ] Add loading state to form submission to avoid dual submissions.
-- [ ] Fix issue with mdx content being unable to delete by red button.
+- [ ] Document `Title` component
+- [x] Finish view response methods for:
+  - [x] `SelectInput`
+  - [x] `DateInput`
+- [x] Handle ordering of form inputs according to newly added field.
+- [x] Add loading state to form submission to avoid dual submissions.
 - [x] Document form submit button
-- [ ] Fix issue with form input order on review page.
-- [ ] Handle response page
-- [ ] Add delete confirmation to form response when in selected state.
-  - [ ] Build a component for each `InputId` and create a switch component that renders each item according to it's `inputId` field.
+- [x] Fix issue with form input order on review page.
+- [x] Handle response page
+- [x] Add delete confirmation to form response when in selected state.
+  - [x] Build a component for each `InputId` and create a switch component that renders each item according to it's `inputId` field.
 
 - [ ] Add these components:
-  - [ ] Hr html element
-  - [ ] Date Picker with the following formats:
+  - [x] Hr html element
+  - [x] Date Picker with the following formats:
     - [x] `date`
     - [x] `dateAndTime` (default)
     - [x] `time`
@@ -30,9 +33,8 @@
   - [ ] Radio Group
   - [ ] Slider
   - [ ] Tabs
-- [ ] Setup markdown remark image plugin for better default image sizing if `prose` doesn't catch it.
 - [ ] Render solid preview in same mdx form container that will be used elsewhere throughout the app.
-- [ ] Fix response preview page to accomodate form of unknown format.
+- [x] Fix response preview page to accomodate form of unknown format.
 
 ## Admin Improvements
 

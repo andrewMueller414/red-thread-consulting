@@ -55,6 +55,7 @@
     --color-moss: var(--moss);
     --color-dust: var(--dust);
     --font-bellefair: var(--font-bellefair);
+    --font-ss-pro: var(--font-ss-pro);
     --font-mono: var(--font-ibm-plex-mono);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
@@ -106,14 +107,17 @@ html {
     overscroll-behavior-y: none;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 body {
     height: 100%;
+    min-height: 100vh;
     width: 100vw;
     background: var(--fog);
-    overflow-y: auto;
+    font-family: var(--font-ss-pro);
+    /* overflow-y: auto; */
 }
 
 .drawer-fontsize {

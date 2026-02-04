@@ -1,18 +1,29 @@
 # Docs
 
-## Editor
-
-Use ⌥+s (option+s) to save. This is required or all data will be lost. This is not done automatically to avoid a huge number of writes to the database that would increase operational cost.
-
-### Important things to keep in mind:
-
+<Callout title="Important things to keep in mind" type="pine" foldable folded={false}>
 - No special characters in field names. The `name` field can be any string so long as it does not contain special characters (characters other than letters, numbers and white-space).
   - This field is used as the 'key' for this field in the database, so it must be unique and never change once the form is created.
-  - Make it as descriptive as you like. This will be displayed along with the results, but is visible only to administrators.
-- Line breaks are only allowed in jsx strings started with a backtick quotation (top left of keyboard). 
-- Copy and paste the components as needed, and just modify their properties. The documentation of each component here is more of a reference than a guide, and can read on an as-needed basis.
+  - Make it as descriptive as you like. This will be displayed as the title for the field in the results, but is visible only to administrators.
+- Line breaks are only allowed in jsx strings started with a backtick quotation (top left of keyboard). There is a list of a few more requirements of strings that are used in jsx, the 'x' in mdx. There are no such requirements for markdown content.
+  - 'jsx' is what goes between the opening `<` and closing `>` described below. Everything else is markdown.
+- Copy and paste the components as needed, and just modify their properties. The documentation of each component here is more of a reference than a guide. Maybe explore the existing components now so improvements can be made, but worry about the details as they're needed.
+- Because the `name` field is used as an identifier, there's some weird behavior in the editor. Whenever you change this field, make sure to save it, reload the editor, and then save it again. The only alternative to enforcing this type of behavior is to require another property that truly never changes.
+</Callout>
 
-## Mdx
+### Some notes on the workflow:
+
+- You can add images to AWS from the administrator's media page. Clicking on an image there will open a modal with a url at the bottom. Clicking this url will copy it to your clipboard, where it can be pasted into either markdown's own image syntax or into the url property of the `Image` component.
+  - You can use any image url with either the markdown image syntax or the image component, so long as the url points directly to an image.
+
+## Editor
+
+**Use ⌥+s (option+s) to save**. This is ***required*** or all data will be lost. Since this writes data to the database this is not done automatically to keep operational costs as low as possible.
+
+<Title 
+    depth={2}
+    title="Mdx"
+    subtitle="You can probably just copy and paste things until something breaks, then come back and read this more thoroughly."
+/>
 
 Mdx is a superset of markdown, a combination of [React's](https://react.dev/) `jsx` language with markdown, the (ironically, 'markup' language) that's used in apps like [Notion](https://www.notion.com/) and [Obsidian](https://obsidian.md/).  
 
@@ -84,7 +95,7 @@ Arrays are just ordered lists of some other type in javascript. They're written 
 
 #### Objects
 
-Objects are just a group of properties that all represent the same thing in some sense. The `ReorderInput` component accepts a list of options that is an array of objects with the properties `title`, `subtitle` and `value`.
+Objects are a part of javascript and are just a group of properties that all represent the same thing in some sense. They're a set of key-value pairs, where the key and value are seperated by a colon, and each key-value pair is separated by a comma. The `ReorderInput` component accepts a list of options that is an array of objects with the properties `title`, `subtitle` and `value`.
 
 This is written as:
 
@@ -104,7 +115,7 @@ options={[
 
 While the spacing within the string will appear as white space within that string, the pretty indentation is completely optional.
 
-# Components, the 'x' in mdx
+# Components
 
 Jsx is a language developed initially by Facebook for it's portability and readability. It can become quite complicated as it's just a superset of a regular programming language, javascript. While complicated in it's entirety, any capable developer should be able to wrap complex layouts in a set of simple, easy to use properties, making the actual usage of those components almost as simple as markdown.
 
@@ -230,7 +241,7 @@ For choosing a single item from a list.
 
 ```tsx
 <DateInput 
-    name="My unique descriptive name."
+    name="My unique descriptive name"
     time
 />
 ```
@@ -238,7 +249,7 @@ For choosing a single item from a list.
 You can include `time` to show a time component. 
 
 <DateInput 
-    name="My unique descriptive name."
+    name="My unique descriptive name"
     time
 />
 
@@ -248,14 +259,14 @@ You can include `time` to show a time component.
 
 ```tsx
 <DateInput 
-    name="My unique descriptive name two."
+    name="My unique descriptive name two"
 />
 ```
 
 If you remove the `time` property only the button is shown.
 
 <DateInput 
-    name="My unique descriptive name two."
+    name="My unique descriptive name two"
 />
 
 This accepts a set of other properties:
@@ -269,7 +280,7 @@ This accepts a set of other properties:
 
 And then also one of the following two:
 
-Here, the `past` and `future` keys, if set to true will collect dates for 10 years in the past or future respectively.
+Here, the `past` and `future` keys, if set to true will collect dates for 10 years forward (future) or 100 years backwards (past).
 
 | Key | Type | Default Value |
 | --- | ---- | ------------- |
@@ -341,6 +352,42 @@ Or you can set the years explicitly:
             value: 3
         },
     ]}
+/>
+
+### Slider
+
+For a number value that belongs in a range, you can use a slider input.
+
+```tsx
+<SliderInput
+    name="My unique name for this slider"
+    // Default: 0
+    min={0}
+    // Optional, if undefined will default to half-way.
+    initial={5}
+    // Default: 1
+    max={10}
+    // Default: 0.1
+    step={0.1}
+    // Optional, Default: undefined
+    label="How important is this to you?"
+    // Whether or not to show value of slider below.
+    // Default: false
+    showValue
+    // "small" | "medium" | "large" | "full"
+    // Default: "medium"
+    width={"medium"}
+/>
+```
+
+<SliderInput
+    name="My unique name for this slider"
+    min={0}
+    max={10}
+    step={0.1}
+    label="How important is this to you?"
+    showValue
+    width={"medium"}
 />
 
 
@@ -482,6 +529,33 @@ Sit id massa ac nibh velit phasellus, condimentum vel, suscipit. Diam duis porta
 
 Ullamcorper id, dignissim iaculis ante faucibus varius, venenatis metus praesent. At aliquam, ligula purus augue nibh at malesuada risus, bibendum. Tristique vulputate laoreet nisi, dui faucibus quis, diam purus et. Aenean eget dui elit quam congue id, elementum, cursus ac. Dignissim ut convallis imperdiet, aliquam id dignissim tincidunt dignissim ligula.
 
+<Title 
+    title="Title"
+    subtitle="A title component with some additional functionality."
+    depth={3}
+    font="ss-pro"
+    width="full"
+/>
+
+Along with the default markdown → html headings, there is also a title component that adds a few additional properties.
+
+To set the font of the title, you can use the `font` property set to one of "ss-pro", "cormorant", or "mono" (monospaced font). There also exists a `subtitle` property that is an optional string, that if applied, will appear below the title with the padding more appropriately spaced. There is also a `depth` property that can be set to a number 1-6 to indicate the depth of the title. This is equivalent to the number of `#` marks in a traditional markdown title.
+
+```tsx title="The title used for this section"
+<Title 
+    // Required string
+    title="Title"
+    // Optional string
+    subtitle="A title component with some additional functionality."
+    // 1-6, default: 1
+    depth={3}
+    // Optional, default depends on depth
+    font="ss-pro"
+    // "fit" | "full", default: "full"
+    width="full"
+/>
+```
+
 ### "Callouts"
 
 ```tsx
@@ -583,3 +657,43 @@ Some content shown after opening!
 </Callout>
 
 Or pass either `right` or `left` as a boolean to float the callout to that side when the screen is large enough and text will wrap around it.
+
+---
+
+## Style Reference
+
+| Label | Compares to | Value | Desc |
+| ----- | ----------- | ----- | ---- |
+| Font (Title) | Beaufort-Pro | [Cormorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) | Also tried [Balthazar](https://fonts.google.com/specimen/Balthazar), [Bellefair](https://fonts.google.com/specimen/Bellefair) and [Cinzel](https://fonts.google.com/specimen/Cinzel) |
+| Font (Body) | Source Sans Pro | [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) | Open sourced by Adobe, this is an almost perfect match. |
+| Font (Monospace) | Adelle-Mono | [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono) | Unable to find any other decent matches. |
+
+These are the elements that markdown itself will be parsed into. The appearance of all of these elements can be easily modified any React developer.
+
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+#### Header 4
+##### Header 5
+###### Header 6
+
+_italic text_, **bold text**, ***bold and italic text***, [Link text](https://google.com)
+
+> This is a block quote.
+
+1. Ordered List
+2. Ordered List
+3. Ordered List
+
+- Unordered List
+- Unordered List
+- Unordered List
+
+Footnote[^1] here
+
+**Markdown Image** (not Image component)
+
+![Some alternative text](https://picsum.photos/200/300?grayscale)
+
+[^1]: This is a footnote example.

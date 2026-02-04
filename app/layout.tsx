@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Bellefair, IBM_Plex_Mono } from "next/font/google";
+import {
+    IBM_Plex_Mono,
+    Cormorant_Garamond,
+    Source_Code_Pro,
+    Source_Sans_3,
+} from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import { LargeHeader } from "@/features/navigation/header";
@@ -13,7 +18,13 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import { AdminFloatingButton } from "@/features/navigation/admin_floating_button/admin_floating_button";
 import { TRPCProvider } from "@/features/trpc/trpc_provider";
 
-const bellefair = Bellefair({
+const ssPro = Source_Sans_3({
+    variable: "--font-ss-pro",
+    weight: ["400", "600", "800"],
+    subsets: ["latin"],
+});
+
+const bellefair = Cormorant_Garamond({
     variable: "--font-bellefair",
     weight: ["400"],
     subsets: ["latin"],
@@ -47,7 +58,7 @@ const RootLayout = async ({
                 />
             </Head>
             <body
-                className={`${bellefair.variable} ${plexMono.variable} antialiased font-sans`}
+                className={`${bellefair.variable} ${plexMono.variable} ${ssPro.variable} antialiased font-sans`}
             >
                 <GlobalProvider>
                     <TRPCProvider>

@@ -1,7 +1,7 @@
 import { useEffect, useEffectEvent, useState } from "react";
 
 export const useHeightWithoutNav = () => {
-    const [height, setHeight] = useState(0);
+    const [height, setHeight] = useState<number | null>(null);
     const handleHeight = (): void => {
         const header =
             document

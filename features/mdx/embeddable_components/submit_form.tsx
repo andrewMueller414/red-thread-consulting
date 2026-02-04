@@ -1,4 +1,9 @@
-import React, { MouseEventHandler, type ReactNode } from "react";
+import React, {
+    MouseEventHandler,
+    useRef,
+    useState,
+    type ReactNode,
+} from "react";
 import z from "zod";
 import { Button } from "../../../components/ui/button";
 import { useFormContext } from "react-hook-form";
@@ -7,7 +12,10 @@ import { trpc } from "@/features/trpc/trpc_provider";
 import { showNotification } from "@/features/notifications/notification_utils";
 import { RedThreadError } from "@/core/errors/red_thread_error";
 import { useSession } from "next-auth/react";
-import { useRenderedMdxFormContext } from "@/features/forms/state/rendered_mdx_form_context";
+import {
+    useRenderedMdxFormContext,
+    useRenderedMdxFormDispatch,
+} from "@/features/forms/state/rendered_mdx_form_context";
 import { usePathname } from "next/navigation";
 import { Route } from "next";
 
@@ -35,18 +43,30 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
     } = submitFormProps.parse(props);
     const session = useSession();
     const pathname = usePathname() as Route;
-    const { mdxSourceId } = useRenderedMdxFormContext();
+    const { mdxSourceId, submitting } = useRenderedMdxFormContext();
+    const formDispatch = useRenderedMdxFormDispatch();
     const form = useFormContext<MdxFormData>();
     const formMutation = trpc.form.create.useMutation();
+
+    const setSubmitting = (payload: boolean): void => {
+        formDispatch({
+            type: "setSubmitting",
+            payload,
+        });
+    };
 
     const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (
         e,
     ): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
+        if (submitting) {
+            return;
+        }
         const isValid = await form.trigger();
         if (isValid) {
             if (pathname !== "/admin/mdx/editor") {
+                setSubmitting(true);
                 formMutation.mutate(
                     {
                         data: form.getValues(),
@@ -66,6 +86,7 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
                                     }
                                 }
                             }
+                            setSubmitting(false);
                             console.error("Error: ", e.message);
                         },
                         onSuccess: (success) => {
@@ -77,6 +98,7 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
                                     variant: "info",
                                 });
                                 form.reset();
+                                setSubmitting(false);
                             } else {
                                 showNotification({
                                     title: notificationErrorTitle,
@@ -84,6 +106,7 @@ export const SubmitForm = (props: SubmitFormProps): ReactNode => {
                                     duration: 5000,
                                     variant: "info",
                                 });
+                                setSubmitting(false);
                             }
                         },
                     },

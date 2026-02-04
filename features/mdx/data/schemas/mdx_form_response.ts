@@ -4,6 +4,7 @@ import {
     ReorderInputItem,
     reorderInputProps,
     selectInputPropsSchema,
+    sliderPropsSchema,
     textAreaInputProps,
     textInputPropsSchema,
 } from "./input_props_schemas";
@@ -25,10 +26,11 @@ export const formDataValueSchema = z.union([
 export enum InputId {
     checkbox = "cb",
     text = "text",
-    textArea = "text-area",
+    textArea = "ta",
     reorder = "reorder",
     dateTime = "dt",
     select = "select",
+    slider = "slider",
 }
 
 const checkboxMeta = checkboxPropsSchema.omit({ name: true });
@@ -36,6 +38,7 @@ const textInputMeta = textInputPropsSchema.omit({ name: true, maxWidth: true });
 const textAreaMeta = textAreaInputProps.omit({ name: true, maxWidth: true });
 const reorderMeta = reorderInputProps.omit({ name: true });
 const selectMeta = selectInputPropsSchema.omit({ name: true });
+const sliderMeta = sliderPropsSchema._def.in.omit({ name: true });
 
 const dateTimeMeta = z.union([
     dateTimeInputPropsWithFutureTense.omit({ name: true }),
@@ -52,6 +55,7 @@ export const formDataNestedValueSchema = z.object({
         textInputMeta,
         textAreaMeta,
         dateTimeMeta,
+        sliderMeta,
     ]),
 });
 
@@ -82,7 +86,7 @@ export type NestedFormValueOfType<T extends NestedFormValue["value"]> =
     NestedFormValue & { value: T };
 
 export interface PreviewComponentProps<
-    T extends string | boolean | ReorderInputItem[] | Date,
+    T extends string | boolean | ReorderInputItem[] | Date | number,
 > {
     disabled?: boolean;
     valueOverride?: T;
@@ -96,3 +100,4 @@ export type TextAreaMeta = z.infer<typeof textAreaMeta>;
 export type ReorderMeta = z.infer<typeof reorderMeta>;
 export type DateTimeMeta = z.infer<typeof dateTimeMeta>;
 export type SelectMeta = z.infer<typeof selectMeta>;
+export type SliderMeta = z.infer<typeof sliderMeta>;

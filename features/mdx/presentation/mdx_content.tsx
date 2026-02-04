@@ -40,7 +40,7 @@ export const MdxContent = ({
     return Component ? (
         <div
             className={cn(
-                "max-w-270 w-full mdx @container/mdx max-h-full prose prose-h2:mt-0 prose-h3:my-4 prose-blockquote:border-dust prose-li:marker:text-mist",
+                "max-w-270 w-full mdx @container/mdx max-h-full prose prose-h2:mt-0 prose-h3:my-4 prose-blockquote:border-dust prose-li:marker:text-mist prose-hr:border-pine/30",
                 className,
             )}
         >
@@ -49,9 +49,13 @@ export const MdxContent = ({
         </div>
     ) : (
         <div
-            className={cn("w-full h-full flex flex-col justify-center items-center")}
+            className={cn(
+                "w-full h-full flex flex-col justify-center items-center",
+                expandLoading && !heightWithoutNav && "h-screen",
+            )}
             style={{
-                ...(expandLoading && {
+                ...(expandLoading &&
+                    heightWithoutNav && {
                     minHeight: `${heightWithoutNav}px`,
                 }),
             }}

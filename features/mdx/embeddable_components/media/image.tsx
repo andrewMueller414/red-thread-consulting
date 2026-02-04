@@ -1,21 +1,24 @@
 import React, { CSSProperties, type ReactNode } from "react";
 import z from "zod";
 import { cn } from "../../../../lib/utils";
+import Image from "next/image";
 
-export const sizeEnum = z.union([
-    z.literal("small"),
-    z.literal("medium"),
-    z.literal("large"),
-]);
+export const sizeEnum = z.union(
+    [z.literal("small"), z.literal("medium"), z.literal("large")],
+    "Please select a value of 'small', 'medium', or 'large'",
+);
 
 export type SizeEnum = z.infer<typeof sizeEnum>;
 
-export const sizeEnumWithFull = z.union([
-    z.literal("small"),
-    z.literal("medium"),
-    z.literal("large"),
-    z.literal("full"),
-]);
+export const sizeEnumWithFull = z.union(
+    [
+        z.literal("small"),
+        z.literal("medium"),
+        z.literal("large"),
+        z.literal("full"),
+    ],
+    "Please select a value of 'small', 'medium', 'large' or 'full'.",
+);
 
 export type SizeEnumWithFull = z.infer<typeof sizeEnumWithFull>;
 
@@ -128,12 +131,12 @@ export const EmbeddableImage = ({
     }
 
     return (
-        <img // NOTE: Use html image element for now. Convert this to Nexts image component once image storage is in place.
+        <Image
             src={url}
             alt={alt}
             width={1080}
             height={1080}
-            className={cn("object-contain rounded", ...classes)}
+            className={cn("img-comp object-contain rounded", ...classes)}
             style={{
                 maxWidth: typeof maxWidth === "number" ? `${maxWidth}px` : undefined,
                 maxHeight: typeof maxHeight === "number" ? `${maxHeight}px` : undefined,

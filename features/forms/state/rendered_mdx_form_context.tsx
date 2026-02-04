@@ -3,19 +3,26 @@ import { ReactNode, createContext, useReducer, useContext } from "react";
 
 export interface RenderedMdxFormState {
     mdxSourceId: string;
+    submitting: boolean;
 }
 
 const defaultInitialValues: RenderedMdxFormState = {
     mdxSourceId: "",
+    submitting: false,
 };
 
 export const RenderedMdxFormContext =
     createContext<RenderedMdxFormState>(defaultInitialValues);
 
-type RenderedMdxFormContextActions = {
-    type: "setMdxSourceId";
-    payload: string;
-};
+type RenderedMdxFormContextActions =
+    | {
+        type: "setMdxSourceId";
+        payload: string;
+    }
+    | {
+        type: "setSubmitting";
+        payload: boolean;
+    };
 
 export const RenderedMdxFormDispatchContext = createContext<
     React.Dispatch<RenderedMdxFormContextActions>
@@ -35,6 +42,12 @@ export const RenderedMdxFormContextReducer = (
             return {
                 ...state,
                 mdxSourceId: action.payload,
+            };
+        }
+        case "setSubmitting": {
+            return {
+                ...state,
+                submitting: action.payload,
             };
         }
         default: {

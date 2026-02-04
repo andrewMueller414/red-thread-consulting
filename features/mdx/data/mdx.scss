@@ -1,5 +1,11 @@
 @use "rehype-callouts/theme/vitepress";
 
+.mdx {
+  a[data-footnote-ref="true"] {
+    text-decoration: none;
+  }
+}
+
 td[data-selected="true"] {
   background-color: transparent;
 }
