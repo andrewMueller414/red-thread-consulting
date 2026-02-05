@@ -7,12 +7,14 @@ export interface OnboardingResponseTableState {
     responseSummaries: OnboardingSummaryResponseSummary[];
     filterText: string;
     filteredSummaries: OnboardingSummaryResponseSummary[];
+    noteIdFilter?: string;
 }
 
 const defaultInitialValues: OnboardingResponseTableState = {
     responseSummaries: [],
     filteredSummaries: [],
     filterText: "",
+    noteIdFilter: undefined,
 };
 
 export const OnboardingResponseTableContext =
@@ -27,6 +29,7 @@ export enum OnboardingResponseTableAction {
     updateItem,
     setReviewedAt,
     removeByIds,
+    setNoteIdFilter,
 }
 
 type OnboardingResponseTableContextActions =
@@ -63,6 +66,10 @@ type OnboardingResponseTableContextActions =
     | {
         type: OnboardingResponseTableAction.removeByIds;
         payload: { id: number }[];
+    }
+    | {
+        type: OnboardingResponseTableAction.setNoteIdFilter;
+        payload: string | null;
     };
 
 export const OnboardingResponseTableDispatchContext = createContext<
@@ -166,6 +173,20 @@ export const OnboardingResponseTableContextReducer = (
                         return item;
                     }
                 }),
+            };
+        }
+        case OnboardingResponseTableAction.setNoteIdFilter: {
+            return {
+                ...state,
+                noteIdFilter: action.payload ?? undefined,
+                filteredSummaries: action.payload
+                    ? state.responseSummaries.filter(
+                        (s) => s.mdxSourceId === action.payload,
+                    )
+                    : getFilteredResponseSummaries(
+                        state.responseSummaries,
+                        state.filterText,
+                    ),
             };
         }
         case OnboardingResponseTableAction.removeByIds: {

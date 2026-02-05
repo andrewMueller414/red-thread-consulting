@@ -248,13 +248,13 @@ export const getSizePropsString = (
         "marginBottom",
         "marginTop",
     ] satisfies (keyof z.infer<typeof sizePropsObject>)[];
-    let s = "";
+    const s: string[] = [];
     for (const k of keys) {
         if (data[k]) {
-            s += data[k];
+            s.push(data[k]);
         }
     }
-    return s;
+    return s.join(" ");
 };
 
 const imageSchema = z.object({

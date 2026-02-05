@@ -9,6 +9,8 @@ import {
 import { TableHeaderColumnSelect } from "./table_header_column_select";
 import { Table } from "@tanstack/react-table";
 import { FormResponse } from "@/lib/generated/prisma/client";
+import { Button } from "../../../../components/ui/button";
+import { useRouter } from "next/navigation";
 
 export const OnboardingResponseTableFilterRow = ({
     table,
@@ -17,6 +19,7 @@ export const OnboardingResponseTableFilterRow = ({
 }): ReactNode => {
     const tableState = useOnboardingResponseTableContext();
     const tableDispatch = useOnboardingResponseTableDispatch();
+    const router = useRouter();
     return (
         <div className="w-full flex flex-row justify-start items-end mb-4">
             <div className="flex flex-col justify-end items-start">
@@ -32,6 +35,19 @@ export const OnboardingResponseTableFilterRow = ({
                     className="py-2"
                 />
             </div>
+            {tableState.noteIdFilter ? (
+                <Button
+                    onClick={() => {
+                        tableDispatch({
+                            type: OnboardingResponseTableAction.setNoteIdFilter,
+                            payload: null,
+                        });
+                        router.replace("/admin");
+                    }}
+                >
+                    Clear Filter
+                </Button>
+            ) : null}
             <TableHeaderColumnSelect table={table} />
         </div>
     );

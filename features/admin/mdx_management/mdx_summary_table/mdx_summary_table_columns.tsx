@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { showMdxDeleteConfirmation } from "../delete_mdx_confirmation_modal/delete_mdx_confirmation_modal_actions";
+import { typedSearchParamRoute } from "../../../../core/utils/url_utils";
+import { Route } from "next";
 dayjs.extend(advancedFormat);
 
 export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
@@ -52,7 +54,7 @@ export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
 
             const editUrl = encodeURI(`/admin/mdx/editor?${sp.toString()}`);
             return (
-                <Link href={editUrl} className="w-full">
+                <Link href={editUrl as Route} className="w-full">
                     {rowId}
                 </Link>
             );
@@ -91,6 +93,11 @@ export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
 
             const editUrl = encodeURI(`/admin/mdx/editor?${sp.toString()}`);
 
+            const responseSp = new URLSearchParams();
+            responseSp.set("articleId", rowId);
+
+            const responsesUrl = typedSearchParamRoute("/admin", responseSp);
+
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -100,12 +107,17 @@ export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-matcha">
                         <DropdownMenuItem>
-                            <Link className="w-full h-full" href={viewUrl}>
+                            <Link className="w-full h-full" href={viewUrl as Route}>
                                 View
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <Link className="w-full h-full" href={editUrl}>
+                            <Link className="w-full h-full" href={responsesUrl}>
+                                Responses
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Link className="w-full h-full" href={editUrl as Route}>
                                 Edit
                             </Link>
                         </DropdownMenuItem>

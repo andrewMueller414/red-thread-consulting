@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
         ],
         minimumCacheTTL: 3600,
     },
+    typedRoutes: true,
 };
 
 export default nextConfig;

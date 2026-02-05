@@ -5,6 +5,7 @@ import { OnboardingResponseTableProvider } from "../../state/onboarding_response
 
 interface OnboardingResponseTableContainerProps {
     items: FormResponse[];
+    initialNoteIdFilter?: string;
 }
 
 export const OnboardingResponseTableContainer = (
@@ -15,7 +16,12 @@ export const OnboardingResponseTableContainer = (
             <OnboardingResponseTableProvider
                 initialValues={{
                     responseSummaries: props.items,
-                    filteredSummaries: props.items,
+                    noteIdFilter: props.initialNoteIdFilter,
+                    filteredSummaries: props.initialNoteIdFilter
+                        ? props.items.filter(
+                            (s) => s.mdxSourceId === props.initialNoteIdFilter,
+                        )
+                        : props.items,
                     filterText: "",
                 }}
             >

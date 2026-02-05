@@ -52,9 +52,9 @@ const MainContainer = ({
     return (
         <div
             className={cn(
-                "group not-prose flex flex-col @5xl/mdx:grid @5xl/mdx:grid-cols-2 rounded",
+                "group not-prose flex @5xl/mdx:grid @5xl/mdx:grid-cols-2 rounded",
                 className,
-                reverse && "flex-col-reverse",
+                reverse ? "flex-col" : "flex-col-reverse",
             )}
         >
             {children}
@@ -142,7 +142,7 @@ const DataColumnContainer = ({
 }: {
     children: ReactNode;
 }): ReactNode => {
-    return <div className="py-12 px-8">{children}</div>;
+    return <div className="py-6 @5xl/mdx:py-12 px-8">{children}</div>;
 };
 
 export const ColoredGridSection = ({
@@ -172,7 +172,7 @@ export const ColoredGridSection = ({
                         width={1080}
                         height={1080}
                         alt={imgAlt}
-                        className="rounded-bl rounded-br @5xl/mdx:rounded-tl @5xl/mdx:rounded-br-none"
+                        className="object-cover w-full h-full my-0! rounded-tl rounded-tr rounded-bl-none @5xl/mdx:rounded-tl @5xl/mdx:rounded-bl @5xl/mdx:rounded-tr-none"
                     />
                     <Overlay reverse={true} color={color} />
                 </ImageContainer>
@@ -196,7 +196,7 @@ export const ColoredGridSection = ({
             <ImageContainer>
                 <Image
                     className={cn(
-                        "object-cover w-full h-full my-0! rounded-br rounded-bl @5xl/mdx:rounded-tr @5xl/mdx:rounded-bl-none",
+                        "object-cover w-full h-full my-0! rounded-tr rounded-tl @5xl/mdx:rounded-tr @5xl/mdx:rounded-br @5xl/mdx:rounded-tl-none",
                     )}
                     src={img}
                     width={1080}

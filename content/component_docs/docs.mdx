@@ -1,3 +1,4 @@
+
 # Docs
 
 <Callout title="Important things to keep in mind" type="pine" foldable folded={false}>
@@ -487,6 +488,492 @@ On the editor page, this component will print out the form's data to the browser
 
 Remember to consider the width of the preview when viewing these layout components, as much of their intended functionality is to respond to different screen sizes.
 
+
+### Card
+
+A 'card' is a component that adds a border, title, an optional subtitle and some padding around it's children. Here is a set of examples applying each of the theme colors to the following component.
+
+```tsx
+<Card 
+    title="This is a pine card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    pine
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+    >
+    <TextInput 
+        label={`Address`}
+        name={"anyUniqueNameThatNeverChanges3"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Street`}
+        name={"anyUniqueNameThatNeverChanges4"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    </Grid>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit />
+    </Align>
+</Card>
+```
+
+
+
+
+<Card 
+    title="This is a pine card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    pine
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+    >
+    <TextInput 
+        label={`Address`}
+        name={"anyUniqueNameThatNeverChanges3"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Street`}
+        name={"anyUniqueNameThatNeverChanges4"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    </Grid>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit />
+    </Align>
+</Card>
+
+---
+
+
+<Card 
+    title="This is a mist card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    mist
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Align
+        width="full"
+        colSpan={2}
+    >
+    <MultiLineTextInput
+        label={`My Label`}
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="Company Name"
+        maxWidth="medium"
+        rows={3}
+    />
+    </Align>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit fog />
+    </Align>
+</Card>
+
+---
+
+
+
+<Card 
+    title="This is a fog card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    fog
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+    >
+    <TextInput 
+        label={`Address`}
+        name={"anyUniqueNameThatNeverChanges3"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Street`}
+        name={"anyUniqueNameThatNeverChanges4"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    </Grid>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit cream />
+    </Align>
+</Card>
+
+---
+
+
+<Card 
+    title="This is a moss card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    moss
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+    >
+    <TextInput 
+        label={`Address`}
+        name={"anyUniqueNameThatNeverChanges3"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Street`}
+        name={"anyUniqueNameThatNeverChanges4"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    </Grid>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit moss />
+    </Align>
+</Card>
+
+---
+
+
+<Card 
+    title="This is a dust card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    dust
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+    >
+    <TextInput 
+        label={`Address`}
+        name={"anyUniqueNameThatNeverChanges3"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Street`}
+        name={"anyUniqueNameThatNeverChanges4"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    </Grid>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit />
+    </Align>
+</Card>
+
+---
+
+
+<Card 
+    title="This is a matcha card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    matcha
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+    >
+    <TextInput 
+        label={`Address`}
+        name={"anyUniqueNameThatNeverChanges3"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Street`}
+        name={"anyUniqueNameThatNeverChanges4"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    </Grid>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit moss />
+    </Align>
+</Card>
+
+
+---
+
+
+<Card 
+    title="This is a cream card"
+    subtitle="Velit odio metus laoreet non aenean vivamus eleifend in nec."
+    cream
+>
+    <Grid 
+        columns={1}
+        gapY="medium"
+        >
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+        >
+    <TextInput 
+        label={`Name`}
+        name={"anyUniqueNameThatNeverChanges"}
+        placeholder="John Doe"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Email`}
+        type="email"
+        name={"anyUniqueNameThatNeverChanges2"}
+        placeholder="example@gmail.com"
+        maxWidth="full"
+    />
+    </Grid>
+    <Grid 
+        columns={{
+            small: 1,
+            medium: 2,
+            large: 2
+        }}
+        gap="medium"
+    >
+    <TextInput 
+        label={`Address`}
+        name={"anyUniqueNameThatNeverChanges3"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    <TextInput 
+        label={`Street`}
+        name={"anyUniqueNameThatNeverChanges4"}
+        placeholder="Company Name"
+        maxWidth="full"
+    />
+    </Grid>
+    </Grid>
+    <Align horizontal="right" marginTop="medium">
+        <Submit mist />
+    </Align>
+</Card>
+
+
 ### Grid 
 
 ```tsx
@@ -567,6 +1054,79 @@ You’re accomplished by every traditional metric, but the meaning it once offer
     subtitle="Red Thread consulting exists to help you choose what comes next."
     width="full"
     mist
+    marginBottom="medium"
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
+
+
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    marginBottom="medium"
+    dust
+    reverse
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
+
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    marginBottom="medium"
+    moss
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    marginBottom="medium"
+    pine
+    reverse
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    marginBottom="medium"
+    fog
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    marginBottom="medium"
+    matcha
+    reverse
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    marginBottom="medium"
+    cream
 >
 You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
 </ColoredGridSection>

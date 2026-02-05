@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React, { type ReactNode } from "react";
 import { SaveEditorNotification } from "../../../../features/notifications/presentation/save_editor_notification";
+import "./editor_page.scss";
 
 interface MdxEditorPageProps {
     searchParams: Promise<{
