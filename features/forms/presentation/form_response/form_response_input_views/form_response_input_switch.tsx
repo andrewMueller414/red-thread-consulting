@@ -111,7 +111,6 @@ export const FormResponseInputSwitch = (
                             : new Date(props.data.value as string)
                     }
                     {...meta}
-                    inputId={InputId.dateTime}
                     meta={meta}
                 />
             );
