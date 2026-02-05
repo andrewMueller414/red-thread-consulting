@@ -14,9 +14,15 @@ import {
 import { useFormContext } from "react-hook-form";
 
 export const DateTimeInputSwitch = (
-    props: DateTimeInputSchema & PreviewComponentProps<Date, DateTimeMeta>,
+    props: Omit<DateTimeInputSchema, "inputId"> &
+        PreviewComponentProps<Date, DateTimeMeta>,
 ): ReactNode => {
-    const _props = props.meta ?? dateTimeInputSchema.parse(props);
+    const _props =
+        props.meta ??
+        dateTimeInputSchema.parse({
+            ...props,
+            inputId: InputId.dateTime,
+        });
     useFormInitialValue<DateTimeMeta>(
         _props.name,
         InputId.dateTime,

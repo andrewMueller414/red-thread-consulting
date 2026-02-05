@@ -57,13 +57,16 @@ export const sizeWidthTransform = (
             return "@sm/mdx:w-45";
         }
         case "medium": {
-            return "@md/mdx:w-45";
+            return "@md/mdx:w-90";
         }
         case "large": {
-            return "@2xl/mdx:w-60";
+            return "@2xl/mdx:w-180";
         }
         case "fit": {
             return "w-fit";
+        }
+        case "full": {
+            return "w-full";
         }
     }
     if (typeof data === "string") {
