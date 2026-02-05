@@ -15,27 +15,22 @@ import {
 } from "@/features/mdx/data/schemas/mdx_form_response";
 import { useFormContext } from "react-hook-form";
 
-export const DateTimeInputSwitch = ({
-    ...props
-}: DateTimeInputSchema & PreviewComponentProps<Date>): ReactNode => {
-    const _props = dateTimeInputSchema.parse(props);
-    useFormInitialValue<DateTimeMeta>(_props.name, InputId.dateTime, new Date(), {
-        datePlaceholder: props.datePlaceholder,
-        timeLabel: props.timeLabel,
-        dateLabel: props.dateLabel,
-        time: props.time,
-    });
+export const DateTimeInputSwitch = (
+    props: DateTimeInputSchema & PreviewComponentProps<Date, DateTimeMeta>,
+): ReactNode => {
+    const _props = props.meta ?? dateTimeInputSchema.parse(props);
+    useFormInitialValue<DateTimeMeta>(
+        _props.name,
+        InputId.dateTime,
+        new Date(),
+        _props,
+    );
     const form = useFormContext<MdxFormData>();
     const setDate = (newDate: Date): void => {
         form.setValue(_props.name, {
             value: newDate,
             inputId: InputId.dateTime,
-            meta: {
-                datePlaceholder: props.datePlaceholder,
-                timeLabel: props.timeLabel,
-                dateLabel: props.dateLabel,
-                time: props.time,
-            },
+            meta: _props,
         });
     };
     if (props.time) {
@@ -45,6 +40,7 @@ export const DateTimeInputSwitch = ({
                 disabled={props.disabled}
                 valueOverride={props.valueOverride}
                 setDate={setDate}
+                meta={props.meta}
             />
         );
     } else {
@@ -54,6 +50,7 @@ export const DateTimeInputSwitch = ({
                 disabled={props.disabled}
                 valueOverride={props.valueOverride}
                 setDate={setDate}
+                meta={props.meta}
             />
         );
     }

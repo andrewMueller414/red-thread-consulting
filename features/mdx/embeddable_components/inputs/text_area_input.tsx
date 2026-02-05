@@ -5,7 +5,6 @@ import React, { type ReactNode } from "react";
 import { z } from "zod";
 import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
-import { getMaxWidthProp } from "../embeddable_component_utils";
 import {
     InputId,
     MdxFormData,
@@ -18,19 +17,16 @@ import { textAreaInputProps } from "../../data/schemas/input_props_schemas";
 export type EmbeddableTextAreaInputProps = z.input<typeof textAreaInputProps>;
 
 export const EmbeddableTextAreaInput = (
-    props: EmbeddableTextAreaInputProps & PreviewComponentProps<string>,
+    props: EmbeddableTextAreaInputProps &
+        PreviewComponentProps<string, TextAreaMeta>,
 ): ReactNode => {
-    const { maxWidth, label, placeholder, name, rows, desc } =
-        textAreaInputProps.parse(props);
+    const __props = props.meta ?? textAreaInputProps.parse(props);
+    const { label, placeholder, name, rows, desc, sizeClasses, ..._props } =
+        __props;
     const form = useFormContext<MdxFormData>();
-    useFormInitialValue<TextAreaMeta>(name, InputId.textArea, "", {
-        label,
-        placeholder,
-        desc,
-        rows,
-    });
+    useFormInitialValue<TextAreaMeta>(name, InputId.textArea, "", __props);
     return (
-        <Field className={cn("mt-8 w-full", getMaxWidthProp(maxWidth))}>
+        <Field className={cn("w-full", sizeClasses)}>
             <FieldLabel>{label}</FieldLabel>
             <Textarea
                 value={props.valueOverride ?? (form.watch(name)?.value as string) ?? ""}
@@ -39,12 +35,7 @@ export const EmbeddableTextAreaInput = (
                     form.setValue(name, {
                         value: e.target.value,
                         inputId: InputId.textArea,
-                        meta: {
-                            label,
-                            placeholder,
-                            desc,
-                            rows,
-                        } satisfies TextAreaMeta,
+                        meta: __props satisfies TextAreaMeta,
                     })
                 }
                 placeholder={placeholder}

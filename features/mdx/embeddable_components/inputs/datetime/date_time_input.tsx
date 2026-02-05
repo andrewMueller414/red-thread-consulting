@@ -5,6 +5,7 @@ import {
 } from "./date_time_input_schema";
 import { useFormContext } from "react-hook-form";
 import {
+    DateTimeMeta,
     InputId,
     MdxFormData,
     NestedFormValueOfType,
@@ -40,7 +41,7 @@ export const DateTimeInput = ({
     ...props
 }: DateTimeInputSchemaOutput &
     DateTimeNestedInputProps &
-    PreviewComponentProps<Date>): ReactNode => {
+    PreviewComponentProps<Date, DateTimeMeta>): ReactNode => {
     const [dateOpen, setDateOpen] = useState(false);
     const form = useFormContext<MdxFormData>();
     const date = form.watch(name) as
@@ -151,16 +152,7 @@ export const DateTimeInput = ({
                                 d = d.set(unit, val);
                             }
                         });
-                        form.setValue(name, {
-                            inputId: InputId.dateTime,
-                            value: d.toDate(),
-                            meta: {
-                                datePlaceholder,
-                                timeLabel,
-                                dateLabel,
-                                time,
-                            },
-                        });
+                        setDate(d.toDate());
                     }}
                 />
             </Field>

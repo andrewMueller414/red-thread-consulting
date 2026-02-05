@@ -1,6 +1,7 @@
 import React, { useState, type ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import {
+    DateTimeMeta,
     MdxFormData,
     NestedFormValueOfType,
     PreviewComponentProps,
@@ -30,7 +31,7 @@ export const DateInput = ({
     ...props
 }: DateTimeInputSchemaOutput &
     DateTimeNestedInputProps &
-    PreviewComponentProps<Date>): ReactNode => {
+    PreviewComponentProps<Date, DateTimeMeta>): ReactNode => {
     const [open, setOpen] = useState(false);
     const form = useFormContext<MdxFormData>();
     const date = form.watch(name) as

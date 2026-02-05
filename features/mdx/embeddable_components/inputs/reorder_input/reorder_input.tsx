@@ -6,6 +6,7 @@ import { H2 } from "../../../../../core/shared_components/typography";
 import {
     InputId,
     MdxFormData,
+    PreviewComponentProps,
     ReorderMeta,
 } from "../../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../../state/hooks/use_form_initial_value";
@@ -24,9 +25,10 @@ export const ReorderInput = (
             group?: string;
             item?: string;
         };
-    },
+    } & PreviewComponentProps<ReorderInputItem[], ReorderMeta>,
 ): ReactNode => {
-    const { options, title, subtitle, name } = reorderInputProps.parse(props);
+    const { options, ..._props } = props.meta ?? reorderInputProps.parse(props);
+    const { title, subtitle, name } = _props;
     const form = useFormContext<MdxFormData>();
     const timer = useRef<NodeJS.Timeout | null>(null);
     const [items, setItems] = useState<ReorderInputItem[]>(options);
@@ -36,9 +38,8 @@ export const ReorderInput = (
         InputId.reorder,
         items.map((n) => n.value as string),
         {
-            title,
-            subtitle,
             options: items,
+            ..._props,
         },
     );
     const handleReorder = (newOrder: ReorderInputItem[]): void => {
@@ -59,9 +60,8 @@ export const ReorderInput = (
                 value: items.map((item) => item.value) as string[],
                 inputId: InputId.reorder,
                 meta: {
-                    title,
-                    subtitle,
                     options: items,
+                    ..._props,
                 } satisfies ReorderMeta,
             });
         }, 500);

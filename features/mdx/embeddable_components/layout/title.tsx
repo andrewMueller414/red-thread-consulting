@@ -12,6 +12,8 @@ import {
     H6,
 } from "../../../../core/shared_components/typography";
 import { cn } from "../../../../lib/utils";
+import { themeColorForegroundRecordToString } from "../shared_schemas";
+import { getSizePropsString, sizePropsObject } from "../media/image";
 
 const TitleSwitch = ({
     depth,
@@ -37,9 +39,26 @@ const TitleSwitch = ({
 };
 
 export const EmbeddabledTitle = (props: EmbeddabledTitleProps): ReactNode => {
-    const { title, subtitle, depth, font, width } = titlePropsSchema.parse(props);
+    const { title, subtitle, depth, font, width, colorClasses, sizeClasses } =
+        titlePropsSchema
+            .merge(sizePropsObject)
+            .transform((c) => {
+                return {
+                    ...c,
+                    colorClasses: themeColorForegroundRecordToString(c),
+                    sizeClasses: getSizePropsString(c),
+                };
+            })
+            .parse(props);
     return (
-        <div className={cn("w-fit flex flex-col justify-start items-start", width)}>
+        <div
+            className={cn(
+                "w-fit flex flex-col justify-start items-start",
+                width,
+                colorClasses,
+                sizeClasses,
+            )}
+        >
             <TitleSwitch className="mb-0!" depth={depth} title={title} font={font} />
             <div className="text-[12px] font-mono text-pine">{subtitle}</div>
         </div>

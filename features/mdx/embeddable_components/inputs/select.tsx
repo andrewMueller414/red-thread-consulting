@@ -28,22 +28,18 @@ export const SelectInput = ({
     valueOverride,
     disabled,
     ...props
-}: SelectInputProps & PreviewComponentProps<string>): ReactNode => {
+}: SelectInputProps & PreviewComponentProps<string, SelectMeta>): ReactNode => {
     const form = useFormContext<MdxFormData>();
-    const { options, label, width, name, placeholder } =
-        selectInputPropsSchema.parse(props);
+    const _props = props.meta ?? selectInputPropsSchema.parse(props);
+    const { options, label, width, name, placeholder } = _props;
     const sizes: { [K in SizeEnumWithFull]: string } = {
         small: "@sm/mdx:w-45",
         medium: "@md/mdx:w-45",
         large: "@2xl/mdx:w-60",
+        fit: "w-fit",
         full: "",
     };
-    useFormInitialValue<SelectMeta>(name, InputId.select, options[0], {
-        label,
-        placeholder,
-        width,
-        options,
-    });
+    useFormInitialValue<SelectMeta>(name, InputId.select, options[0], _props);
     const data = form.watch(name) as
         | NestedFormValueOfType<string>
         | null
@@ -57,12 +53,7 @@ export const SelectInput = ({
                     form.setValue(name, {
                         value: val,
                         inputId: InputId.select,
-                        meta: {
-                            label,
-                            width,
-                            options,
-                            placeholder,
-                        },
+                        meta: _props,
                     });
                 }}
                 value={valueOverride ?? data?.value ?? ""}

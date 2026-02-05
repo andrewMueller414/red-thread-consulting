@@ -9,6 +9,7 @@ import {
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { useFormContext } from "react-hook-form";
 import {
+    CheckboxMeta,
     InputId,
     MdxFormData,
     NestedFormValue,
@@ -20,14 +21,16 @@ import { checkboxPropsSchema } from "../../data/schemas/input_props_schemas";
 export type EmbeddableCheckboxProps = z.infer<typeof checkboxPropsSchema>;
 
 export const EmbeddableCheckbox = (
-    props: EmbeddableCheckboxProps & PreviewComponentProps<boolean>,
+    props: EmbeddableCheckboxProps & PreviewComponentProps<boolean, CheckboxMeta>,
 ): ReactNode => {
-    const { title, subtitle, name } = checkboxPropsSchema.parse(props);
+    const { title, subtitle, name } =
+        props.meta ?? checkboxPropsSchema.parse(props);
     const form = useFormContext<MdxFormData>();
     const value = form.watch(name) as NestedFormValue;
     useFormInitialValue(name, InputId.checkbox, false, {
         title,
         subtitle,
+        name,
     });
     return (
         <Field orientation="horizontal">
@@ -45,6 +48,7 @@ export const EmbeddableCheckbox = (
                         meta: {
                             title,
                             subtitle,
+                            name,
                         },
                     })
                 }

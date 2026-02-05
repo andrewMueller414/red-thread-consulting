@@ -377,6 +377,13 @@ For a number value that belongs in a range, you can use a slider input.
     // "small" | "medium" | "large" | "full"
     // Default: "medium"
     width={"medium"}
+    // If showValue is true, this is the 
+    // number of decimals to round the value to.
+    // Default: 1
+    decimals={1}
+    // Any of the theme colors can be applied
+    // as a boolean.
+    mist
 />
 ```
 
@@ -385,9 +392,72 @@ For a number value that belongs in a range, you can use a slider input.
     min={0}
     max={10}
     step={0.1}
-    label="How important is this to you?"
+    label="This is a 'dust' slider"
     showValue
     width={"medium"}
+    dust
+/>
+
+<SliderInput
+    name="My unique name for this slider"
+    min={0}
+    max={10}
+    step={0.1}
+    label="This is a 'moss' slider"
+    showValue
+    width={"medium"}
+    moss
+/>
+<SliderInput
+    name="My unique name for this slider"
+    min={0}
+    max={10}
+    step={0.1}
+    label="This is a 'pine' slider"
+    showValue
+    width={"medium"}
+    pine
+/>
+<SliderInput
+    name="My unique name for this slider"
+    min={0}
+    max={10}
+    step={0.1}
+    label="This is a 'mist' slider"
+    showValue
+    width={"medium"}
+    mist
+/>
+<SliderInput
+    name="My unique name for this slider"
+    min={0}
+    max={10}
+    step={0.1}
+    label="This is a 'fog' slider"
+    showValue
+    width={"medium"}
+    fog
+/>
+<SliderInput
+    name="My unique name for this slider"
+    min={0}
+    max={10}
+    step={0.1}
+    label="This is a 'matcha' slider"
+    showValue
+    width={"medium"}
+    matcha
+/>
+
+<SliderInput
+    name="My unique name for this slider"
+    min={0}
+    max={10}
+    step={0.1}
+    label="This is a 'cream' slider"
+    showValue
+    width={"medium"}
+    cream
 />
 
 
@@ -459,6 +529,47 @@ Remember to consider the width of the preview when viewing these layout componen
         This will be in the center of the second column
     </Align>
 </Grid>
+
+
+
+### ColoredGridSection 
+
+
+The section that appears on the Red Thread Consulting landing page was not replicated exactly as components that span the full width of the screen require some reasonably complex properties to style for all screensizes. Instead there exists something similar, hopefully adding the ability to add some color contrast to various sections.
+
+Set `reverse` to true to flip the image and the content.
+
+
+
+```tsx
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    // "cormorant" | "mono" | "ss-pro"
+    // Default: cormorant
+    titleFont="cormorant"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    // Any of the theme colors can be
+    // applied as a boolean.
+    mist
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
+```
+
+
+<ColoredGridSection 
+    img="https://red-thread-consulting-media.s3.us-east-2.amazonaws.com/78ed74e7-98b6-49e3-87df-7d13e5dd8f0b"
+    imgAlt="A big tree in the forest."
+    title="For that moment when the old definition of success no longer fits…"
+    subtitle="Red Thread consulting exists to help you choose what comes next."
+    width="full"
+    mist
+>
+You’re accomplished by every traditional metric, but the meaning it once offered no longer feels like enough. Now, you’re ready to redefine wealth, success, and legacy — on your own terms.
+</ColoredGridSection>
 
 
 ### Align
@@ -549,7 +660,8 @@ To set the font of the title, you can use the `font` property set to one of "ss-
     subtitle="A title component with some additional functionality."
     // 1-6, default: 1
     depth={3}
-    // Optional, default depends on depth
+    // "ss-pro" | "mono" | "cormorant"
+    // Default depends on depth
     font="ss-pro"
     // "fit" | "full", default: "full"
     width="full"

@@ -30,6 +30,7 @@ const ArticleViewPage = async ({
         <RenderedMdxFormProvider
             initialValues={{
                 mdxSourceId,
+                submitting: false,
             }}
         >
             <div className="min-h-screen w-full px-8 lg:px-16 py-16 flex flex-col justify-start items-center">

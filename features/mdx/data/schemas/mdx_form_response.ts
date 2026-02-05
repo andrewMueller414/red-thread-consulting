@@ -1,8 +1,8 @@
 import { z } from "zod";
 import {
     checkboxPropsSchema,
-    ReorderInputItem,
     reorderInputProps,
+    reorderItemSchema,
     selectInputPropsSchema,
     sliderPropsSchema,
     textAreaInputProps,
@@ -21,6 +21,7 @@ export const formDataValueSchema = z.union([
     z.date(),
     z.string().array(),
     z.number().array(),
+    reorderItemSchema.array(),
 ]);
 
 export enum InputId {
@@ -33,16 +34,16 @@ export enum InputId {
     slider = "slider",
 }
 
-const checkboxMeta = checkboxPropsSchema.omit({ name: true });
-const textInputMeta = textInputPropsSchema.omit({ name: true, maxWidth: true });
-const textAreaMeta = textAreaInputProps.omit({ name: true, maxWidth: true });
-const reorderMeta = reorderInputProps.omit({ name: true });
-const selectMeta = selectInputPropsSchema.omit({ name: true });
-const sliderMeta = sliderPropsSchema._def.in.omit({ name: true });
+const checkboxMeta = checkboxPropsSchema;
+const textInputMeta = textInputPropsSchema;
+const textAreaMeta = textAreaInputProps;
+const reorderMeta = reorderInputProps;
+const selectMeta = selectInputPropsSchema;
+const sliderMeta = sliderPropsSchema;
 
 const dateTimeMeta = z.union([
-    dateTimeInputPropsWithFutureTense.omit({ name: true }),
-    dateTimeInputPropsWithYears.omit({ name: true }),
+    dateTimeInputPropsWithFutureTense,
+    dateTimeInputPropsWithYears,
 ]);
 
 export const formDataNestedValueSchema = z.object({
@@ -78,6 +79,8 @@ export const mdxFormSchema = z.object({
     reviewed_at: z.date().nullable(),
 }) satisfies z.ZodType<TypedFormResponse>;
 
+export type MdxFormValue = z.infer<typeof formDataValueSchema>;
+
 export type MdxForm = z.infer<typeof mdxFormSchema>;
 /** The input of the MdxForm type and mdxForm schema. */
 export type MdxFormInput = z.input<typeof mdxFormSchema>;
@@ -85,19 +88,21 @@ export type MdxFormInput = z.input<typeof mdxFormSchema>;
 export type NestedFormValueOfType<T extends NestedFormValue["value"]> =
     NestedFormValue & { value: T };
 
+export type CheckboxMeta = z.output<typeof checkboxMeta>;
+export type TextInputMeta = z.output<typeof textInputMeta>;
+export type TextAreaMeta = z.output<typeof textAreaMeta>;
+export type ReorderMeta = z.output<typeof reorderMeta>;
+export type DateTimeMeta = z.output<typeof dateTimeMeta>;
+export type SelectMeta = z.output<typeof selectMeta>;
+export type SliderMeta = z.output<typeof sliderMeta>;
+
+export type AnyMeta = NestedFormValue["meta"];
+
 export interface PreviewComponentProps<
-    T extends string | boolean | ReorderInputItem[] | Date | number,
+    T extends MdxFormValue,
+    Meta extends AnyMeta,
 > {
     disabled?: boolean;
     valueOverride?: T;
+    meta?: Meta;
 }
-
-export type MdxFormValue = z.infer<typeof formDataValueSchema>;
-
-export type CheckboxMeta = z.infer<typeof checkboxMeta>;
-export type TextInputMeta = z.infer<typeof textInputMeta>;
-export type TextAreaMeta = z.infer<typeof textAreaMeta>;
-export type ReorderMeta = z.infer<typeof reorderMeta>;
-export type DateTimeMeta = z.infer<typeof dateTimeMeta>;
-export type SelectMeta = z.infer<typeof selectMeta>;
-export type SliderMeta = z.infer<typeof sliderMeta>;

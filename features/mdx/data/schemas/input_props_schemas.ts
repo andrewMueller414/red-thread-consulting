@@ -1,9 +1,15 @@
-import { ReactNode } from "react";
+import { HTMLInputTypeAttribute } from "react";
 import { z } from "zod";
-import { embeddableInputSchema } from "../../embeddable_components/shared_schemas";
 import {
-  sizeEnum,
+  colorEnumRecord,
+  embeddableInputSchema,
+  firstThemeColorValue,
+  ThemeColor,
+} from "../../embeddable_components/shared_schemas";
+import {
+  getSizePropsString,
   sizeEnumWithFull,
+  sizePropsObject,
 } from "../../embeddable_components/media/image";
 import { widthClassSchema } from "./shared_schemas";
 
@@ -14,32 +20,76 @@ export const checkboxPropsSchema = embeddableInputSchema.extend({
   subtitle: z.string().optional(),
 });
 
-export const textInputPropsSchema = embeddableInputSchema.extend({
-  label: z.string({ message: "A label is required" }),
-  desc: z.string().optional(),
-  name: z
-    .string({ message: "A name field is required." })
-    .min(1, "Include a name that isn't empty."),
-  placeholder: z.string().optional(),
-  maxWidth: z.enum(["small", "medium", "large", "full"]).default("full"),
-});
+export const textInputPropsSchema = embeddableInputSchema
+  .merge(sizePropsObject)
+  .extend({
+    width: sizeEnumWithFull.optional().transform((w) => {
+      switch (w) {
+        case "full":
+          return "w-full";
+        case "small":
+          return "w-full @5xl/mdx:max-w-60";
+        case "medium":
+          return "w-full @5xl/mdx:max-w-120";
+        case "large":
+          return "w-full @5xl/mdx:max-w-180";
+      }
+      if (typeof w === "string") {
+        return w;
+      }
+    }),
+    label: z.string({ message: "A label is required" }),
+    desc: z.string().optional(),
+    name: z
+      .string({ message: "A name field is required." })
+      .min(1, "Include a name that isn't empty."),
+    placeholder: z.string().optional(),
+    type: z
+      .enum(
+        [
+          "text",
+          "email",
+          "tel",
+          "number",
+          "search",
+          "url",
+        ] satisfies HTMLInputTypeAttribute[],
+        `Please select one of ${[
+          "text",
+          "email",
+          "tel",
+          "number",
+          "search",
+          "url",
+        ].join(", ")}.`,
+      )
+      .default("text"),
+  });
 
 export type TextInputProps = z.infer<typeof textInputPropsSchema>;
 
-export const textAreaInputProps = textInputPropsSchema.extend({
-  rows: z.number().int().default(3),
+export const textAreaInputProps = textInputPropsSchema
+  .merge(sizePropsObject)
+  .extend({
+    rows: z.number().int().default(3),
+  })
+  .transform((c) => {
+    return {
+      ...c,
+      sizeClasses: getSizePropsString(c),
+    };
+  });
+
+export const reorderItemSchema = z.object({
+  title: z
+    .string({ message: "A title is required" })
+    .min(1, "Please include a title that isn't empty"),
+  subtitle: z.string().optional(),
+  value: z.string().or(z.number()),
 });
 
 export const reorderInputProps = z.object({
-  options: z
-    .object({
-      title: z
-        .string({ message: "A title is required" })
-        .min(1, "Please include a title that isn't empty"),
-      subtitle: z.string().optional(),
-      value: z.string().or(z.number()),
-    })
-    .array(),
+  options: reorderItemSchema.array(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
   name: z.string({ message: "You must include a name for all inputs." }),
@@ -61,7 +111,36 @@ export const selectInputPropsSchema = embeddableInputSchema.extend({
 
 export type SelectInputProps = z.infer<typeof selectInputPropsSchema>;
 
-export const titlePropsSchema = z.object({
+export const fontNames = ["ss-pro", "cormorant", "mono"] as const;
+export const parsedFontNames = [
+  "font-ss-pro",
+  "font-bellefair",
+  "font-mono",
+] as const;
+
+export const getFontClassSchema = (defaultFont: (typeof fontNames)[number]) => {
+  return z
+    .enum(
+      [...fontNames, ...parsedFontNames],
+      "Please provide a font of 'ss-pro', 'cormorant', or 'mono'.",
+    )
+    .default(defaultFont)
+    .transform((s) => {
+      switch (s) {
+        case "ss-pro":
+          return "font-ss-pro";
+        case "cormorant":
+          return "font-bellefair";
+        case "mono":
+          return "font-mono";
+      }
+      if (typeof s === "string") {
+        return s;
+      }
+    });
+};
+
+export const titlePropsSchema = colorEnumRecord.extend({
   depth: z
     .union([
       z.literal(1),
@@ -74,30 +153,41 @@ export const titlePropsSchema = z.object({
     .default(1),
   title: z.string(),
   subtitle: z.string().optional(),
-  font: z
-    .union(
-      [z.literal("ss-pro"), z.literal("cormorant"), z.literal("mono")],
-      "Please provide a font of 'ss-pro', 'cormorant', or 'mono'.",
-    )
-    .optional()
-    .transform((s) => {
-      switch (s) {
-        case "ss-pro":
-          return "font-ss-pro";
-        case "cormorant":
-          return "font-bellefair";
-        case "mono":
-          return "font-mono";
-        default:
-          return null;
-      }
-    }),
+  font: getFontClassSchema("ss-pro"),
   width: widthClassSchema,
 });
 
 export type EmbeddabledTitleProps = z.infer<typeof titlePropsSchema>;
 
+const getSliderColorClasses = (k: ThemeColor): string => {
+  switch (k) {
+    case "cream": {
+      return "accemt-cream";
+    }
+
+    case "matcha": {
+      return "accent-matcha";
+    }
+    case "fog": {
+      return "accent-fog";
+    }
+    case "mist": {
+      return "accent-mist";
+    }
+    case "pine": {
+      return "accent-pine";
+    }
+    case "moss": {
+      return "accent-moss";
+    }
+    case "dust": {
+      return "accent-dust";
+    }
+  }
+};
+
 export const sliderPropsSchema = embeddableInputSchema
+  .merge(colorEnumRecord)
   .extend({
     label: z.string().optional(),
     min: z.number().default(0),
@@ -107,11 +197,15 @@ export const sliderPropsSchema = embeddableInputSchema
     vertical: z.boolean().default(false),
     width: sizeEnumWithFull.default("medium"),
     showValue: z.boolean().default(false),
+    decimals: z.number().int().default(1),
   })
   .transform((data) => {
+    const firstColor = firstThemeColorValue(data);
     return {
       ...data,
       initial: data.initial ?? data.min + (data.max - data.min) / 2, // Set it to half way between max and min if it's undefined.
+      color: firstColor,
+      colorClasses: firstColor ? getSliderColorClasses(firstColor) : "",
     };
   });
 

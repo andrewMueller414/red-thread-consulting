@@ -1,4 +1,4 @@
-import React, { type ReactNode } from "react";
+import React, { useId, type ReactNode } from "react";
 import {
     EmbeddableSliderProps,
     sliderPropsSchema,
@@ -18,26 +18,31 @@ import { Label } from "../../../../components/ui/label";
 import { useFormContext } from "react-hook-form";
 
 export const EmbeddableSlider = (
-    props: EmbeddableSliderProps & PreviewComponentProps<number>,
+    props: EmbeddableSliderProps & PreviewComponentProps<number, SliderMeta>,
 ): ReactNode => {
-    const { initial, step, max, min, label, name, vertical, width, showValue } =
-        sliderPropsSchema.parse(props);
-    useFormInitialValue<SliderMeta>(name, InputId.slider, initial, {
-        vertical,
+    const _props = props.meta ?? sliderPropsSchema.parse(props);
+    const {
         initial,
+        step,
         max,
         min,
-        step,
         label,
+        name,
+        vertical,
         width,
         showValue,
-    });
+        decimals,
+        colorClasses,
+    } = _props;
+    useFormInitialValue<SliderMeta>(name, InputId.slider, initial, _props);
+    const id = useId();
     const form = useFormContext<MdxFormData>();
     const widthMap: { [K in SizeEnumWithFull]: string } = {
         small: "@sm/mdx:w-45",
         medium: "@md/mdx:w-90",
         large: "@2xl/mdx:w-180",
-        full: "",
+        fit: "w-fit",
+        full: "w-full",
     };
     const value = form.watch(name) as NestedFormValueOfType<number>;
     return (
@@ -47,35 +52,34 @@ export const EmbeddableSlider = (
                 widthMap[width],
             )}
         >
-            {label ? <Label className="mb-2">{label}</Label> : null}
+            {label ? (
+                <Label htmlFor={id} className="mb-2">
+                    {label}
+                </Label>
+            ) : null}
             <Slider
                 min={min}
                 max={max}
                 step={step}
                 disabled={props.disabled}
+                id={id}
+                orientation={vertical ? "vertical" : "horizontal"}
+                color={_props.color}
                 onValueChange={(v) => {
                     if (v.length === 1) {
                         form.setValue(name, {
                             value: v[0],
                             inputId: InputId.slider,
-                            meta: {
-                                vertical,
-                                initial,
-                                max,
-                                min,
-                                step,
-                                label,
-                                width,
-                                showValue,
-                            },
+                            meta: _props,
                         });
                     }
                 }}
                 value={[props.valueOverride ?? value?.value ?? initial]}
+                className={colorClasses}
             />
             {showValue && typeof value?.value === "number" ? (
                 <div className="w-full mb-6 mt-0 text-right text-[12px] font-mono text-pine">
-                    {value?.value}
+                    {value?.value?.toFixed(decimals)}
                 </div>
             ) : null}
         </div>

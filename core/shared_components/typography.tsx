@@ -2,7 +2,7 @@ import { EmbeddabledTitleProps } from "@/features/mdx/data/schemas/input_props_s
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-interface TypographyProps extends Pick<EmbeddabledTitleProps, "font"> {
+interface TypographyProps extends Partial<Pick<EmbeddabledTitleProps, "font">> {
     children: ReactNode;
     className?: string;
 }

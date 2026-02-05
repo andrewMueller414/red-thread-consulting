@@ -51,6 +51,14 @@ import { IconArrowBackUp } from "@tabler/icons-react";
 import { EmbeddabledTitle } from "../embeddable_components/layout/title";
 import Image from "next/image";
 import { EmbeddableSlider } from "../embeddable_components/inputs/slider";
+import {
+    FormCard,
+    FormCardProps,
+} from "../embeddable_components/inputs/form_card/form_card";
+import {
+    ColoredGridSection,
+    ColoredGridSectionProps,
+} from "../embeddable_components/inputs/layout/colored_grid_section";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -169,6 +177,13 @@ export const getComponentMap = (): Record<string, FC<any>> => {
                 </MdxErrorBoundary>
             );
         },
+        ColoredGridSection: (props: ColoredGridSectionProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <ColoredGridSection {...props} />
+                </MdxErrorBoundary>
+            );
+        },
         Align: (props: AlignmentProps) => {
             return (
                 <MdxErrorBoundary>
@@ -176,7 +191,13 @@ export const getComponentMap = (): Record<string, FC<any>> => {
                 </MdxErrorBoundary>
             );
         },
-
+        Card: (props: FormCardProps) => {
+            return (
+                <MdxErrorBoundary>
+                    <FormCard {...props} />
+                </MdxErrorBoundary>
+            );
+        },
         Title: (props: EmbeddabledTitleProps) => {
             return (
                 <MdxErrorBoundary>

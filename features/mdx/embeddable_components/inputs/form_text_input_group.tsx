@@ -8,15 +8,18 @@ import {
     InputId,
     MdxFormData,
     PreviewComponentProps,
+    TextInputMeta,
 } from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
+import { TextInputProps } from "../../data/schemas/input_props_schemas";
 
-interface FormTextInputGroupProps {
+interface FormTextInputGroupProps extends TextInputProps {
     label: string;
     desc?: string;
     placeholder?: string;
     required?: boolean;
     name: string;
+    type: TextInputMeta["type"];
     classes?: {
         input?: string;
         container?: string;
@@ -35,22 +38,28 @@ export const FormTextInputGroup = ({
     required,
     disabled,
     valueOverride,
+    type = "text",
     classes = {},
     styles = {},
-}: FormTextInputGroupProps & PreviewComponentProps<string>): ReactNode => {
+    ..._props
+}: FormTextInputGroupProps &
+    PreviewComponentProps<string, TextInputMeta>): ReactNode => {
     const form = useFormContext<MdxFormData>();
     const value = form.watch(name);
-    useFormInitialValue(name, InputId.text, "", {
+    useFormInitialValue<TextInputMeta>(name, InputId.text, "", {
         placeholder,
         label,
         desc,
+        type,
+        name,
+        ..._props,
     });
     return (
         <Field className={classes.container} style={styles.container}>
             <FieldLabel>{label}</FieldLabel>
             {desc ? <FieldDescription>{desc}</FieldDescription> : null}
             <Input
-                type="text"
+                type={type}
                 placeholder={placeholder}
                 disabled={disabled}
                 required={required}
@@ -63,6 +72,9 @@ export const FormTextInputGroup = ({
                             placeholder,
                             label,
                             desc,
+                            type,
+                            name,
+                            ..._props,
                         },
                     })
                 }

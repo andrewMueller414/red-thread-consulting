@@ -9,9 +9,10 @@
 - [x] Handle form submission
 - [x] Finish implementing new font for body text.
   - [x] Try re-installing with cdn to get to work and make sure this is the correct font, because currently it looks fucking horrendous.
-  - [ ] Document that along with 'compares to' column.
+  - [x] Document that along with 'compares to' column.
 - [ ] Document 'desc' property on text inputs.
-- [ ] Document `Title` component
+- [ ] Create notification that indicates a form is being submitted. The state already exists.
+- [x] Document `Title` component
 - [x] Finish view response methods for:
   - [x] `SelectInput`
   - [x] `DateInput`
@@ -22,6 +23,7 @@
 - [x] Handle response page
 - [x] Add delete confirmation to form response when in selected state.
   - [x] Build a component for each `InputId` and create a switch component that renders each item according to it's `inputId` field.
+- [ ] Move zod state being passed to meta to using the 'output' state and a conditional statement in the `useInitialFormValue` hook or create a new hook to conditionally parse the props based on the page or some context state. Give up on trying to pass around the input state before parsing it as it's creating some massively over-complex types.
 
 - [ ] Add these components:
   - [x] Hr html element
