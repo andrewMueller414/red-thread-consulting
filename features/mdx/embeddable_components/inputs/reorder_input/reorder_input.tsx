@@ -40,6 +40,7 @@ export const ReorderInput = (
         {
             options: items,
             ..._props,
+            inputId: InputId.reorder,
         },
     );
     const handleReorder = (newOrder: ReorderInputItem[]): void => {
@@ -62,6 +63,7 @@ export const ReorderInput = (
                 meta: {
                     options: items,
                     ..._props,
+                    inputId: InputId.reorder,
                 } satisfies ReorderMeta,
             });
         }, 500);

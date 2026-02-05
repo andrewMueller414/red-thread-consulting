@@ -31,6 +31,7 @@ export const EmbeddableCheckbox = (
         title,
         subtitle,
         name,
+        inputId: InputId.checkbox,
     });
     return (
         <Field orientation="horizontal">
@@ -49,6 +50,7 @@ export const EmbeddableCheckbox = (
                             title,
                             subtitle,
                             name,
+                            inputId: InputId.checkbox,
                         },
                     })
                 }

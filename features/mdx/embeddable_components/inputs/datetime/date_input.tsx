@@ -1,15 +1,13 @@
 import React, { useState, type ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import {
+    DateTimeInputSchemaOutput,
     DateTimeMeta,
+    DateTimeNestedInputProps,
     MdxFormData,
     NestedFormValueOfType,
     PreviewComponentProps,
 } from "../../../data/schemas/mdx_form_response";
-import {
-    DateTimeInputSchemaOutput,
-    DateTimeNestedInputProps,
-} from "./date_time_input_schema";
 import { Field, FieldLabel } from "../../../../../components/ui/field";
 import {
     Popover,

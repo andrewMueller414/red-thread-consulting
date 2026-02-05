@@ -42,6 +42,13 @@ export const heightEnum = z
         }
     });
 
+export const parsedHeightEnum = z.union([
+    z.literal("h-screen"),
+    z.literal("max-h-screen"),
+    z.literal("min-h-screen"),
+    z.literal("h-fit"),
+]);
+
 export const sizeWidthTransform = (
     data: z.infer<typeof sizeEnumWithFull> | undefined,
 ) => {

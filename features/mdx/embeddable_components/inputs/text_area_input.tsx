@@ -12,7 +12,10 @@ import {
     TextAreaMeta,
 } from "../../data/schemas/mdx_form_response";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
-import { textAreaInputProps } from "../../data/schemas/input_props_schemas";
+import {
+    sizeClassesTransform,
+    textAreaInputProps,
+} from "../../data/schemas/input_props_schemas";
 
 export type EmbeddableTextAreaInputProps = z.input<typeof textAreaInputProps>;
 
@@ -20,11 +23,15 @@ export const EmbeddableTextAreaInput = (
     props: EmbeddableTextAreaInputProps &
         PreviewComponentProps<string, TextAreaMeta>,
 ): ReactNode => {
-    const __props = props.meta ?? textAreaInputProps.parse(props);
-    const { label, placeholder, name, rows, desc, sizeClasses, ..._props } =
-        __props;
+    const __props =
+        props.meta ??
+        textAreaInputProps.transform(sizeClassesTransform).parse(props);
+    const { label, placeholder, name, rows, desc, sizeClasses } = __props;
     const form = useFormContext<MdxFormData>();
-    useFormInitialValue<TextAreaMeta>(name, InputId.textArea, "", __props);
+    useFormInitialValue<TextAreaMeta>(name, InputId.textArea, "", {
+        ...__props,
+        inputId: InputId.textArea,
+    });
     return (
         <Field className={cn("w-full", sizeClasses)}>
             <FieldLabel>{label}</FieldLabel>
@@ -35,7 +42,10 @@ export const EmbeddableTextAreaInput = (
                     form.setValue(name, {
                         value: e.target.value,
                         inputId: InputId.textArea,
-                        meta: __props satisfies TextAreaMeta,
+                        meta: {
+                            ...__props,
+                            inputId: InputId.textArea,
+                        } satisfies TextAreaMeta,
                     })
                 }
                 placeholder={placeholder}

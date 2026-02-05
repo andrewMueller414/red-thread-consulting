@@ -39,7 +39,10 @@ export const SelectInput = ({
         fit: "w-fit",
         full: "",
     };
-    useFormInitialValue<SelectMeta>(name, InputId.select, options[0], _props);
+    useFormInitialValue<SelectMeta>(name, InputId.select, options[0], {
+        ..._props,
+        inputId: InputId.select,
+    });
     const data = form.watch(name) as
         | NestedFormValueOfType<string>
         | null
@@ -53,7 +56,10 @@ export const SelectInput = ({
                     form.setValue(name, {
                         value: val,
                         inputId: InputId.select,
-                        meta: _props,
+                        meta: {
+                            ..._props,
+                            inputId: InputId.select,
+                        },
                     });
                 }}
                 value={valueOverride ?? data?.value ?? ""}

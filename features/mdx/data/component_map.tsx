@@ -44,7 +44,6 @@ import {
     Callout,
     CalloutProps,
 } from "../embeddable_components/layout/callout/callout";
-import { DateTimeInputSchema } from "../embeddable_components/inputs/datetime/date_time_input_schema";
 import { DateTimeInputSwitch } from "../embeddable_components/inputs/datetime/date_time_input_switch";
 import { SelectInput } from "../embeddable_components/inputs/select";
 import { IconArrowBackUp } from "@tabler/icons-react";
@@ -59,6 +58,7 @@ import {
     ColoredGridSection,
     ColoredGridSectionProps,
 } from "../embeddable_components/inputs/layout/colored_grid_section";
+import { DateTimeInputSchema } from "./schemas/mdx_form_response";
 
 /* eslint-disable-next-line  -- Need to use any here. */
 export const getComponentMap = (): Record<string, FC<any>> => {
@@ -71,7 +71,6 @@ export const getComponentMap = (): Record<string, FC<any>> => {
         h5: H5,
         h6: H6,
         img: (props: { src: string; alt: string }) => {
-            console.log("image props: ", props);
             return (
                 <Image
                     className="max-w-[min(450px,90vw)] max-h-[90vh] object-contain"

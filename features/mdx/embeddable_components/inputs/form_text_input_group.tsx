@@ -52,6 +52,7 @@ export const FormTextInputGroup = ({
         desc,
         type,
         name,
+        inputId: InputId.text,
         ..._props,
     });
     return (
@@ -74,6 +75,7 @@ export const FormTextInputGroup = ({
                             desc,
                             type,
                             name,
+                            inputId: InputId.text,
                             ..._props,
                         },
                     })

@@ -1,16 +1,17 @@
 import React, { useId, type ReactNode } from "react";
 import {
-    EmbeddableSliderProps,
-    sliderPropsSchema,
+  EmbeddableSliderProps,
+  sliderPropsSchema,
+  sliderPropsTransform,
 } from "../../data/schemas/input_props_schemas";
 import { Slider } from "../../../../components/ui/slider";
 import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 import {
-    InputId,
-    MdxFormData,
-    NestedFormValueOfType,
-    PreviewComponentProps,
-    SliderMeta,
+  InputId,
+  MdxFormData,
+  NestedFormValueOfType,
+  PreviewComponentProps,
+  SliderMeta,
 } from "../../data/schemas/mdx_form_response";
 import { cn } from "../../../../lib/utils";
 import { SizeEnumWithFull } from "../media/image";
@@ -18,72 +19,80 @@ import { Label } from "../../../../components/ui/label";
 import { useFormContext } from "react-hook-form";
 
 export const EmbeddableSlider = (
-    props: EmbeddableSliderProps & PreviewComponentProps<number, SliderMeta>,
+  props: EmbeddableSliderProps & PreviewComponentProps<number, SliderMeta>,
 ): ReactNode => {
-    const _props = props.meta ?? sliderPropsSchema.parse(props);
-    const {
-        initial,
-        step,
-        max,
-        min,
-        label,
-        name,
-        vertical,
-        width,
-        showValue,
-        decimals,
-        colorClasses,
-    } = _props;
-    useFormInitialValue<SliderMeta>(name, InputId.slider, initial, _props);
-    const id = useId();
-    const form = useFormContext<MdxFormData>();
-    const widthMap: { [K in SizeEnumWithFull]: string } = {
-        small: "@sm/mdx:w-45",
-        medium: "@md/mdx:w-90",
-        large: "@2xl/mdx:w-180",
-        fit: "w-fit",
-        full: "w-full",
-    };
-    const value = form.watch(name) as NestedFormValueOfType<number>;
-    return (
-        <div
-            className={cn(
-                "flex flex-col justify-start items-start h-fit max-w-full",
-                widthMap[width],
-            )}
-        >
-            {label ? (
-                <Label htmlFor={id} className="mb-2">
-                    {label}
-                </Label>
-            ) : null}
-            <Slider
-                min={min}
-                max={max}
-                step={step}
-                disabled={props.disabled}
-                id={id}
-                orientation={vertical ? "vertical" : "horizontal"}
-                color={_props.color}
-                onValueChange={(v) => {
-                    if (v.length === 1) {
-                        form.setValue(name, {
-                            value: v[0],
-                            inputId: InputId.slider,
-                            meta: _props,
-                        });
-                    }
-                }}
-                value={[props.valueOverride ?? value?.value ?? initial]}
-                className={colorClasses}
-            />
-            {showValue && typeof value?.value === "number" ? (
-                <div className="w-full mb-6 mt-0 text-right text-[12px] font-mono text-pine">
-                    {value?.value?.toFixed(decimals)}
-                </div>
-            ) : null}
+  const _props =
+    props.meta ??
+    sliderPropsSchema.transform(sliderPropsTransform).parse(props);
+  const {
+    initial,
+    step,
+    max,
+    min,
+    label,
+    name,
+    vertical,
+    width,
+    showValue,
+    decimals,
+    colorClasses,
+  } = _props;
+  useFormInitialValue<SliderMeta>(name, InputId.slider, initial, {
+    ..._props,
+    inputId: InputId.slider,
+  });
+  const id = useId();
+  const form = useFormContext<MdxFormData>();
+  const widthMap: { [K in SizeEnumWithFull]: string } = {
+    small: "@sm/mdx:w-45",
+    medium: "@md/mdx:w-90",
+    large: "@2xl/mdx:w-180",
+    fit: "w-fit",
+    full: "w-full",
+  };
+  const value = form.watch(name) as NestedFormValueOfType<number>;
+  return (
+    <div
+      className={cn(
+        "flex flex-col justify-start items-start h-fit max-w-full",
+        widthMap[width],
+      )}
+    >
+      {label ? (
+        <Label htmlFor={id} className="mb-2">
+          {label}
+        </Label>
+      ) : null}
+      <Slider
+        min={min}
+        max={max}
+        step={step}
+        disabled={props.disabled}
+        id={id}
+        orientation={vertical ? "vertical" : "horizontal"}
+        color={_props.color}
+        onValueChange={(v) => {
+          if (v.length === 1) {
+            form.setValue(name, {
+              value: v[0],
+              inputId: InputId.slider,
+              meta: {
+                ..._props,
+                inputId: InputId.slider,
+              },
+            });
+          }
+        }}
+        value={[props.valueOverride ?? value?.value ?? initial]}
+        className={colorClasses}
+      />
+      {showValue && typeof value?.value === "number" ? (
+        <div className="w-full mb-6 mt-0 text-right text-[12px] font-mono text-pine">
+          {value?.value?.toFixed(decimals)}
         </div>
-    );
+      ) : null}
+    </div>
+  );
 };
 
 EmbeddableSlider.displayName = "EmbeddableSlider";

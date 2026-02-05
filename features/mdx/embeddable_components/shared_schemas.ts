@@ -1,4 +1,5 @@
 import z from "zod";
+import { getSliderColorClasses } from "../data/schemas/input_props_schemas";
 
 export const themeColors = [
     "cream",
@@ -22,6 +23,35 @@ export const colorEnumRecord = z.object({
     pine: z.boolean().optional(),
     moss: z.boolean().optional(),
     dust: z.boolean().optional(),
+});
+
+type ColorPropertiesReturnType<T extends ThemeColor | undefined> =
+    T extends ThemeColor
+    ? { color: ThemeColor; colorClasses: string }
+    : { color: ThemeColor; colorClasses: string } | undefined;
+
+export const getColorProperties = <T extends ThemeColor | undefined>(
+    data: z.infer<typeof colorEnumRecord>,
+    defaultValue: T,
+): ColorPropertiesReturnType<T> => {
+    const firstColor = firstThemeColorValue(data);
+    if (firstColor) {
+        return {
+            color: firstColor,
+            colorClasses: firstColor ? getSliderColorClasses(firstColor) : "",
+        } as ColorPropertiesReturnType<T>;
+    } else if (defaultValue) {
+        return {
+            color: defaultValue,
+            colorClasses: getSliderColorClasses(defaultValue),
+        } as ColorPropertiesReturnType<T>;
+    }
+    return undefined as ColorPropertiesReturnType<T>;
+};
+
+export const parsedColorPropertiesSchema = z.object({
+    color: z.string(),
+    colorClasses: z.string(),
 });
 
 export type ThemeColorRecord = z.infer<typeof colorEnumRecord>;

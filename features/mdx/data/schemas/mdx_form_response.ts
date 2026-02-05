@@ -1,6 +1,8 @@
 import { z } from "zod";
 import {
     checkboxPropsSchema,
+    getSliderColorClasses,
+    parsedSizeClassesSchema,
     reorderInputProps,
     reorderItemSchema,
     selectInputPropsSchema,
@@ -8,11 +10,13 @@ import {
     textAreaInputProps,
     textInputPropsSchema,
 } from "./input_props_schemas";
-import {
-    dateTimeInputPropsWithFutureTense,
-    dateTimeInputPropsWithYears,
-} from "../../embeddable_components/inputs/datetime/date_time_input_schema";
 import { FormResponse } from "@/lib/generated/prisma/client";
+import { getSizePropsString } from "../../embeddable_components/media/image";
+import {
+    embeddableInputSchema,
+    firstThemeColorValue,
+    parsedColorPropertiesSchema,
+} from "../../embeddable_components/shared_schemas";
 
 export const formDataValueSchema = z.union([
     z.boolean(),
@@ -34,12 +38,72 @@ export enum InputId {
     slider = "slider",
 }
 
-const checkboxMeta = checkboxPropsSchema;
-const textInputMeta = textInputPropsSchema;
-const textAreaMeta = textAreaInputProps;
-const reorderMeta = reorderInputProps;
-const selectMeta = selectInputPropsSchema;
-const sliderMeta = sliderPropsSchema;
+const checkboxMeta = checkboxPropsSchema.extend({
+    inputId: z.literal(InputId.checkbox),
+});
+const textInputMeta = textInputPropsSchema.extend({
+    inputId: z.literal(InputId.text),
+});
+
+const textAreaMeta = textAreaInputProps
+    .merge(parsedSizeClassesSchema)
+    .extend({ inputId: z.literal(InputId.textArea) })
+    .transform((c) => {
+        return {
+            ...c,
+            sizeClasses: getSizePropsString(c),
+        };
+    });
+
+const reorderMeta = reorderInputProps.extend({
+    inputId: z.literal(InputId.reorder),
+});
+const selectMeta = selectInputPropsSchema.extend({
+    inputId: z.literal(InputId.select),
+});
+const sliderMeta = sliderPropsSchema
+    .merge(parsedColorPropertiesSchema.partial())
+    .extend({ inputId: z.literal(InputId.slider), initial: z.number() })
+    .transform((data) => {
+        const firstColor = firstThemeColorValue(data);
+        return {
+            ...data,
+            initial: data.initial ?? data.min + (data.max - data.min) / 2, // Set it to half way between max and min if it's undefined.
+            color: firstColor,
+            colorClasses: firstColor ? getSliderColorClasses(firstColor) : "",
+        };
+    });
+
+const dateTimeSchemaBase = embeddableInputSchema.extend({
+    dateLabel: z.string().default("Date"),
+    datePlaceholder: z.string().default("Select date"),
+    timeLabel: z.string().default("Time"),
+    time: z.boolean().default(false),
+});
+
+export const dateTimeInputPropsWithFutureTense = dateTimeSchemaBase.extend({
+    past: z.boolean(),
+    future: z.boolean(),
+    inputId: z.literal(InputId.dateTime),
+});
+
+export const dateTimeInputPropsWithYears = dateTimeSchemaBase.extend({
+    toYear: z.number().int().optional(),
+    fromYear: z.number().int().optional(),
+    inputId: z.literal(InputId.dateTime),
+});
+
+export const dateTimeInputSchema = z.union([
+    dateTimeInputPropsWithFutureTense,
+    dateTimeInputPropsWithYears,
+]);
+
+export type DateTimeInputSchema = z.infer<typeof dateTimeInputSchema>;
+export type DateTimeInputSchemaOutput = z.output<typeof dateTimeInputSchema>;
+
+export interface DateTimeNestedInputProps {
+    setDate: (newDate: Date) => void;
+}
 
 const dateTimeMeta = z.union([
     dateTimeInputPropsWithFutureTense,
@@ -50,13 +114,14 @@ export const formDataNestedValueSchema = z.object({
     inputId: z.nativeEnum(InputId),
     value: formDataValueSchema,
     meta: z.union([
+        sliderMeta,
         selectMeta,
         reorderMeta,
         checkboxMeta,
         textInputMeta,
         textAreaMeta,
         dateTimeMeta,
-        sliderMeta,
+        z.any(), // Hack to avoid rewriting all of the schemas for the output of the original schema just to render components with the form disabled.
     ]),
 });
 
