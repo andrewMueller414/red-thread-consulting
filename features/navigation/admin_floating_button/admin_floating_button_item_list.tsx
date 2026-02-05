@@ -15,7 +15,7 @@ export type DropdownButton =
     | {
         label: string;
         filter?: (pathname: Route) => boolean;
-        href: string;
+        href: Route;
     };
 
 interface AdminFloatingButtonListProps {
