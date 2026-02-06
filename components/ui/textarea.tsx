@@ -11,7 +11,7 @@ function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
                 // Placeholder colors
                 "group-[.bg-mist]:placeholder:text-fog/70 group-[.bg-pine]:placeholder:text-fog/60 group-[.bg-moss]:placeholder:text-fog/60 group-[.bg-dust]:placeholder:text-fog/60 placeholder:text-dust/60 ",
                 // Ring colors.
-                "border-dust/50 group-[.bg-pine]:border-mist/50 group-[.bg-pine]:focus-visible:border-mist/70 group-[.bg-moss]:border-mist/50 group-[.bg-moss]:focus-visible:border-mist/70 group-[.bg-dust]:border-mist/50 group-[.bg-dust]:focus-visible:border-mist/70 focus-visible:border-dust/70 group-[.bg-dust]:focus-visible:ring-fog/50 group-[.bg-moss]:focus-visible:ring-fog/50 group-[.bg-pine]:focus-visible:ring-fog/50 group-[.bg-matcha]:focus-visible:ring-pine/50 group-[.bg-cream]:focus-visible:ring-pine/50 group-[.bg-fog]:focus-visible:ring-pine/50 group-[.bg-mist]:focus-visible:ring-fog/50",
+                "border-dust/50 group-[.bg-pine]:border-mist/50 group-[.bg-pine]:focus-visible:border-mist/70 group-[.bg-moss]:border-mist/50 group-[.bg-moss]:focus-visible:border-mist/70 group-[.bg-dust]:border-mist/50 group-[.bg-dust]:focus-visible:border-mist/70 focus-visible:border-dust/70 group-[.bg-dust]:focus-visible:ring-fog/50 group-[.bg-moss]:focus-visible:ring-fog/50 group-[.bg-pine]:focus-visible:ring-fog/50 group-[.bg-matcha]:focus-visible:ring-pine/50 group-[.bg-cream]:focus-visible:ring-pine/50 group-[.bg-fog]:focus-visible:ring-pine/50 group-[.bg-mist]:focus-visible:ring-fog/50 group-[.bg-mist]:border-fog/30 group-[.bg-mist]:focus-visible:border-fog/50",
                 className,
             )}
             {...props}

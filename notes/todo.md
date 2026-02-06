@@ -23,6 +23,7 @@
 - [x] Handle response page
 - [x] Add delete confirmation to form response when in selected state.
   - [x] Build a component for each `InputId` and create a switch component that renders each item according to it's `inputId` field.
+- [ ] Apply color enum property to reorder component and fix that dumbaxx hover animation.
 - [ ] Move zod state being passed to meta to using the 'output' state and a conditional statement in the `useInitialFormValue` hook or create a new hook to conditionally parse the props based on the page or some context state. Give up on trying to pass around the input state before parsing it as it's creating some massively over-complex types.
 
 - [ ] Add these components:
@@ -33,7 +34,7 @@
     - [x] `time`
     - [x] `calendar` (Show calendar and leave it visible, don't hide like a popover.)
   - [ ] Radio Group
-  - [ ] Slider
+  - [x] Slider
   - [ ] Tabs
 - [ ] Render solid preview in same mdx form container that will be used elsewhere throughout the app.
 - [x] Fix response preview page to accomodate form of unknown format.

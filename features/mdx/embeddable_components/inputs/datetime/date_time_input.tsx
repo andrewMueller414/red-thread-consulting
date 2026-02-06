@@ -24,6 +24,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 dayjs.extend(advancedFormat);
 
 export const DateTimeInput = ({
@@ -35,6 +36,9 @@ export const DateTimeInput = ({
     disabled,
     time,
     valueOverride,
+    colorClasses,
+    color,
+    sizeClasses,
     ...props
 }: DateTimeInputSchemaOutput &
     DateTimeNestedInputProps &
@@ -82,7 +86,9 @@ export const DateTimeInput = ({
         return `${formatUnit(d.get("hours").toString())}:${formatUnit(d.get("minutes").toString())}:${formatUnit(d.get("seconds").toString())}`;
     };
     return (
-        <FieldGroup className="max-w-xs flex flex-col sm:flex-row w-full">
+        <FieldGroup
+            className={cn("max-w-xs flex flex-col sm:flex-row w-full", sizeClasses)}
+        >
             <Field>
                 <FieldLabel htmlFor="date-picker">{dateLabel}</FieldLabel>
                 <Popover open={dateOpen} onOpenChange={setDateOpen}>
@@ -90,7 +96,10 @@ export const DateTimeInput = ({
                         <Button
                             variant="outline"
                             id="date-picker"
-                            className="w-32 justify-between font-normal bg-matcha"
+                            className={cn(
+                                "w-32 justify-between font-normal bg-matcha",
+                                colorClasses,
+                            )}
                             onClick={() => setDateOpen(true)}
                             disabled={disabled}
                         >
@@ -108,6 +117,7 @@ export const DateTimeInput = ({
                             selected={valueOverride ?? date?.value ?? new Date()}
                             captionLayout="dropdown"
                             disabled={disabled}
+                            color={color}
                             defaultMonth={valueOverride ?? date?.value ?? new Date()}
                             toYear={years.to}
                             fromYear={years.from}
@@ -130,7 +140,10 @@ export const DateTimeInput = ({
                     defaultValue={
                         valueOverride ? getFormattedTime(valueOverride) : "10:30:00"
                     }
-                    className="bg-matcha focus-visible:bg-fog appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none focus:bg-matcha"
+                    className={cn(
+                        "bg-matcha focus-visible:bg-fog focus-visible:text-dust appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none focus:bg-matcha transition-colors duration-500",
+                        colorClasses,
+                    )}
                     disabled={disabled}
                     onChange={(e) => {
                         let d = dayjs(date?.value ?? new Date());

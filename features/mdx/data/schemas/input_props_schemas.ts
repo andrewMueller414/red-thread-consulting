@@ -1,6 +1,7 @@
 import { HTMLInputTypeAttribute } from "react";
 import { z } from "zod";
 import {
+    colorEnum,
     colorEnumRecord,
     embeddableInputSchema,
     getColorProperties,
@@ -12,6 +13,10 @@ import {
     sizePropsObject,
 } from "../../embeddable_components/media/image";
 import { widthClassSchema } from "./shared_schemas";
+import {
+    ThemeColorGroup,
+    themeColorGroups,
+} from "../../../../core/utils/color_utils/color_group";
 
 export const checkboxPropsSchema = embeddableInputSchema.extend({
     title: z
@@ -100,9 +105,16 @@ export const reorderInputProps = z.object({
     title: z.string().optional(),
     subtitle: z.string().optional(),
     name: z.string({ message: "You must include a name for all inputs." }),
+    color: colorEnum.default("matcha").transform((c): ThemeColorGroup => {
+        return themeColorGroups.find((f) => f.background === c) as ThemeColorGroup;
+    }),
+    drag: colorEnum.default("cream").transform((c): ThemeColorGroup => {
+        return themeColorGroups.find((f) => f.background === c) as ThemeColorGroup;
+    }),
 });
 
 export type ReorderInputProps = z.infer<typeof reorderInputProps>;
+export type ReorderInputPropsOutput = z.output<typeof reorderInputProps>;
 export type ReorderInputItem = z.infer<
     typeof reorderInputProps
 >["options"][number];
@@ -169,9 +181,8 @@ export type EmbeddabledTitleProps = z.infer<typeof titlePropsSchema>;
 export const getSliderColorClasses = (k: ThemeColor): string => {
     switch (k) {
         case "cream": {
-            return "accemt-cream";
+            return "accent-cream";
         }
-
         case "matcha": {
             return "accent-matcha";
         }

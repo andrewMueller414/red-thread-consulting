@@ -28,7 +28,7 @@ export const ReorderInput = (
     } & PreviewComponentProps<ReorderInputItem[], ReorderMeta>,
 ): ReactNode => {
     const { options, ..._props } = props.meta ?? reorderInputProps.parse(props);
-    const { title, subtitle, name } = _props;
+    const { title, subtitle, name, drag, color } = _props;
     const form = useFormContext<MdxFormData>();
     const timer = useRef<NodeJS.Timeout | null>(null);
     const [items, setItems] = useState<ReorderInputItem[]>(options);
@@ -97,6 +97,8 @@ export const ReorderInput = (
                             <ReorderItem
                                 key={`${item.title}${item.value}`}
                                 item={item}
+                                drag={drag}
+                                color={color}
                                 disabled={props.disabled}
                                 className={props?.classes?.item}
                             />

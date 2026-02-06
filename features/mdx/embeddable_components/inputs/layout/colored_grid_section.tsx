@@ -87,6 +87,9 @@ const Title = ({
                 color && colorClasses[color],
                 font,
             )}
+            style={{
+                textWrapStyle: "pretty",
+            }}
         >
             {children}
         </h2>

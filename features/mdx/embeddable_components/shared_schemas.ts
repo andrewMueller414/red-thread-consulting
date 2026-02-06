@@ -33,17 +33,18 @@ type ColorPropertiesReturnType<T extends ThemeColor | undefined> =
 export const getColorProperties = <T extends ThemeColor | undefined>(
     data: z.infer<typeof colorEnumRecord>,
     defaultValue: T,
+    transform: (c: ThemeColor) => string = getSliderColorClasses,
 ): ColorPropertiesReturnType<T> => {
     const firstColor = firstThemeColorValue(data);
     if (firstColor) {
         return {
             color: firstColor,
-            colorClasses: firstColor ? getSliderColorClasses(firstColor) : "",
+            colorClasses: firstColor ? transform(firstColor) : "",
         } as ColorPropertiesReturnType<T>;
     } else if (defaultValue) {
         return {
             color: defaultValue,
-            colorClasses: getSliderColorClasses(defaultValue),
+            colorClasses: transform(defaultValue),
         } as ColorPropertiesReturnType<T>;
     }
     return undefined as ColorPropertiesReturnType<T>;
@@ -82,7 +83,39 @@ export const foregroundColorClass = colorEnum.transform((c) => {
     }
 });
 
-export const backgroundClass = colorEnum.transform((c) => {
+export const backgroundClassTransformWithHover = (
+    c: z.infer<typeof colorEnum>,
+) => {
+    switch (c) {
+        case "cream": {
+            return "bg-cream hover:bg-cream/80 text-pine hover:text-pine";
+        }
+        case "matcha": {
+            return "bg-matcha hover:bg-matcha/80 text-pine hover:text-pine";
+        }
+        case "fog": {
+            return "bg-fog hover:bg-fog/80 text-pine hover:text-pine";
+        }
+        case "mist": {
+            return "bg-mist hover:bg-mist/80 text-fog hover:text-fog";
+        }
+        case "pine": {
+            return "bg-pine hover:bg-pine/80 text-fog hover:text-fog";
+        }
+        case "moss": {
+            return "bg-moss hover:bg-moss/80 text-fog hover:text-fog";
+        }
+        case "dust": {
+            return "bg-dust hover:bg-dust/80 text-fog hover:text-fog";
+        }
+    }
+};
+
+export const themeColorIsDark = (themeColor: ThemeColor) => {
+    return ["moss", "dust", "pine"].includes(themeColor);
+};
+
+export const backgroundClassTransform = (c: z.infer<typeof colorEnum>) => {
     switch (c) {
         case "cream": {
             return "bg-cream text-pine";
@@ -106,7 +139,12 @@ export const backgroundClass = colorEnum.transform((c) => {
             return "bg-dust text-fog";
         }
     }
-});
+};
+
+export const backgroundClass = colorEnum.transform(backgroundClassTransform);
+export const backgroundClassWithHover = colorEnum.transform(
+    backgroundClassTransformWithHover,
+);
 
 export const firstThemeColorValue = (
     data: z.infer<typeof colorEnumRecord>,

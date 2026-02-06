@@ -11,10 +11,16 @@ import {
     textInputPropsSchema,
 } from "./input_props_schemas";
 import { FormResponse } from "@/lib/generated/prisma/client";
-import { getSizePropsString } from "../../embeddable_components/media/image";
 import {
+    getSizePropsString,
+    sizePropsObject,
+} from "../../embeddable_components/media/image";
+import {
+    backgroundClassWithHover,
+    colorEnumRecord,
     embeddableInputSchema,
     firstThemeColorValue,
+    getColorProperties,
     parsedColorPropertiesSchema,
 } from "../../embeddable_components/shared_schemas";
 
@@ -74,12 +80,15 @@ const sliderMeta = sliderPropsSchema
         };
     });
 
-const dateTimeSchemaBase = embeddableInputSchema.extend({
-    dateLabel: z.string().default("Date"),
-    datePlaceholder: z.string().default("Select date"),
-    timeLabel: z.string().default("Time"),
-    time: z.boolean().default(false),
-});
+const dateTimeSchemaBase = embeddableInputSchema
+    .merge(sizePropsObject)
+    .merge(colorEnumRecord)
+    .extend({
+        dateLabel: z.string().default("Date"),
+        datePlaceholder: z.string().default("Select date"),
+        timeLabel: z.string().default("Time"),
+        time: z.boolean().default(false),
+    });
 
 export const dateTimeInputPropsWithFutureTense = dateTimeSchemaBase.extend({
     past: z.boolean(),
@@ -93,10 +102,17 @@ export const dateTimeInputPropsWithYears = dateTimeSchemaBase.extend({
     inputId: z.literal(InputId.dateTime),
 });
 
-export const dateTimeInputSchema = z.union([
-    dateTimeInputPropsWithFutureTense,
-    dateTimeInputPropsWithYears,
-]);
+export const dateTimeInputSchema = z
+    .union([dateTimeInputPropsWithFutureTense, dateTimeInputPropsWithYears])
+    .transform((c) => {
+        return {
+            ...c,
+            sizeClasses: getSizePropsString(c),
+            ...getColorProperties(c, "matcha", (l) => {
+                return backgroundClassWithHover.parse(l);
+            }),
+        };
+    });
 
 export type DateTimeInputSchema = z.infer<typeof dateTimeInputSchema>;
 export type DateTimeInputSchemaOutput = z.output<typeof dateTimeInputSchema>;
@@ -105,10 +121,15 @@ export interface DateTimeNestedInputProps {
     setDate: (newDate: Date) => void;
 }
 
-const dateTimeMeta = z.union([
-    dateTimeInputPropsWithFutureTense,
-    dateTimeInputPropsWithYears,
-]);
+const dateTimeMeta = z
+    .union([dateTimeInputPropsWithFutureTense, dateTimeInputPropsWithYears])
+    .transform((c) => {
+        return {
+            ...c,
+            sizeClasses: getSizePropsString(c),
+            ...getColorProperties(c, "matcha"),
+        };
+    });
 
 export const formDataNestedValueSchema = z.object({
     inputId: z.nativeEnum(InputId),

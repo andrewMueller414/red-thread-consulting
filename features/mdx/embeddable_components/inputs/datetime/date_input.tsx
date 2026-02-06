@@ -19,13 +19,17 @@ import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { Button } from "../../../../../components/ui/button";
 import { CalendarIcon } from "lucide-react";
+import { cn } from "../../../../../lib/utils";
 dayjs.extend(advancedFormat);
 
 export const DateInput = ({
     name,
     setDate,
     datePlaceholder,
+    colorClasses,
+    color,
     disabled,
+    sizeClasses,
     ...props
 }: DateTimeInputSchemaOutput &
     DateTimeNestedInputProps &
@@ -38,7 +42,7 @@ export const DateInput = ({
         | null;
 
     return (
-        <div className="w-full">
+        <div className={cn("w-full", sizeClasses)}>
             <Field className="w-44">
                 <FieldLabel htmlFor="date-picker-simple">Date</FieldLabel>
                 <Popover open={open} onOpenChange={setOpen}>
@@ -46,10 +50,13 @@ export const DateInput = ({
                         <Button
                             variant="outline"
                             id="date-picker-simple"
-                            className="justify-start font-normal bg-matcha"
+                            className={cn(
+                                "justify-start font-normal bg-matcha",
+                                colorClasses,
+                            )}
                             disabled={disabled}
                         >
-                            <CalendarIcon className="text-dust/80" />
+                            <CalendarIcon className="opacity-60" />
                             {props.valueOverride ? (
                                 dayjs(props.valueOverride).format("MMMM DD, YYYY")
                             ) : date?.value ? (
@@ -63,6 +70,7 @@ export const DateInput = ({
                         <Calendar
                             mode="single"
                             required
+                            color={color}
                             captionLayout="dropdown"
                             selected={date?.value ?? new Date()}
                             onSelect={(newDate) => {

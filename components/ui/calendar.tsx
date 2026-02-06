@@ -14,6 +14,12 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { ThemeColor } from "../../features/mdx/embeddable_components/shared_schemas";
+
+interface CalendarClassesGroup {
+    today?: string;
+    navButton?: string;
+}
 
 function Calendar({
     className,
@@ -23,11 +29,44 @@ function Calendar({
     buttonVariant = "ghost",
     formatters,
     components,
+    color = "dust",
     ...props
 }: React.ComponentProps<typeof DayPicker> & {
     buttonVariant?: React.ComponentProps<typeof Button>["variant"];
+    color?: ThemeColor;
 }) {
     const defaultClassNames = getDefaultClassNames();
+
+    const classes: { [K in ThemeColor]: CalendarClassesGroup } = {
+        matcha: {
+            today: "bg-matcha/20",
+            navButton: "hover:bg-matcha/40",
+        },
+        cream: {
+            today: "bg-cream/20",
+            navButton: "hover:bg-cream/40",
+        },
+        dust: {
+            today: "bg-dust/20",
+            navButton: "hover:bg-dust/40",
+        },
+        fog: {
+            today: "bg-mist/20",
+            navButton: "hover:bg-fog/40",
+        },
+        mist: {
+            today: "bg-mist/20",
+            navButton: "hover:bg-mist/40",
+        },
+        moss: {
+            today: "bg-moss/20",
+            navButton: "hover:bg-moss/40",
+        },
+        pine: {
+            today: "bg-pine/20",
+            navButton: "hover:bg-pine/40",
+        },
+    };
 
     return (
         <DayPicker
@@ -58,11 +97,13 @@ function Calendar({
                 button_previous: cn(
                     buttonVariants({ variant: buttonVariant }),
                     "size-(--cell-size) aria-disabled:opacity-50 p-0 select-none",
+                    classes[color].navButton,
                     defaultClassNames.button_previous,
                 ),
                 button_next: cn(
                     buttonVariants({ variant: buttonVariant }),
                     "size-(--cell-size) aria-disabled:opacity-50 p-0 select-none",
+                    classes[color].navButton,
                     defaultClassNames.button_next,
                 ),
                 month_caption: cn(
@@ -110,14 +151,12 @@ function Calendar({
                         : "[&:first-child[data-selected=true]_button]:rounded-l-md",
                     defaultClassNames.day,
                 ),
-                range_start: cn(
-                    "rounded-l-md bg-accent",
-                    defaultClassNames.range_start,
-                ),
+                range_start: cn("rounded-l-md", defaultClassNames.range_start),
                 range_middle: cn("rounded-none", defaultClassNames.range_middle),
-                range_end: cn("rounded-r-md bg-accent", defaultClassNames.range_end),
+                range_end: cn("rounded-r-md", defaultClassNames.range_end),
                 today: cn(
-                    "bg-mist text-fog rounded-md data-[selected=true]:rounded-none",
+                    "rounded-md data-[selected=true]:rounded-none",
+                    classes[color].today,
                     defaultClassNames.today,
                 ),
                 outside: cn(
@@ -162,7 +201,7 @@ function Calendar({
                         <ChevronDownIcon className={cn("size-4", className)} {...props} />
                     );
                 },
-                DayButton: CalendarDayButton,
+                DayButton: (p) => <CalendarDayButton {...p} color={color} />,
                 WeekNumber: ({ children, ...props }) => {
                     return (
                         <td {...props}>
@@ -183,14 +222,27 @@ function CalendarDayButton({
     className,
     day,
     modifiers,
+    color,
     ...props
-}: React.ComponentProps<typeof DayButton>) {
+}: React.ComponentProps<typeof DayButton> & { color: ThemeColor }) {
     const defaultClassNames = getDefaultClassNames();
 
     const ref = React.useRef<HTMLButtonElement>(null);
     React.useEffect(() => {
         if (modifiers.focused) ref.current?.focus();
     }, [modifiers.focused]);
+
+    const themeColorClasses: { [K in ThemeColor]: string } = {
+        matcha:
+            "data-[selected-single=true]:bg-matcha data-[selected-single=true]:text-dust data-[range-start=true]:bg-matcha/20 data-[range-middle=true]:bg-matcha/20 data-[range-middle=true]:text-matcha hover:bg-matcha/40",
+        cream:
+            "data-[selected-single=true]:bg-cream data-[selected-single=true]:text-dust data-[range-start=true]:bg-cream/20 data-[range-middle=true]:bg-cream/20 data-[range-middle=true]:text-cream hover:bg-cream/40",
+        fog: "data-[selected-single=true]:bg-fog data-[selected-single=true]:text-dust data-[range-start=true]:bg-fog/20 data-[range-middle=true]:bg-fog/20 data-[range-middle=true]:text-dust hover:bg-fog/40",
+        mist: "data-[selected-single=true]:bg-mist data-[selected-single=true]:text-fog data-[range-start=true]:bg-mist/20 data-[range-middle=true]:bg-mist/20 data-[range-middle=true]:text-fog hover:bg-mist/40",
+        dust: "data-[selected-single=true]:bg-dust data-[selected-single=true]:text-fog data-[range-start=true]:bg-dust/20 data-[range-middle=true]:bg-dust/20 data-[range-middle=true]:text-dust hover:bg-dust/40",
+        moss: "data-[selected-single=true]:bg-moss data-[selected-single=true]:text-fog data-[range-start=true]:bg-moss/20 data-[range-middle=true]:bg-moss/20 data-[range-middle=true]:text-moss hover:bg-moss/40",
+        pine: "data-[selected-single=true]:bg-pine data-[selected-single=true]:text-fog data-[range-start=true]:bg-pine/20 data-[range-middle=true]:bg-pine/20 data-[range-middle=true]:text-pine hover:bg-pine/40",
+    };
 
     return (
         <Button
@@ -208,8 +260,9 @@ function CalendarDayButton({
             data-range-end={modifiers.range_end}
             data-range-middle={modifiers.range_middle}
             className={cn(
-                "data-[selected-single=true]:bg-cream data-[selected-single=true]:text-dust data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-cream data-[range-start=true]:text-dust data-[range-end=true]:bg-cream data-[range-end=true]:text-dust group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md [&>span]:text-xs [&>span]:opacity-70",
+                "data-[range-start=true]:text-dust data-[range-end=true]:bg-cream data-[range-end=true]:text-dust group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md [&>span]:text-xs [&>span]:opacity-70",
                 defaultClassNames.day,
+                themeColorClasses[color],
                 className,
             )}
             {...props}

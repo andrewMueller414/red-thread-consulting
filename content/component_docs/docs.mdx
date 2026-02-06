@@ -162,7 +162,7 @@ All of the properties here are the same as in the `EmbeddableTextInput` componen
 <MultiLineTextInput
     label={`My Label`}
     name={"anyUniqueNameThatNeverChanges2"}
-    placeholder="Company Name"
+    placeholder="Tell me more..."
     // "small" | "medium" | "large" | "full"
     // If none provided, default is "full"
     width="medium"
@@ -178,7 +178,7 @@ All of the properties here are the same as in the `EmbeddableTextInput` componen
 <MultiLineTextInput
     label={`My Label`}
     name={"anyUniqueNameThatNeverChanges2"}
-    placeholder="Company Name"
+    placeholder="Tell me more..."
     rows={3}
     width="medium"
 />
@@ -244,6 +244,9 @@ For choosing a single item from a list.
 <DateInput 
     name="My unique descriptive name"
     time
+    // Any theme color can be passed in as a boolean.
+    // Default: "matcha"
+    dust
 />
 ```
 
@@ -252,7 +255,53 @@ You can include `time` to show a time component.
 <DateInput 
     name="My unique descriptive name"
     time
+    matcha
+    marginBottom="medium"
 />
+
+
+<DateInput 
+    name="My unique descriptive name"
+    time
+    marginBottom="medium"
+    cream
+/>
+
+<DateInput 
+    name="My unique descriptive name"
+    time
+    marginBottom="medium"
+    dust
+/>
+
+<DateInput 
+    name="My unique descriptive name"
+    time
+    marginBottom="medium"
+    fog
+/>
+
+<DateInput 
+    name="My unique descriptive name"
+    time
+    marginBottom="medium"
+    mist
+/>
+
+<DateInput 
+    name="My unique descriptive name"
+    time
+    marginBottom="medium"
+    moss
+/>
+
+<DateInput 
+    name="My unique descriptive name"
+    time
+    marginBottom="medium"
+    pine
+/>
+
 
 
 
@@ -261,13 +310,57 @@ You can include `time` to show a time component.
 ```tsx
 <DateInput 
     name="My unique descriptive name two"
+    // Any of the theme colors can be applied as a boolean.
+    // Default: dust
+    mist
+    // Completely optional, just using for spacing.
+    marginBottom="medium"
 />
 ```
 
 If you remove the `time` property only the button is shown.
 
 <DateInput 
-    name="My unique descriptive name two"
+    name="My unique descriptive name two 1"
+    matcha
+    marginBottom="medium"
+/>
+
+
+<DateInput 
+    name="My unique descriptive name two 2"
+    cream
+    marginBottom="medium"
+/>
+
+<DateInput 
+    name="My unique descriptive name two 3"
+    dust
+    marginBottom="medium"
+/>
+
+<DateInput 
+    name="My unique descriptive name two 4"
+    fog
+    marginBottom="medium"
+/>
+
+<DateInput 
+    name="My unique descriptive name two 5"
+    mist
+    marginBottom="medium"
+/>
+
+<DateInput 
+    name="My unique descriptive name two 6"
+    moss
+    marginBottom="medium"
+/>
+
+<DateInput 
+    name="My unique descriptive name two 7"
+    pine
+    marginBottom="medium"
 />
 
 This accepts a set of other properties:
@@ -301,8 +394,20 @@ Or you can set the years explicitly:
 ```tsx
 <ReorderInput 
     name="myUniqueUnchangingName"
+    // An optional title.
     title="A title is optional"
+    // An optionl subtitle.
     subtitle="A subtitle is optional too!"
+    // The theme color to apply when not dragging.
+    // Default: matcha
+    color="matcha"
+    // The theme color to apply when dragging.
+    // Default: cream
+    drag="cream"
+    // A required array of options with the fields:
+    // title: string
+    // value: string | number (must be unique)
+    // subtitle: optional string
     options={[
         {
             title: "Option 1",
@@ -332,6 +437,8 @@ Or you can set the years explicitly:
     name="myUniqueUnchangingName"
     title="A title is optional"
     subtitle="A subtitle is optional too!"
+    color="matcha"
+    drag="cream"
     options={[
         {
             title: "Option 1",
@@ -464,7 +571,7 @@ For a number value that belongs in a range, you can use a slider input.
 
 ### Submit
 
-This is a simple button that submits the form, but has several useful properties. Below are the default values. All properties are optional, so it can just be written as `<Submit />` if the defaults are ok.
+This is a simple button that submits the form, but has several useful properties. Below are the default values. All properties are optional, so it can just be written as `<Submit />` if the defaults are ok. You can also pass any theme color as a boolean, and an `icon` field that is any [lucide icon](https://lucide.dev/icons/) name to display an icon alongside the text.
 
 ```tsx
 <Submit 
@@ -655,7 +762,7 @@ A 'card' is a component that adds a border, title, an optional subtitle and some
     <MultiLineTextInput
         label={`My Label`}
         name={"anyUniqueNameThatNeverChanges2"}
-        placeholder="Company Name"
+        placeholder="Tell me more..."
         maxWidth="medium"
         rows={3}
     />
@@ -760,6 +867,7 @@ A 'card' is a component that adds a border, title, an optional subtitle and some
         name={"anyUniqueNameThatNeverChanges2"}
         placeholder="example@gmail.com"
         maxWidth="full"
+
     />
     </Grid>
     <Grid 
@@ -785,7 +893,7 @@ A 'card' is a component that adds a border, title, an optional subtitle and some
     </Grid>
     </Grid>
     <Align horizontal="right" marginTop="medium">
-        <Submit moss />
+        <Submit matcha />
     </Align>
 </Card>
 
@@ -969,7 +1077,7 @@ A 'card' is a component that adds a border, title, an optional subtitle and some
     </Grid>
     </Grid>
     <Align horizontal="right" marginTop="medium">
-        <Submit mist />
+        <Submit matcha />
     </Align>
 </Card>
 
