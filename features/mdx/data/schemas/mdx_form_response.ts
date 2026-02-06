@@ -35,11 +35,11 @@ export const formDataValueSchema = z.union([
 ]);
 
 export enum InputId {
-    checkbox = "cb",
+    checkbox = "checkbox",
     text = "text",
-    textArea = "ta",
+    textArea = "text-area",
     reorder = "reorder",
-    dateTime = "dt",
+    dateTime = "date-time",
     select = "select",
     slider = "slider",
 }

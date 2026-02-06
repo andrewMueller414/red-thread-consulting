@@ -5,7 +5,15 @@ import z from "zod";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { RedThreadError } from "@/core/errors/red_thread_error";
 import superjson, { SuperJSONResult } from "superjson";
-import { mdxFormSchema } from "@/features/mdx/data/schemas/mdx_form_response";
+import {
+    mdxFormSchema,
+    NestedFormValue,
+} from "@/features/mdx/data/schemas/mdx_form_response";
+import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+dayjs.extend(advancedFormat);
+import { utils, write } from "xlsx";
+import { v4 } from "uuid";
 
 export const formRouter = createTRPCRouter({
     create: baseProcedure
@@ -154,5 +162,100 @@ export const formRouter = createTRPCRouter({
                 console.error("Error: ", err);
                 return false;
             }
+        }),
+    /** Returns a csv file of all data associated with a given note id. */
+    getReponseDataById: baseProcedure
+        .input(
+            z.object({
+                id: z.string(),
+            }),
+        )
+        .mutation(async ({ input }) => {
+            const _notes = await prisma.formResponse.findMany({
+                where: {
+                    mdxSourceId: {
+                        equals: input.id,
+                    },
+                },
+                select: {
+                    id: true,
+                    mdxSourceId: true,
+                    ctime: true,
+                    reviewed_at: true,
+                    data: true,
+                },
+            });
+            if (!_notes.length) {
+                return;
+            }
+
+            const byName: Record<string, object[]> = {};
+
+            type T = string | number | string[] | number[] | Date;
+
+            const formatValueForTable = (d: T): string | number => {
+                switch (typeof d) {
+                    case "number": {
+                        return d;
+                    }
+                    case "string": {
+                        return d;
+                    }
+                    case "boolean": {
+                        return d ? "True" : "False";
+                    }
+                }
+                if (d instanceof Date) {
+                    return dayjs(d).format("MMMM DD, YYYY h:mm A");
+                }
+                if (Array.isArray(d)) {
+                    return d.map(formatValueForTable).join(", ");
+                }
+                return d as string;
+            };
+
+            _notes.forEach((n) => {
+                const ctime = dayjs(n.ctime).format("MMMM DD, YYYY h:mm A");
+                const reviewed_at = n.reviewed_at
+                    ? dayjs(n.reviewed_at).format("MMMM DD, YYYY h:mm A")
+                    : null;
+                const deserializedJson = superjson.deserialize(
+                    n.data as unknown as SuperJSONResult,
+                ) as Record<string, NestedFormValue>;
+
+                Object.entries(deserializedJson).map((_v) => {
+                    const [name, itemData] = _v;
+                    if (!byName[name]) {
+                        byName[name] = [];
+                    }
+                    byName[name].push({
+                        value: formatValueForTable(itemData.value as T),
+                        "Input Type": itemData.inputId,
+                        "Created At": ctime,
+                        "Reviewed At": reviewed_at,
+                    });
+                });
+            });
+
+            const workbook = utils.book_new();
+
+            Object.keys(byName).map((k) => {
+                const data = byName[k as keyof typeof byName];
+                const worksheet = utils.json_to_sheet(data);
+                const s = v4();
+                utils.book_append_sheet(
+                    workbook,
+                    worksheet,
+                    s.replace("-", "").slice(0, 31),
+                );
+            });
+
+            const excelBuffer = write(workbook, { type: "buffer", bookType: "xlsx" });
+            const base64 = excelBuffer.toString("base64");
+
+            return {
+                filename: `export-${input.id}.xlsx`,
+                content: base64,
+            };
         }),
 });

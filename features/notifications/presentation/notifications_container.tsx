@@ -17,7 +17,7 @@ interface NotificationsContainerProps {
 export const NotificationsContainer = connector(
     ({ notifications }: NotificationsContainerProps): ReactNode => {
         return (
-            <div className="w-full max-w-87.5 fixed top-4 right-4 h-fit flex flex-col justify-start items-center max-h-screen z-50">
+            <div className="w-full max-w-87.5 fixed top-4 right-4 h-fit flex flex-col gap-y-2 justify-start items-center max-h-screen z-50">
                 {notifications.map((n) => {
                     return <NotificationItemComponent key={n.id} item={n} />;
                 })}

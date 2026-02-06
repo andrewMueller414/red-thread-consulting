@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { showMdxDeleteConfirmation } from "../delete_mdx_confirmation_modal/delete_mdx_confirmation_modal_actions";
 import { typedSearchParamRoute } from "../../../../core/utils/url_utils";
 import { Route } from "next";
+import { trpc } from "@/features/trpc/trpc_provider";
+import { showNotification } from "@/features/notifications/notification_utils";
 dayjs.extend(advancedFormat);
 
 export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
@@ -86,6 +88,7 @@ export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
         header: () => <div>Actions</div>,
         cell: ({ row }) => {
             const rowId = row.getValue(MdxSummaryTableColId.id) as string;
+            const csvMutation = trpc.form.getReponseDataById.useMutation();
             const viewUrl = encodeURI(`/articles/${rowId}`);
 
             const sp = new URLSearchParams();
@@ -97,6 +100,45 @@ export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
             responseSp.set("articleId", rowId);
 
             const responsesUrl = typedSearchParamRoute("/admin", responseSp);
+            const handleExportData = async (): Promise<void> => {
+                csvMutation.mutate(
+                    {
+                        id: rowId,
+                    },
+                    {
+                        onError: (err) => {
+                            console.log("err: ", err);
+                            showNotification({
+                                title: "Oh no",
+                                variant: "info",
+                                message: "Something went wrong while trying to export data.",
+                                duration: 5000,
+                            });
+                        },
+                        onSuccess(data) {
+                            if (data?.content) {
+                                const byteCharacters = atob(data.content);
+                                const byteNumbers = new Array(byteCharacters.length);
+                                for (let i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                const byteArray = new Uint8Array(byteNumbers);
+                                const blob = new Blob([byteArray], {
+                                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                });
+                                const url = window.URL.createObjectURL(blob);
+                                const a = document.createElement("a");
+                                a.href = url;
+                                a.download = data.filename;
+                                document.body.appendChild(a);
+                                a.click();
+                                window.URL.revokeObjectURL(url);
+                                document.body.removeChild(a);
+                            }
+                        },
+                    },
+                );
+            };
 
             return (
                 <DropdownMenu>
@@ -115,6 +157,9 @@ export const mdxSummaryTableColumns: ColumnDef<MdxSummaryItem>[] = [
                             <Link className="w-full h-full" href={responsesUrl}>
                                 Responses
                             </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleExportData}>
+                            Export Data
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Link className="w-full h-full" href={editUrl as Route}>

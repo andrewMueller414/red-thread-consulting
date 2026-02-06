@@ -12,6 +12,7 @@
   - [x] Document that along with 'compares to' column.
 - [ ] Document 'desc' property on text inputs.
 - [ ] Create notification that indicates a form is being submitted. The state already exists.
+- [ ] Add ability to export data to csv through polars when the response table is filtered to a single note.
 - [x] Document `Title` component
 - [x] Finish view response methods for:
   - [x] `SelectInput`

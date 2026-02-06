@@ -44,11 +44,11 @@ export const textInputPropsSchema = embeddableInputSchema
             }
         }),
         label: z.string({ message: "A label is required" }),
-        desc: z.string().optional(),
+        desc: z.string().nullish().default(null),
         name: z
             .string({ message: "A name field is required." })
             .min(1, "Include a name that isn't empty."),
-        placeholder: z.string().optional(),
+        placeholder: z.string().nullish().default(null),
         type: z
             .enum(
                 [
@@ -96,14 +96,14 @@ export const reorderItemSchema = z.object({
     title: z
         .string({ message: "A title is required" })
         .min(1, "Please include a title that isn't empty"),
-    subtitle: z.string().optional(),
+    subtitle: z.string().nullish().default(null),
     value: z.string().or(z.number()),
 });
 
 export const reorderInputProps = z.object({
     options: reorderItemSchema.array(),
-    title: z.string().optional(),
-    subtitle: z.string().optional(),
+    title: z.string().nullish().default(null),
+    subtitle: z.string().nullish().default(null),
     name: z.string({ message: "You must include a name for all inputs." }),
     color: colorEnum.default("matcha").transform((c): ThemeColorGroup => {
         return themeColorGroups.find((f) => f.background === c) as ThemeColorGroup;
