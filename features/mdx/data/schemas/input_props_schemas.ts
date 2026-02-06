@@ -42,6 +42,7 @@ export const textInputPropsSchema = embeddableInputSchema
             if (typeof w === "string") {
                 return w;
             }
+            return null;
         }),
         label: z.string({ message: "A label is required" }),
         desc: z.string().nullish().default(null),
@@ -171,7 +172,7 @@ export const titlePropsSchema = colorEnumRecord.extend({
         ])
         .default(1),
     title: z.string(),
-    subtitle: z.string().optional(),
+    subtitle: z.string().nullish().default(null),
     font: getFontClassSchema("ss-pro"),
     width: widthClassSchema,
 });

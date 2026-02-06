@@ -84,6 +84,8 @@ export const FormResponseInputSwitch = (
                     meta={meta}
                     color={meta.color}
                     drag={meta.drag}
+                    title={meta.title}
+                    subtitle={meta.subtitle}
                 />
             );
         }

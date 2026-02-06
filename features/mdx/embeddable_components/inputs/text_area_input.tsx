@@ -48,7 +48,7 @@ export const EmbeddableTextAreaInput = (
                         } satisfies TextAreaMeta,
                     })
                 }
-                placeholder={placeholder}
+                placeholder={placeholder ?? undefined}
                 className="w-full"
                 rows={rows}
             />

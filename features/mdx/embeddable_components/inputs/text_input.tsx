@@ -21,7 +21,7 @@ export const EmbeddableTextInput = (
             disabled={props.disabled}
             width={width}
             classes={{
-                container: width,
+                container: width ?? undefined,
             }}
             meta={props.meta}
         />

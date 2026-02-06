@@ -14,9 +14,6 @@ import { useFormInitialValue } from "../../state/hooks/use_form_initial_value";
 import { TextInputProps } from "../../data/schemas/input_props_schemas";
 
 interface FormTextInputGroupProps extends TextInputProps {
-    label: string;
-    desc?: string;
-    placeholder?: string;
     required?: boolean;
     name: string;
     type: TextInputMeta["type"];
@@ -61,7 +58,7 @@ export const FormTextInputGroup = ({
             {desc ? <FieldDescription>{desc}</FieldDescription> : null}
             <Input
                 type={type}
-                placeholder={placeholder}
+                placeholder={placeholder ?? undefined}
                 disabled={disabled}
                 required={required}
                 value={valueOverride ?? (value?.value as string) ?? ""}
