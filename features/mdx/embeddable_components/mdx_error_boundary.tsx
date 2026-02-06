@@ -54,7 +54,7 @@ export const ErrorComponent = ({
     return (
         <div className="flex flex-col justify-center items-center">
             <div className="p-2 rounded-full bg-pine stroke-fog">
-                <ShieldAlert />
+                <ShieldAlert className="text-fog" />
             </div>
             <div className="text-2xl font-bellefair">Error</div>
             {typeof error === "string" ? (

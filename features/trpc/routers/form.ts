@@ -163,7 +163,7 @@ export const formRouter = createTRPCRouter({
                 return false;
             }
         }),
-    /** Returns a csv file of all data associated with a given note id. */
+    /** Returns an excel buffer of all data associated with a given note id. */
     getReponseDataById: baseProcedure
         .input(
             z.object({
