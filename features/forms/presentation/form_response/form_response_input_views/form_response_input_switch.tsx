@@ -82,6 +82,8 @@ export const FormResponseInputSwitch = (
                         container: "py-0",
                     }}
                     meta={meta}
+                    color={meta.color}
+                    drag={meta.drag}
                 />
             );
         }
