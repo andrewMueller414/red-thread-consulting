@@ -1,9 +1,6 @@
 "use client";
-import { CheckLineIcon, ShieldAlert } from "lucide-react";
-import {
-    ErrorBoundary,
-    ErrorComponent as ErrorComponentType,
-} from "next/dist/client/components/error-boundary";
+import { ShieldAlert } from "lucide-react";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import React, { type ReactNode } from "react";
 import { ZodError } from "zod";
 

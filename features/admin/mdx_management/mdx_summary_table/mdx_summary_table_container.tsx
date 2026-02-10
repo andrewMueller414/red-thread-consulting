@@ -28,7 +28,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { MdxSummaryTableColId } from "./mdx_summary_table_column_label_map";
 import { DataTableViewOptions } from "@/core/shared_components/table_utils/table_header_row";
 import { PaginationTableFooter } from "@/core/shared_components/table_utils/table_footer_row";
-import { trpc } from "@/features/trpc/trpc_provider";
 import { useEventListener } from "@/core/state/hooks/use_event_listener";
 import { showMdxDeleteConfirmation } from "../delete_mdx_confirmation_modal/delete_mdx_confirmation_modal_actions";
 
@@ -40,7 +39,6 @@ export const MdxSummaryTableContainer = ({
     items,
 }: MdxSummaryTableContainerProps): ReactNode => {
     const [data, setData] = useState(items);
-    const deleteMutation = trpc.mdx.deleteByIds.useMutation();
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         [],
